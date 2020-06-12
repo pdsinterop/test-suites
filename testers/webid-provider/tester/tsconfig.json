@@ -1,21 +1,9 @@
 {
-  "env": "node",
   "compilerOptions": {
-    "target": "es2015",
-    "strict": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "sourceMap": true,
-    "outDir": "dist",
     "declaration": true,
-    "esModuleInterop": true
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
+    "outDir": "lib"
   },
-  "typeRoots": ["./types"],
-  "exclude": [
-    "test",
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*"]
 }
