@@ -7,8 +7,8 @@
   "configPath": "./config",
   "configFile": "./config.json",
   "dbPath": "./.db",
-  "sslKey": "./tls/privkey.pem",
-  "sslCert": "./tls/fullchain.pem",
+  "sslKey": "./server.key",
+  "sslCert": "./server.cert",
   "multiuser": false,
   "server": {
     "name": "localhost",
