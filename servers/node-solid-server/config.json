@@ -1,15 +1,17 @@
 {
   "root": "./data",
-  "port": "8080",
-  "serverUri": "http://localhost:8080",
-  "webid": false,
+  "port": "8443",
+  "serverUri": "https://localhost:8443",
+  "webid": true,
   "mount": "/",
   "configPath": "./config",
+  "configFile": "./config.json",
   "dbPath": "./.db",
+  "sslKey": "./tls/privkey.pem",
+  "sslCert": "./tls/fullchain.pem",
   "multiuser": false,
-  "corsProxy": "/proxy",
   "server": {
-    "name": "",
+    "name": "localhost",
     "description": "",
     "logo": ""
   },

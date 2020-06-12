@@ -4,4 +4,5 @@ RUN apt-get update && apt-get install -yq \
   && apt-get clean
 ADD tester .
 RUN npm install
+ENV NODE_TLS_REJECT_UNAUTHORIZED 0
 CMD npm run jest

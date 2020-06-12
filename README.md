@@ -16,27 +16,19 @@ Prerequisites: [Docker](https://docs.docker.com/install/)
 Run the following commands in your command line terminal:
 
 ```sh
-docker build -t ldp-basic testers/ldp-basic
-docker build -t websockets-pubsub testers/websockets-pubsub
-docker build -t rdf-fixtures testers/rdf-fixtures
 docker build -t webid-provider testers/webid-provider
-
-docker build -t table-reporter reporters/table
 docker network create testnet
 mkdir  -p reports
 
 bash runTests.sh node-solid-server
-bash runTests.sh trellis
 bash runTests.sh solid-app-kit
 
-egrep 'Tests:|tests run:|earl:outcome' reports/* | docker run -i table-reporter
+grep Tests reports/*
 ```
 The final output should look something like:
 ```sh
-Server              	LDP Basic           	Websockets-pub-sub  	RDF-fixtures
-node-solid-server   	15/90               	0/1                 	22/49
-trellis             	47/90               	0/1                 	10/45
-solid-app-kit          	57/90               	1/1                 	8/50
+reports/node-solid-server-webid-provider.txt:Tests:       1 passed, 1 total
+reports/solid-app-kit-webid-provider.txt:Tests:       1 passed, 1 total
 ```
 
 To run one tester against one server interactively, you can do for instance:
