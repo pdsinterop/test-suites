@@ -11,7 +11,7 @@ To summarize the test results, we have opted to build them in Docker
 (this part was copied from [Solid's test-suite](https://github.com/solid/test-suite)),
 and to run them within that. This documents how to run it:
 
-Prerequisites: [Docker](https://docs.docker.com/install/)
+Prerequisites: [Docker](https://docs.docker.com/install/)o
 
 Run the following commands in your command line terminal:
 
@@ -33,19 +33,9 @@ reports/solid-app-kit-webid-provider.txt:Tests:       1 passed, 1 total
 
 To run one tester against one server interactively, you can do for instance:
 ```sh
-./runTesterAgainstServer.sh rdf-fixtures node-solid-server
+./runTesterAgainstServer.sh webid-provider node-solid-server
 [...]
-root@f0c7e54fb1f3:/# prove --formatter TAP::Formatter::EARL -l /opt/run-scripts/
-root@f0c7e54fb1f3:/# exit
-[...]
-```
-
-or:
-
-```sh
-./runTesterAgainstServer.sh ldp-basic node-solid-server
-[...]
-root@f0c7e54fb1f3:/# java -jar ldp-testsuite.jar --basic --server http://server:8080 --test PostContainer
+root@f0c7e54fb1f3:/# npm run jest
 root@f0c7e54fb1f3:/# exit
 [...]
 ```
