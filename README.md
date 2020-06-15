@@ -11,7 +11,7 @@ To summarize the test results, we have opted to build them in Docker
 (this part was copied from [Solid's test-suite](https://github.com/solid/test-suite)),
 and to run them within that. This documents how to run it:
 
-Prerequisites: [Docker](https://docs.docker.com/install/)o
+Prerequisites: [Docker](https://docs.docker.com/install/)
 
 Run the following commands in your command line terminal:
 
