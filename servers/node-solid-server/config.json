@@ -1,0 +1,22 @@
+{
+  "root": "./data",
+  "port": "8443",
+  "serverUri": "https://localhost:8443",
+  "webid": true,
+  "mount": "/",
+  "configPath": "./config",
+  "configFile": "./config.json",
+  "dbPath": "./.db",
+  "sslKey": "./server.key",
+  "sslCert": "./server.cert",
+  "multiuser": false,
+  "server": {
+    "name": "localhost",
+    "description": "",
+    "logo": ""
+  },
+  "enforceToc": true,
+  "disablePasswordChecks": false,
+  "tocUri": "https://your-toc",
+  "supportEmail": "Your support email address"
+}
