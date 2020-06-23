@@ -2,7 +2,7 @@
 FROM node:8.11.2
 RUN git clone https://github.com/solid/node-solid-server
 WORKDIR node-solid-server
-RUN git checkout master
+RUN git checkout update-deps
 RUN npm install
 ADD config.json .
 ADD config ./config
