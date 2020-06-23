@@ -3,13 +3,13 @@ RUN git clone https://github.com/michielbdejong/solid-app-kit
 WORKDIR solid-app-kit
 RUN npm install
 RUN npm run build
-EXPOSE 8080/tcp
+EXPOSE 443
 COPY config.json .
 ENV DEBUG *
-ENV PORT 8443
+ENV PORT 443
 ENV HTTPS true
 ENV DOMAIN server
-ENV AUD http://server:8080
+ENV AUD https://server
 RUN apt-get update && apt-get install -yq \
   redis-server \
   vim \
