@@ -1,12 +1,32 @@
 import fetch from "node-fetch";
 import { fetchDocument } from "tripledoc";
-import { ldp } from "rdf-namespaces";
+import { ldp, foaf, rdf, schema } from "rdf-namespaces";
 
 const ALICE_WEBID = process.env.ALICE_WEBID;
 const SERVER_ROOT = process.env.SERVER_ROOT || "https://server";
 
-test("/.well-known/openid-configuration is valid JSON", async () => {
-  const doc = await fetchDocument(ALICE_WEBID);
-  const sub = doc.getSubject(ALICE_WEBID);
-  expect(sub.getRef(ldp.inbox).startsWith("https://")).toEqual(true);
+describe("Alice's webid profile", () => {
+  let doc;
+  let subAlice;
+  let subDoc;
+
+  beforeAll(async () => {
+    doc = await fetchDocument(ALICE_WEBID);
+    subAlice = doc.getSubject(ALICE_WEBID);
+    subDoc = doc.getSubject(doc.asRef());
+  });
+
+  test("profile points to an LDP inbox", async () => {
+    expect(subAlice.getRef(ldp.inbox).startsWith("https://")).toEqual(true);
+  });
+
+  test("profile is a foaf:PersonalProfileDocument", async () => {
+    const profileTypes = subDoc.getAllRefs(rdf.type);
+    expect(profileTypes.sort()).toEqual([foaf.PersonalProfileDocument].sort());
+  });
+
+  test("Alice is a foaf:Person and a schema:Person", async () => {
+    const aliceTypes = subAlice.getAllRefs(rdf.type);
+    expect(aliceTypes.sort()).toEqual([foaf.Person, schema.Person].sort());
+  });
 });
