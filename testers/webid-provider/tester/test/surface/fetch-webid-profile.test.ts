@@ -20,9 +20,14 @@ describe("Alice's webid profile", () => {
     expect(subAlice.getRef(ldp.inbox).startsWith("https://")).toEqual(true);
   });
 
-  test("profile is a foaf:PersonalProfileDocument", async () => {
+  test("doc itself is a foaf:PersonalProfileDocument", async () => {
     const profileTypes = subDoc.getAllRefs(rdf.type);
     expect(profileTypes.sort()).toEqual([foaf.PersonalProfileDocument].sort());
+  });
+
+  test("Alice is the foaf:primaryTopic of the profile doc", async () => {
+    const profileTypes = subDoc.getAllRefs(rdf.type);
+    expect(subDoc.getRef(foaf.primaryTopic)).toEqual(subAlice.asRef());
   });
 
   test("Alice is a foaf:Person and a schema:Person", async () => {
