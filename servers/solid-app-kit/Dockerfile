@@ -21,5 +21,5 @@ RUN openssl req -new -x509 -days 365 -nodes \
   -keyout ./server.key \
   -subj "/C=RO/ST=Bucharest/L=Bucharest/O=IT/CN=www.example.ro"
 CMD /etc/init.d/redis-server start && \
-  cat data.txt | redis-cli --pipe && \
+  cat data.txt | head -100 | redis-cli --pipe && \
   npm start
