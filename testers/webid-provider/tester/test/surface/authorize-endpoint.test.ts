@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import { expectedArrivalFrom } from "rdf-namespaces/dist/schema";
 
 const SERVER_ROOT = process.env.SERVER_ROOT || "https://server";
+const LOGIN_URL = `${SERVER_ROOT}/login/password`;
 
 describe("The server's authorize endpoint", () => {
   let authorizeUrl
@@ -24,13 +25,23 @@ describe("The server's authorize endpoint", () => {
     ];
     const paramsStr = params.map(arr => `${encodeURIComponent(arr[0])}=${encodeURIComponent(arr[1])}`).join('&');
     authorizeUrl = `${authorizeEndpoint}?${paramsStr}`;
+    const loginParams = {
+      
+    };
+    const loginResult = await fetch(LOGIN_URL, {
+      method: 'POST',
+      body: 'username=alice&password=123'
+    });
+    const responseHeaders = loginResult.headers;
+    console.log(responseHeaders);
+    console.log(await loginResult.text());
   });
 
   test("the authorize endpoint is within the system under test", async () => {
     expect(authorizeUrl.startsWith(SERVER_ROOT)).toEqual(true);
   });
 
-  test("the authorize URL presents a login form", async () => {
+  test("the authorize URL without cookie presents a login form", async () => {
     const fetchResult = await fetch(authorizeUrl);
     expect(fetchResult.status).toEqual(200);
     const body = await fetchResult.text();
