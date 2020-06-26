@@ -10,7 +10,7 @@ HSET v1/server/storage/ v1/server/storage/alice/ true
 
 HSET v1/server/storage/alice/ v1/server/storage/alice/.acl false
 
-SET 1/server/storage/alice/.acl "{\"contentType\":\"text/turtle\",\"body\":\"@prefix acl: <http://www.w3.org/ns/auth/acl#>.\\n<#owner>\\n  a acl:Authorization;\\n  acl:agent <https://server/storage/alice/profile/card#me>;\\n  acl:accessTo <./>;\\n  acl:default <./>;\\n  acl:mode\\n    acl:Read, acl:Write, acl:Control.\",\"etag\":\"aew8ibI9BfkogPcINth7JA==\",\"rdfType\":1}"
+SET v1/server/storage/alice/.acl "{\"contentType\":\"text/turtle\",\"body\":\"@prefix acl: <http://www.w3.org/ns/auth/acl#>.\\n<#owner>\\n  a acl:Authorization;\\n  acl:agent <https://server/storage/alice/profile/card#me>;\\n  acl:accessTo <./>;\\n  acl:default <./>;\\n  acl:mode\\n    acl:Read, acl:Write, acl:Control.\",\"etag\":\"aew8ibI9BfkogPcINth7JA==\",\"rdfType\":1}"
 
 HSET v1/server/storage/alice/ v1/server/storage/alice/profile/ true
 
