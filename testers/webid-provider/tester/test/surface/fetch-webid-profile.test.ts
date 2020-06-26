@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { fetchDocument } from "tripledoc";
-import { ldp, foaf, rdf, schema } from "rdf-namespaces";
+import { ldp, foaf, rdf, schema, vcard, solid, space } from "rdf-namespaces";
 
 const ALICE_WEBID = process.env.ALICE_WEBID;
 const SERVER_ROOT = process.env.SERVER_ROOT || "https://server";
@@ -16,8 +16,32 @@ describe("Alice's webid profile", () => {
     subDoc = doc.getSubject(doc.asRef());
   });
 
-  test("profile points to an LDP inbox", async () => {
+  test("Alice has an ldp:inbox", async () => {
     expect(subAlice.getRef(ldp.inbox).startsWith("https://")).toEqual(true);
+  });
+
+  test("Alice has a space:storage", async () => {
+    expect(subAlice.getRef(space.storage).startsWith("https://")).toEqual(true);
+  });
+
+  test("Alice has a space:preferencesFile", async () => {
+    expect(subAlice.getRef(space.preferencesFile).startsWith("https://")).toEqual(true);
+  });
+
+  test("Alice has a solid:account", async () => {
+    expect(subAlice.getRef(solid.account).startsWith("https://")).toEqual(true);
+  });
+
+  test("Alice has a space:preferencesFile", async () => {
+    expect(subAlice.getRef(space.preferencesFile).startsWith("https://")).toEqual(true);
+  });
+
+  test("Alice has a solid:privateTypeIndex", async () => {
+    expect(subAlice.getRef(solid.privateTypeIndex).startsWith("https://")).toEqual(true);
+  });
+
+  test("Alice has a solid:publicTypeIndex", async () => {
+    expect(subAlice.getRef(solid.publicTypeIndex).startsWith("https://")).toEqual(true);
   });
 
   test("doc itself is a foaf:PersonalProfileDocument", async () => {
@@ -34,4 +58,17 @@ describe("Alice's webid profile", () => {
     const aliceTypes = subAlice.getAllRefs(rdf.type);
     expect(aliceTypes.sort()).toEqual([foaf.Person, schema.Person].sort());
   });
+
+  test.skip("Alice has a foaf:name", async () => {
+    expect(subAlice.getRef(foaf.name).length > 0).toEqual(true);
+  });
+
+  test.skip("Alice has a vcard:fn", async () => {
+    expect(subAlice.getRef(vcard.fn).length > 0).toEqual(true);
+  });
+
+  test.skip("Alice has a vcard:hasPhoto", async () => {
+    expect(subAlice.getRef(vcard.hasPhoto).startsWith("https://")).toEqual(true);
+  });
+
 });
