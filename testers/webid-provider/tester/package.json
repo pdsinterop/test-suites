@@ -5,14 +5,18 @@
     "@types/node-fetch": "^2.5.7",
     "@types/ws": "^6.0.1",
     "debug": "^4.1.1",
-    "jest": "^24.7.1",
+    "jest": "^26.1.0",
     "node-fetch": "^2.5.0",
-    "ts-jest": "^24.0.2",
+    "rdf-namespaces": "^1.8.0",
+    "solid-auth-client": "^2.4.1",
+    "tripledoc": "^4.3.4",
+    "ts-jest": "^26.1.1",
     "typescript": "^3.9.5"
   },
   "scripts": {
     "jest": "jest",
-    "lint": "eslint test/ --ext .ts"
+    "lint": "eslint test/ --ext .ts",
+    "local": "NODE_TLS_REJECT_UNAUTHORIZED=0 SERVER_ROOT=https://localhost:8443 ALICE_WEBID=https://localhost:8443/profile/card#me npm run jest"
   },
   "devDependencies": {
     "@types/jest": "^24.9.1",

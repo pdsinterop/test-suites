@@ -27,8 +27,8 @@ grep Tests reports/*
 ```
 The final output should look something like:
 ```sh
-reports/node-solid-server-webid-provider.txt:Tests:       1 passed, 1 total
-reports/solid-app-kit-webid-provider.txt:Tests:       1 passed, 1 total
+reports/node-solid-server-webid-provider.txt:Tests:       1 failed, 4 skipped, 25 passed, 30 total
+reports/solid-app-kit-webid-provider.txt:Tests:       11 failed, 4 skipped, 15 passed, 30 total
 ```
 
 To run one tester against one server interactively, you can do for instance:

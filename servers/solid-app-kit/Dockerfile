@@ -1,4 +1,8 @@
 FROM node
+RUN apt-get update && apt-get install -yq \
+  redis-server \
+  vim \
+  && apt-get clean
 RUN git clone https://github.com/michielbdejong/solid-app-kit
 WORKDIR solid-app-kit
 RUN npm install
@@ -10,10 +14,6 @@ ENV PORT 443
 ENV HTTPS true
 ENV DOMAIN server
 ENV AUD https://server
-RUN apt-get update && apt-get install -yq \
-  redis-server \
-  vim \
-  && apt-get clean
 ENV NODE_TLS_REJECT_UNAUTHORIZED 0
 RUN openssl req -new -x509 -days 365 -nodes \
   -out ./server.cert \
@@ -31,5 +31,5 @@ CMD /etc/init.d/redis-server start && \
   redis-cli HSET v1/server/storage/alice/ v1/server/storage/alice/profile/.acl false && \
   redis-cli HSET v1/server/storage/alice/ v1/server/storage/alice/profile/card false && \
   redis-cli SET v1/server/storage/alice/profile/.acl "{\"contentType\":\"text/turtle\",\"body\":\"@prefix acl: <http://www.w3.org/ns/auth/acl#>.\\n@prefix  foaf:  <http://xmlns.com/foaf/0.1/>.\\n<#owner>\\n  a acl:Authorization;\\n  acl:agent <https://server/storage/alice/profile/card#me>;\\n  acl:accessTo <./>;\\n  acl:default <./>;\\n  acl:mode\\n    acl:Read, acl:Write, acl:Control.\\n<#public>\\n  a acl:Authorization;\\n  acl:agent foaf:Agent;\\n  acl:accessTo <./>;\\n  acl:default <./>;\\n  acl:mode\\n    acl:Read.\",\"etag\":\"NHp/kK+ycUgOFu1J5P/W0Q==\",\"rdfType\":1}" && \
-  redis-cli SET v1/server/storage/alice/profile/card "{\"contentType\":\"text/turtle\",\"body\":\"@prefix : <#>.\\n@prefix schema: <http://schema.org/>.\\n@prefix n0: <http://www.w3.org/ns/auth/acl#>.\\n@prefix ldp: <http://www.w3.org/ns/ldp#>.\\n@prefix inbox: <../inbox/>.\\n@prefix sp: <http://www.w3.org/ns/pim/space#>.\\n@prefix n1: <../>.\\n@prefix n2: <https://www.w3.org/TR/activitypub/#>.\\n@prefix cont: <../contacts.ttl#>.\\n\\n:me\\n    a schema:Person;\\n    n0:trustedApp :same-origin;\\n    ldp:inbox inbox:;\\n    sp:storage n1:;\\n    n2:following cont:friends.\\n:same-origin\\n    n0:mode n0:Control, n0:Read, n0:Write;\\n    n0:origin <https://server>.\\n\",\"etag\":\"RxxEE7WhmcXrlon7v4Jx9g==\",\"rdfType\":1}" && \
+  redis-cli SET v1/server/storage/alice/profile/card "{\"contentType\":\"text/turtle\",\"body\":\"@prefix schema: <http://schema.org/>.\\n@prefix pim: <http://www.w3.org/ns/pim/space#>.\\n@prefix ldp: <http://www.w3.org/ns/ldp#>.\\n@prefix acl: <http://www.w3.org/ns/auth/acl#>.\\n@prefix foaf: <http://xmlns.com/foaf/0.1/>.\\n@prefix solid: <http://www.w3.org/ns/solid/terms#>.\\n\\n<> a foaf:PersonalProfileDocument ; foaf:primaryTopic <#me>.\\n<#me>\\n  a schema:Person, foaf:Person;\\n  pim:storage <https://server/storage/alice/>;\\n  solid:account <https://server/storage/alice/>;\\n  pim:preferencesFile <https://server/storage/alice/settings/prefs.ttl>;\\n  solid:privateTypeIndex <https://server/storage/alice/settings/privateTypeIndex.ttl>;\\n  solid:publicTypeIndex <https://server/storage/alice/settings/publicTypeIndex.ttl>;\\n  ldp:inbox <https://server/storage/alice/inbox/>;\\n  acl:trustedApp <#same-origin>.\\n<#same-origin>\\n  acl:origin <https://server>;\\n  acl:mode acl:Read, acl:Write, acl:Control.\",\"etag\":\"RxxEE7WhmcXrlon7v4Jx9g==\",\"rdfType\":1}" && \
   npm start
