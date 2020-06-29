@@ -6,8 +6,10 @@ test("/.well-known/openid-configuration is valid JSON", async () => {
   const fetchResult = await fetch(
     `${SERVER_ROOT}/.well-known/openid-configuration`
   );
+  // console.log(`${SERVER_ROOT}/.well-known/openid-configuration`);
   expect(fetchResult.status).toEqual(200);
   const body = await fetchResult.text();
+  // console.log('body:', body);
   JSON.parse(body);
 });
 

@@ -54,7 +54,7 @@ But to run for instance the webid-provider tester against a URL, you can simply 
 ```sh
 cd testers/webid-provider/tester
 npm install
-NODE_TLS_REJECT_UNAUTHORIZED=0 ALICE_WEBID=https://localhost/profile/card#me SERVER_ROOT=https://localhost/ ./node_modules/.bin/jest test/surface/*
+NODE_TLS_REJECT_UNAUTHORIZED=0 ALICE_WEBID=https://localhost/profile/card#me SERVER_ROOT=https://localhost ./node_modules/.bin/jest test/surface/*
 ```
 
 ## YMMV
