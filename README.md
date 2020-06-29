@@ -5,7 +5,7 @@
 The goal of these test suites is to test which open source
 Personal Data Store implementations comply with which protocol specs.
 
-## Test Suite Summary in Docker
+## Running testers against servers in a Docker testnet
 
 To summarize the test results, we have opted to build them in Docker
 (this part was copied from [Solid's test-suite](https://github.com/solid/test-suite)),
@@ -40,17 +40,24 @@ root@f0c7e54fb1f3:/# exit
 [...]
 ```
 
+## Running one of the servers
 To run a server on your localhost system:
 ```sh
 ./runServer.sh node-solid-server
 ```
 
-To run the webid-prodider tester against a URL:
+## Running one of the testers
+Running the tester Docker images on a Mac outside a testnet will not work
+straight-forwardly due to https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds.
+
+But to run for instance the webid-provider tester against a URL, you can simply run it outside Docker:
 ```sh
 cd testers/webid-provider/tester
 npm install
 NODE_TLS_REJECT_UNAUTHORIZED=0 ALICE_WEBID=https://localhost/profile/card#me SERVER_ROOT=https://localhost/ ./node_modules/.bin/jest test/surface/*
 ```
+
+## YMMV
 
 Caveat 1: the qualities of a software product can of course not be counted with a simple number of passing tests,
 so this list only gives a rough idea of levels of Solid spec compliance.
