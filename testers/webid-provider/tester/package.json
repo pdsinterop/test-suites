@@ -16,7 +16,7 @@
   "scripts": {
     "jest": "jest",
     "lint": "eslint test/ --ext .ts",
-    "local": "NODE_TLS_REJECT_UNAUTHORIZED=0 SERVER_ROOT=https://localhost:8443 ALICE_WEBID=https://localhost:8443/profile/card#me npm run jest"
+    "local": "NODE_TLS_REJECT_UNAUTHORIZED=0 SERVER_ROOT=https://localhost ALICE_WEBID=https://localhost/profile/card#me npm run jest"
   },
   "devDependencies": {
     "@types/jest": "^24.9.1",

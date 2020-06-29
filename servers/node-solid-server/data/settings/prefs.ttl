@@ -8,8 +8,8 @@
 
   dct:title "Preferences file" .
 
-<https://localhost:8443/profile/card#me> foaf:mbox <mailto:alice@unhosted.org> .
+</profile/card#me> foaf:mbox <mailto:alice@unhosted.org> .
 
-<https://localhost:8443/profile/card#me>
+</profile/card#me>
   solid:publicTypeIndex <publicTypeIndex.ttl> ;
   solid:privateTypeIndex <privateTypeIndex.ttl> .

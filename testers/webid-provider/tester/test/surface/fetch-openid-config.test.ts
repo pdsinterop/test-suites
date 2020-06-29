@@ -95,24 +95,4 @@ describe("The server's openid configuration", () => {
   test("announces a registration endpoint", async () => {
     expect(configObj.registration_endpoint.startsWith("https://")).toEqual(true);
   });
-
-  // check_session_iframe: 'https://localhost:8443/session',
-  // end_session_endpoint: 'https://localhost:8443/logout',
-  // authorization_endpoint: 'https://localhost:8443/authorize',
-  // token_endpoint: 'https://localhost:8443/token',
-  // userinfo_endpoint: 'https://localhost:8443/userinfo',
-  // registration_endpoint: 'https://localhost:8443/register',
-  // keys: {
-  //   descriptor: {
-  //     id_token: [Object],
-  //     token: [Object],
-  //     userinfo: [Object],
-  //     register: [Object]
-  //   },
-  //   jwks: { keys: [Array] },
-  //   id_token: { signing: [Object], encryption: {} },
-  //   token: { signing: [Object], encryption: {} },
-  //   userinfo: { encryption: {} },
-  //   register: { signing: [Object] },
-  //   jwkSet: '{
 });
