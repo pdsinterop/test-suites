@@ -49,7 +49,7 @@ To run the webid-prodider tester against a URL:
 ```sh
 cd testers/webid-provider/tester
 npm install
-NODE_TLS_REJECT_UNAUTHORIZED=0 ALICE_WEBID=https://localhost/profile/card#me SERVER_ROOT=https://localhost/ npm run jest
+NODE_TLS_REJECT_UNAUTHORIZED=0 ALICE_WEBID=https://localhost/profile/card#me SERVER_ROOT=https://localhost/ ./node_modules/.bin/jest test/surface/*
 ```
 
 Caveat 1: the qualities of a software product can of course not be counted with a simple number of passing tests,
