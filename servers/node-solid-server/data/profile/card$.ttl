@@ -6,10 +6,10 @@
 
 <>
     a foaf:PersonalProfileDocument ;
-    foaf:maker <https://server/profile/card#me> ;
-    foaf:primaryTopic <https://server/profile/card#me> .
+    foaf:maker <#me> ;
+    foaf:primaryTopic <#me> .
 
-<https://server/profile/card#me>
+<#me>
     a foaf:Person ;
     a schema:Person ;
 

@@ -12,6 +12,7 @@ describe("Alice's webid profile", () => {
 
   beforeAll(async () => {
     doc = await fetchDocument(ALICE_WEBID);
+    // console.log(ALICE_WEBID);
     subAlice = doc.getSubject(ALICE_WEBID);
     subDoc = doc.getSubject(doc.asRef());
   });
