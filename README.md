@@ -40,6 +40,18 @@ root@f0c7e54fb1f3:/# exit
 [...]
 ```
 
+To run a server on your localhost system:
+```sh
+./runServer.sh node-solid-server
+```
+
+To run the webid-prodider tester against a URL:
+```sh
+cd testers/webid-provider/tester
+npm install
+NODE_TLS_REJECT_UNAUTHORIZED=0 ALICE_WEBID=https://localhost/profile/card#me SERVER_ROOT=https://localhost/ ./node_modules/.bin/jest test/surface/*
+```
+
 Caveat 1: the qualities of a software product can of course not be counted with a simple number of passing tests,
 so this list only gives a rough idea of levels of Solid spec compliance.
 
