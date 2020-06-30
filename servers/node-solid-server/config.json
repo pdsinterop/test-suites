@@ -1,7 +1,7 @@
 {
   "root": "./data",
   "port": "443",
-  "serverUri": "https://localhost:443",
+  "serverUri": "https://localhost",
   "webid": true,
   "mount": "/",
   "configPath": "./config",
@@ -11,7 +11,7 @@
   "sslCert": "./server.cert",
   "multiuser": false,
   "server": {
-    "name": "localhost",
+    "name": "server",
     "description": "",
     "logo": ""
   },
