@@ -6,7 +6,7 @@ const query1 = "?response_type=id_token%20code&redirect_uri=http%3A%2F%2Flocalho
 const query2 = "?response_type=id_token%20code&redirect_uri=http%3A%2F%2Flocalhost%3A3002%2Fredirect&scope=openid%20profile%20offline_access&client_id=coolApp2&code_challenge_method=S256&code_challenge=M3CBok-0kQFc0GUz2YD90cFee0XzTTru3Eaj0Ubm-oc&state=84ae2b48-eb1b-4000-8782-ac1cd748aeb0";
 
 async function getCookie() {
-  const result = await fetch("https://localhost/login/password", {
+  const result = await fetch(`${SERVER_ROOT}/login/password`, {
     headers: {
       "content-type": "application/x-www-form-urlencoded"
     },
@@ -37,7 +37,6 @@ describe("The server's authorize endpoint", () => {
       [ 'code_challenge', 'M3CBok-0kQFc0GUz2YD90cFee0XzTTru3Eaj0Ubm-oc'],
       [ 'state', '84ae2b48-eb1b-4000-8782-ac1cd748aeb0']
     ];
-    console.log(configObj);
     authorizationEndpoint = configObj.authorization_endpoint;
     cookie = await getCookie();
   });
@@ -51,7 +50,7 @@ describe("The server's authorize endpoint", () => {
       redirect: "manual"
     });
     expect(fetchResult.status).toEqual(302);
-    expect(fetchResult.headers.get('location')).toEqual("https://localhost:443/login" + query1);
+    expect(fetchResult.headers.get('location')).toEqual(`${SERVER_ROOT}/login` + query1);
   });
 
   test("when redirected to login, you see a html form", async () => {
@@ -71,9 +70,7 @@ describe("The server's authorize endpoint", () => {
       redirect: "manual"
     });
     expect(fetchResult.status).toEqual(302);
-    expect(fetchResult.headers.get('location')).toEqual("https://localhost:443/sharing" + query1);
-    const body = await fetchResult.text();
-    console.log(body);
+    expect(fetchResult.headers.get('location')).toEqual(`${SERVER_ROOT}/sharing${query1}`);
   });
 
   test("when redirected to consent, there is a html form", async () => {
@@ -98,12 +95,12 @@ describe("The server's authorize endpoint", () => {
       redirect: "manual"
     });
     expect(fetchResult.status).toEqual(302);
-    expect(fetchResult.headers.get('location')).toEqual("https://localhost:443/sharing?response_type=id_token%20code&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fredirect&scope=openid%20profile%20offline_access&client_id=coolApp1&code_challenge_method=S256&code_challenge=M3CBok-0kQFc0GUz2YD90cFee0XzTTru3Eaj0Ubm-oc&state=84ae2b48-eb1b-4000-8782-ac1cd748aeb0");
+    expect(fetchResult.headers.get('location')).toEqual(`${SERVER_ROOT}/sharing?response_type=id_token%20code&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fredirect&scope=openid%20profile%20offline_access&client_id=coolApp1&code_challenge_method=S256&code_challenge=M3CBok-0kQFc0GUz2YD90cFee0XzTTru3Eaj0Ubm-oc&state=84ae2b48-eb1b-4000-8782-ac1cd748aeb0`);
   });
 
   test("Giving consent redirects you back to authorize", async () => {
     // This test uses the consented coolApp2
-    const fetchResult = await fetch("https://localhost/sharing", {
+    const fetchResult = await fetch(`${SERVER_ROOT}/sharing`, {
       "headers": {
         "content-type": "application/x-www-form-urlencoded",
         "upgrade-insecure-requests": "1",
@@ -114,12 +111,12 @@ describe("The server's authorize endpoint", () => {
       redirect: "manual"
     });
     expect(fetchResult.status).toEqual(302);
-    expect(fetchResult.headers.get('location')).toEqual("https://localhost/authorize?response_type=id_token%20code&display=&scope=openid%20profile%20offline_access&client_id=coolApp2&redirect_uri=http%3A%2F%2Flocalhost%3A3002%2Fredirect&state=84ae2b48-eb1b-4000-8782-ac1cd748aeb0&nonce=&request=");
+    expect(fetchResult.headers.get('location')).toEqual(`${SERVER_ROOT}/authorize?response_type=id_token%20code&display=&scope=openid%20profile%20offline_access&client_id=coolApp2&redirect_uri=http%3A%2F%2Flocalhost%3A3002%2Fredirect&state=84ae2b48-eb1b-4000-8782-ac1cd748aeb0&nonce=&request=`);
   });
 
   test("Authorize with cookie after consent redirects you back to the app", async () => {
     // This test uses the consented coolApp2
-    const fetchResult = await fetch("https://localhost/authorize?response_type=id_token%20code&display=&scope=openid%20profile%20offline_access&client_id=coolApp2&redirect_uri=http%3A%2F%2Flocalhost%3A3002%2Fredirect&state=84ae2b48-eb1b-4000-8782-ac1cd748aeb0&nonce=&request=", {
+    const fetchResult = await fetch(`${SERVER_ROOT}/authorize?response_type=id_token%20code&display=&scope=openid%20profile%20offline_access&client_id=coolApp2&redirect_uri=http%3A%2F%2Flocalhost%3A3002%2Fredirect&state=84ae2b48-eb1b-4000-8782-ac1cd748aeb0&nonce=&request=`, {
       "headers": {
         cookie
       },

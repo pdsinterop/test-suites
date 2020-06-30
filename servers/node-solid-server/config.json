@@ -1,7 +1,7 @@
 {
   "root": "./data",
   "port": "443",
-  "serverUri": "https://localhost",
+  "serverUri": "https://server",
   "webid": true,
   "mount": "/",
   "configPath": "./config",
