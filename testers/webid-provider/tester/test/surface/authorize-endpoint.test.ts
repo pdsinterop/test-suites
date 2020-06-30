@@ -5,18 +5,19 @@ const LOGIN_URL = `${SERVER_ROOT}/login/password`;
 
 async function getCookie() {
   const result = await fetch("https://localhost/login/password", {
-    "headers": {
+    headers: {
       "content-type": "application/x-www-form-urlencoded"
     },
-    "body": "username=alice&password=123",
-    "method": "POST",
-    "redirect": "manual"
+    body: "username=alice&password=123",
+    method: "POST",
+    redirect: "manual"
   });
   return result.headers.get('set-cookie');
 }
 
 describe("The server's authorize endpoint", () => {
-  let authorizeUrl
+  let authorizationEndpoint
+  let cookie
 
   beforeAll(async () => {
     const configFetchResult = await fetch(
@@ -34,26 +35,30 @@ describe("The server's authorize endpoint", () => {
       [ 'code_challenge', 'M3CBok-0kQFc0GUz2YD90cFee0XzTTru3Eaj0Ubm-oc'],
       [ 'state', '84ae2b48-eb1b-4000-8782-ac1cd748aeb0']
     ];
-    const paramsStr = params.map(arr => `${encodeURIComponent(arr[0])}=${encodeURIComponent(arr[1])}`).join('&');
-    authorizeUrl = `${authorizeEndpoint}?${paramsStr}`;
-    const loginParams = {
-      
-    };
+    console.log(configObj);
+    authorizationEndpoint = configObj.authorization_endpoint;
+    cookie = await getCookie();
   });
 
   test("the authorize endpoint is within the system under test", async () => {
-    expect(authorizeUrl.startsWith(SERVER_ROOT)).toEqual(true);
+    expect(authorizationEndpoint.startsWith(SERVER_ROOT)).toEqual(true);
   });
 
-  test.skip("the authorize URL without cookie presents a login form", async () => {
-    const fetchResult = await fetch(authorizeUrl);
+  test.skip("the authorize URL with cookie works", async () => {
+    const fetchResult = await fetch(authorizationEndpoint, {
+      headers: {
+        cookie
+      }
+    });
     expect(fetchResult.status).toEqual(200);
     const body = await fetchResult.text();
     expect(body.indexOf("form")).not.toEqual(-1);
-  });
+  }); 
 
   test("the authorize URL without cookie presents a login form", async () => {
-    const fetchResult = await fetch(authorizeUrl);
+    const fetchResult = await fetch(authorizationEndpoint, {
+      redirect: "manual"
+    });
     expect(fetchResult.status).toEqual(200);
     const body = await fetchResult.text();
     expect(body.indexOf("form")).not.toEqual(-1);
