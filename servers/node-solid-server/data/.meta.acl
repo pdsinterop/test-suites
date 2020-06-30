@@ -8,7 +8,7 @@
     a acl:Authorization;
 
     acl:agent
-        <https://localhost/profile/card#me>;
+        </profile/card#me>;
 
     acl:accessTo </.meta>;
 
