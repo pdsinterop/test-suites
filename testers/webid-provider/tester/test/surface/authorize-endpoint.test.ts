@@ -56,10 +56,12 @@ describe("The server's authorize endpoint", () => {
   }); 
 
   test("the authorize URL without cookie presents a login form", async () => {
-    const fetchResult = await fetch(authorizationEndpoint, {
-      redirect: "manual"
+    const query = "?response_type=id_token%20code&redirect_uri=http%3A%2F%2Flocalhost%3A3001%2Fredirect&scope=openid%20profile%20offline_access&client_id=coolApp&code_challenge_method=S256&code_challenge=M3CBok-0kQFc0GUz2YD90cFee0XzTTru3Eaj0Ubm-oc&state=84ae2b48-eb1b-4000-8782-ac1cd748aeb0";
+    const fetchResult = await fetch(authorizationEndpoint + query, {
+      redirect: "follow"
     });
     expect(fetchResult.status).toEqual(200);
+    // expect(fetchResult.headers.get('location').startsWith("https://")).toEqual(true);
     const body = await fetchResult.text();
     expect(body.indexOf("form")).not.toEqual(-1);
   });
