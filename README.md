@@ -5,6 +5,9 @@
 The goal of these test suites is to test which open source
 Personal Data Store implementations comply with which protocol specs.
 
+## Info on what each test suite tests
+So far, there is only one test suite here, namely [webid-provider](./docs/webid-provider.md).
+
 ## Running testers against servers in a Docker testnet
 
 To summarize the test results, we have opted to build them in Docker
