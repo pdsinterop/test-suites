@@ -6,6 +6,7 @@
     "@types/ws": "^6.0.1",
     "debug": "^4.1.1",
     "jest": "^26.1.0",
+    "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.5.0",
     "rdf-namespaces": "^1.8.0",
     "solid-auth-client": "^2.4.1",
