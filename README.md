@@ -40,10 +40,17 @@ root@f0c7e54fb1f3:/# exit
 [...]
 ```
 
-## Running one of the servers
-To run a server on your localhost system:
+## Running one of the servers and one of the testers interactively:
+In one terminal:
 ```sh
 ./runServer.sh node-solid-server
+# DEBUG=* ./bin/solid-test start
+```
+
+In another terminal:
+```sh
+./runTester.sh webid-provider node-solid-server
+# ./node_modules/.bin/jest test/surface/token.test.ts
 ```
 
 ## Running one of the testers
