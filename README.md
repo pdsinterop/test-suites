@@ -25,12 +25,14 @@ mkdir  -p reports
 
 bash runTests.sh node-solid-server
 bash runTests.sh solid-app-kit
+bash runTests.sh php-solid-server
 
 grep Tests reports/*
 ```
 The final output should look something like:
 ```sh
 reports/node-solid-server-webid-provider.txt:Tests:       6 skipped, 43 passed, 49 total
+reports/php-solid-server-webid-provider.txt:Tests:       43 failed, 6 skipped, 49 total
 reports/solid-app-kit-webid-provider.txt:Tests:       28 failed, 6 skipped, 15 passed, 49 total
 ```
 
