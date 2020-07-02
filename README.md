@@ -31,6 +31,8 @@ bash runTests.sh nextcloud-server
 grep Tests reports/*
 ```
 
+## Expected output
+
 Note that nextcloud-server and php-solid-server do not have webid-provider functionality enabled yet (we are
 still working on that). Therefore, the final output should look something like:
 ```sh
