@@ -26,11 +26,15 @@ mkdir  -p reports
 bash runTests.sh node-solid-server
 bash runTests.sh solid-app-kit
 bash runTests.sh php-solid-server
+bash runTests.sh nextcloud-server
 
 grep Tests reports/*
 ```
-The final output should look something like:
+
+Note that nextcloud-server and php-solid-server do not have webid-provider functionality enabled yet (we are
+still working on that). Therefore, the final output should look something like:
 ```sh
+reports/nextcloud-server-webid-provider.txt:Tests:       43 failed, 6 skipped, 49 total
 reports/node-solid-server-webid-provider.txt:Tests:       6 skipped, 43 passed, 49 total
 reports/php-solid-server-webid-provider.txt:Tests:       43 failed, 6 skipped, 49 total
 reports/solid-app-kit-webid-provider.txt:Tests:       28 failed, 6 skipped, 15 passed, 49 total
