@@ -6,5 +6,10 @@ RUN openssl req -new -x509 -days 365 -nodes \
   -out /tls/server.cert \
   -keyout /tls/server.key \
   -subj "/C=RO/ST=Bucharest/L=Bucharest/O=IT/CN=www.example.ro"
-
+RUN apt-get update && apt-get install -yq \
+  git \
+  vim
+RUN git clone https://github.com/pdsinterop/solid-nextcloud /solid-nextcloud
+RUN mv /solid-nextcloud/pdsinterop /usr/src/nextcloud/apps/pdsinterop
+RUN cd /usr/src/nextcloud/apps/pdsinterop && make
 EXPOSE 443
