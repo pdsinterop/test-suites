@@ -11,5 +11,8 @@ RUN apt-get update && apt-get install -yq \
   vim
 RUN git clone https://github.com/pdsinterop/solid-nextcloud /solid-nextcloud
 RUN mv /solid-nextcloud/pdsinterop /usr/src/nextcloud/apps/pdsinterop
-RUN cd /usr/src/nextcloud/apps/pdsinterop && make
+WORKDIR /usr/src/nextcloud/
+RUN php console.php maintenance:install --admin-user alice --admin-pass nextcloud123
+RUN php console.php status
+RUN php console.php app:enable pdsinterop
 EXPOSE 443
