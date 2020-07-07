@@ -8,6 +8,7 @@ docker run -d --name=server --network=testnet $2
 if [[ "$1" == nextcloud-server ]]
   then
     echo Running init script for Nextcloud server ...
+    sleep 5
     docker exec -u www-data -it server sh /init.sh
 fi
 
