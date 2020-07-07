@@ -6,8 +6,10 @@ echo Starting server...
 docker run -d --name=server --network=testnet $1
 if [[ "$1" == nextcloud-server ]]
   then
+    echo Waiting for Nextcloud server to start ...
+    sleep 10
+    docker logs server
     echo Running init script for Nextcloud server ...
-    sleep 5
     docker exec -u www-data -it server sh /init.sh
 fi
 
