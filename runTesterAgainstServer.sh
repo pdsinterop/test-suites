@@ -5,6 +5,11 @@ docker build -t $2 servers/$2
 
 echo Starting server ...
 docker run -d --name=server --network=testnet $2
+if [[ "$1" == nextcloud-server ]]
+  then
+    echo Running init script for Nextcloud server ...
+    docker exec -u www-data -it server sh /init.sh
+fi
 
 echo Running $1 tester interactively ...
 docker run --name tester --env-file servers/$2/env.list --network=testnet -it $1 /bin/bash
