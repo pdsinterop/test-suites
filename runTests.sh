@@ -16,6 +16,9 @@ fi
 echo Running webid-provider tester...
 docker run --network=testnet --env-file servers/$1/env.list webid-provider 2> reports/$1-webid-provider.txt
 
+echo Running solid-storage tester...
+docker run --network=testnet --env-file servers/$1/env.list solid-storage 2> reports/$1-solid-storage.txt
+
 echo Stopping server...
 docker stop server
 
