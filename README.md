@@ -20,7 +20,7 @@ Run the following commands in your command line terminal:
 
 ```sh
 docker build -t webid-provider testers/webid-provider
-docker build -t solid-storage testers/solid-storage
+docker build -t solid-crud testers/solid-crud
 docker network create testnet
 mkdir  -p reports
 
@@ -37,13 +37,13 @@ grep Tests reports/*
 Note that nextcloud-server and php-solid-server do not have webid-provider functionality enabled yet (we are
 still working on that). Therefore, the final output should look something like:
 ```sh
-reports/nextcloud-server-solid-storage.txt:Tests:       1 failed, 1 total
+reports/nextcloud-server-solid-crud.txt:Tests:       1 failed, 1 total
 reports/nextcloud-server-webid-provider.txt:Tests:       43 failed, 6 skipped, 49 total
-reports/node-solid-server-solid-storage.txt:Tests:       1 passed, 1 total
+reports/node-solid-server-solid-crud.txt:Tests:       1 passed, 1 total
 reports/node-solid-server-webid-provider.txt:Tests:       6 skipped, 43 passed, 49 total
-reports/php-solid-server-solid-storage.txt:Tests:       1 failed, 1 total
+reports/php-solid-server-solid-crud.txt:Tests:       1 failed, 1 total
 reports/php-solid-server-webid-provider.txt:Tests:       43 failed, 6 skipped, 49 total
-reports/solid-app-kit-solid-storage.txt:Tests:       1 failed, 1 total
+reports/solid-app-kit-solid-crud.txt:Tests:       1 failed, 1 total
 reports/solid-app-kit-webid-provider.txt:Tests:       38 failed, 6 skipped, 5 passed, 49 total
 ```
 
