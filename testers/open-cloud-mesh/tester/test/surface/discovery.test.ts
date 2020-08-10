@@ -19,5 +19,5 @@ describe("Discovery at /ocm-provider/", () => {
         }
       ],
     });
-
+  });
 });

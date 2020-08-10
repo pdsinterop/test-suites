@@ -9,7 +9,7 @@
   "scripts": {
     "jest": "jest",
     "lint": "eslint test/ --ext .ts",
-    "start": "NODE_TLS_REJECT_UNAUTHORIZED=0 SERVER_ROOT=https://localhost npm run jest"
+    "local": "NODE_TLS_REJECT_UNAUTHORIZED=0 SERVER_ROOT=https://localhost npm run jest"
   },
   "repository": {
     "type": "git",
