@@ -19,6 +19,9 @@ docker run --network=testnet --env-file servers/$1/env.list webid-provider 2> re
 echo Running solid-crud tester...
 docker run --network=testnet --env-file servers/$1/env.list solid-crud 2> reports/$1-solid-crud.txt
 
+echo Running open-cloud-mesh tester...
+docker run --network=testnet --env-file servers/$1/env.list open-cloud-mesh 2> reports/$1-open-cloud-mesh.txt
+
 echo Stopping server...
 docker stop server
 
