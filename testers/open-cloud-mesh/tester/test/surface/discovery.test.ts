@@ -8,13 +8,13 @@ describe("Discovery at /ocm-provider/", () => {
     expect(jsonParsed).toEqual({
       "enabled":true,
       "apiVersion":"1.0-proposal1",
-      "endPoint":"http://localhost/server/index.php/ocm",
+      "endPoint":"https://localhost/ocm",
       "resourceTypes": [
         {
           "name": "file",
           "shareTypes": ["user", "group"],
           "protocols": {
-            "webdav":"http://localhost/server/public.php/webdav/"
+            "webdav":"/public.php/webdav/"
           }
         }
       ],
