@@ -5,7 +5,7 @@ docker build -t $2 servers/$2
 
 echo Starting server ...
 docker run -d --name=server --network=testnet $2
-if [[ "$1" == nextcloud-server ]]
+if [[ "$2" == nextcloud-server ]]
   then
     echo Waiting for Nextcloud server to start ...
     sleep 10
