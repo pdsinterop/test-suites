@@ -4,7 +4,7 @@ docker build -t $1 testers/$1
 docker build -t $2 servers/$2
 
 echo Starting server ...
-docker run -d --name=server --network=testnet $2
+docker run -d --name=server --rm --network=testnet $2
 if [[ "$2" == nextcloud-server ]]
   then
     echo Waiting for Nextcloud server to start ...
@@ -15,11 +15,7 @@ if [[ "$2" == nextcloud-server ]]
 fi
 
 echo Running $1 tester interactively ...
-docker run --name tester --env-file servers/$2/env.list --network=testnet -it $1 /bin/bash
+docker run --name tester --rm --env-file servers/$2/env.list --network=testnet -it $1 /bin/bash
 
 echo Tester exited, stopping server ...
 docker stop server
-
-echo Removing tester and server ...
-docker rm tester
-docker rm server

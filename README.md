@@ -21,6 +21,7 @@ Run the following commands in your command line terminal:
 ```sh
 docker build -t webid-provider testers/webid-provider
 docker build -t solid-crud testers/solid-crud
+docker build -t open-cloud-mesh testers/open-cloud-mesh
 docker network create testnet
 mkdir  -p reports
 
