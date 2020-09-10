@@ -45,6 +45,7 @@ runTests() {
       docker logs "${sContainerName}"
       echo ' -----> Running init script for Nextcloud server ...'
       docker exec -it --user 'www-data' "${sContainerName}" sh /init.sh
+      docker exec -it --user 'root' "${sContainerName}" service apache2 reload
   fi
 
   for sTest in "${aTests[@]}"; do

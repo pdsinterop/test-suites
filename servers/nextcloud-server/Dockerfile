@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -yq \
   git \
   vim
 RUN git clone https://github.com/pdsinterop/solid-nextcloud /solid-nextcloud
-RUN mv /solid-nextcloud/pdsinterop /usr/src/nextcloud/apps/pdsinterop
+RUN cd /solid-nextcloud && git checkout openid-configuration
+RUN mv /solid-nextcloud/solid /usr/src/nextcloud/apps/solid
 ADD init.sh /
 EXPOSE 443

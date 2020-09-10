@@ -81,6 +81,11 @@ npm install
 NODE_TLS_REJECT_UNAUTHORIZED=0 ALICE_WEBID=https://localhost/profile/card#me SERVER_ROOT=https://localhost ./node_modules/.bin/jest test/surface/*
 ```
 
+## Running a server on https://localhost
+```sh
+docker run -d -p 443:443 nextcloud-server
+```
+
 ## YMMV
 
 Caveat 1: the qualities of a software product can of course not be counted with a simple number of passing tests,
