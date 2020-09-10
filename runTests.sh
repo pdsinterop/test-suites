@@ -11,6 +11,7 @@ if [[ "$1" == nextcloud-server ]]
     docker logs server
     echo Running init script for Nextcloud server ...
     docker exec -u www-data -it server sh /init.sh
+    docker exec -u root -it server service apache2 reload
 fi
 
 echo Running webid-provider tester...
