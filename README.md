@@ -39,7 +39,7 @@ Note that nextcloud-server and php-solid-server do not have webid-provider funct
 still working on that). Therefore, the final output should look something like:
 ```sh
 reports/nextcloud-server-solid-crud.txt:Tests:       1 failed, 1 total
-reports/nextcloud-server-webid-provider.txt:Tests:       43 failed, 6 skipped, 49 total
+reports/nextcloud-server-webid-provider.txt:Tests:       41 failed, 6 skipped, 2 passed, 49 total
 reports/node-solid-server-solid-crud.txt:Tests:       1 passed, 1 total
 reports/node-solid-server-webid-provider.txt:Tests:       6 skipped, 43 passed, 49 total
 reports/php-solid-server-solid-crud.txt:Tests:       1 failed, 1 total
