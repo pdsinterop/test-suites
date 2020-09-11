@@ -38,14 +38,18 @@ grep Tests reports/*
 Note that nextcloud-server and php-solid-server do not have webid-provider functionality enabled yet (we are
 still working on that). Therefore, the final output should look something like:
 ```sh
-reports/nextcloud-server-solid-crud.txt:Tests:       1 failed, 1 total
-reports/nextcloud-server-webid-provider.txt:Tests:       41 failed, 6 skipped, 2 passed, 49 total
-reports/node-solid-server-solid-crud.txt:Tests:       1 passed, 1 total
-reports/node-solid-server-webid-provider.txt:Tests:       6 skipped, 43 passed, 49 total
-reports/php-solid-server-solid-crud.txt:Tests:       1 failed, 1 total
+reports/nextcloud-server-open-cloud-mesh.txt:Tests:       1 failed, 1 total
+reports/nextcloud-server-solid-crud.txt:Tests:       0 total
+reports/nextcloud-server-webid-provider.txt:Tests:       43 failed, 6 skipped, 49 total
+reports/node-solid-server-open-cloud-mesh.txt:Tests:       1 failed, 1 total
+reports/node-solid-server-solid-crud.txt:Tests:       0 total
+reports/node-solid-server-webid-provider.txt:Tests:       41 failed, 6 skipped, 2 passed, 49 total
+reports/php-solid-server-open-cloud-mesh.txt:Tests:       1 failed, 1 total
+reports/php-solid-server-solid-crud.txt:Tests:       0 total
 reports/php-solid-server-webid-provider.txt:Tests:       43 failed, 6 skipped, 49 total
-reports/solid-app-kit-solid-crud.txt:Tests:       1 failed, 1 total
-reports/solid-app-kit-webid-provider.txt:Tests:       38 failed, 6 skipped, 5 passed, 49 total
+reports/solid-app-kit-open-cloud-mesh.txt:Tests:       1 failed, 1 total
+reports/solid-app-kit-solid-crud.txt:Tests:       0 total
+reports/solid-app-kit-webid-provider.txt:Tests:       43 failed, 6 skipped, 49 total
 ```
 
 To run one tester against one server interactively, you can do for instance:
