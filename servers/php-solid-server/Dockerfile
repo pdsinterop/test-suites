@@ -15,9 +15,9 @@ WORKDIR /install
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
-RUN git clone https://github.com/potherca-contrib/solid-php /app
+RUN git clone https://github.com/pdsinterop/php-solid-server /app
 WORKDIR /app
-RUN git checkout feature/first-draft
+RUN git checkout dev
 RUN php /install/composer.phar install --no-dev --prefer-dist
 COPY site.conf /etc/apache2/sites-enabled/site.conf
 EXPOSE 443
