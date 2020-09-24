@@ -142,7 +142,18 @@ And here it gets tricky because you would want to run something like:
 docker run -e COOKIE="$COOKIE" -e SERVER_ROOT="https://host.docker.internal" -e ALICE_WEBID="https://host.docker.internal/apps/solid/@alice/turtle#me" webid-provider
 ```
 But then you'll run into https://github.com/pdsinterop/test-suites/issues/26.
-So at this point you could also just follow the instructions from https://github.com/solid/webid-provider-tests#against-production and just run that test suite against https://localhost/ on your host machine, instead of doing it inside the testnet.
+So at this point you could also just follow the instructions from https://github.com/solid/webid-provider-tests#against-production and just run that test suite against https://localhost/ on your host machine, instead of doing it inside the testnet:
+```sh
+loopy:webid-provider-tests michiel$ NODE_TLS_REJECT_UNAUTHORIZED=0 SERVER_ROOT=https://localhost ./node_modules/.bin/jest test/surface/fetch-openid-config.test.ts 
+(node:8545) Warning: Setting the NODE_TLS_REJECT_UNAUTHORIZED environment variable to '0' makes TLS connections and HTTPS requests insecure by disabling certificate verification.
+ PASS  test/surface/fetch-openid-config.test.ts
+
+Test Suites: 1 passed, 1 total
+Tests:       4 skipped, 13 passed, 17 total
+Snapshots:   0 total
+Time:        1.266 s, estimated 4 s
+Ran all test suites matching /test\/surface\/fetch-openid-config.test.ts/i.
+```
 
 
 ## YMMV
