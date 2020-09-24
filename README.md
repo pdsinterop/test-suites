@@ -111,7 +111,7 @@ docker exec -u root -it server service apache2 reload
 ```
 * Now visit https://localhost (make sure to accept the self-signed cert, instructions for that differ per browser)
 * Open the developer tools, on the network tab tick 'Preserve log' and clear the network log
-* Log in as alice / 123
+* Log in as alice / alice123
 * find the second request (to `files/`), Ctrl-click `login` -> Copy -> Copy Request Headers
 * The result should look something like:
 ```
@@ -137,11 +137,13 @@ echo Cookie set:
 echo $COOKIE
 ```
 Make sure it contains `nc_username` and `nc_token`.
-Now you should be able to run something like:
+And here it gets tricky because you would want to run something like:
 ```sh
 docker run -e COOKIE="$COOKIE" -e SERVER_ROOT="https://host.docker.internal" -e ALICE_WEBID="https://host.docker.internal/apps/solid/@alice/turtle#me" webid-provider
 ```
-Or at this point you could also just follow the instructions from https://github.com/solid/webid-provider-tests#against-production.
+But then you'll run into https://github.com/pdsinterop/test-suites/issues/26.
+So at this point you could also just follow the instructions from https://github.com/solid/webid-provider-tests#against-production and just run that test suite against https://localhost/ on your host machine, instead of doing it inside the testnet.
+
 
 ## YMMV
 
