@@ -43,7 +43,7 @@ reports/nextcloud-server-solid-crud.txt:Tests:       0 total
 reports/nextcloud-server-webid-provider.txt:Tests:       16 failed, 9 skipped, 24 passed, 49 total
 reports/node-solid-server-open-cloud-mesh.txt:Tests:       1 failed, 1 total
 reports/node-solid-server-solid-crud.txt:Tests:       0 total
-reports/node-solid-server-webid-provider.txt:Tests:       26 failed, 9 skipped, 14 passed, 49 total
+reports/node-solid-server-webid-provider.txt:Tests:       16 failed, 9 skipped, 24 passed, 49 total
 reports/php-solid-server-open-cloud-mesh.txt:Tests:       1 failed, 1 total
 reports/php-solid-server-solid-crud.txt:Tests:       0 total
 reports/php-solid-server-webid-provider.txt:Tests:       43 failed, 6 skipped, 49 total
