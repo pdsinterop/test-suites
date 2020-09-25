@@ -52,6 +52,7 @@ runTests() {
     echo " -----> Running ${sTest} tester..."
     {
       docker run \
+        --cap-add=SYS_ADMIN \
         --env-file "servers/${sServerName}/env.list" \
         --network=testnet \
         "${sTest}" \
