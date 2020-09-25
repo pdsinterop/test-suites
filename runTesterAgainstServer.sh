@@ -16,7 +16,7 @@ if [[ "$2" == nextcloud-server ]]
 fi
 
 echo Running $1 tester interactively ...
-docker run --name tester --rm --env-file servers/$2/env.list --network=testnet -it $1 /bin/bash
+docker run --cap-add=SYS_ADMIN --name tester --rm --env-file servers/$2/env.list --network=testnet -it $1 /bin/bash
 
 echo Tester exited, stopping server ...
 docker stop server
