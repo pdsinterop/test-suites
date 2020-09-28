@@ -38,9 +38,9 @@ grep Tests reports/*
 Note that nextcloud-server and php-solid-server do not have webid-provider functionality enabled yet (we are
 still working on that). Therefore, the final output should look something like:
 ```sh
-reports/nextcloud-server-webid-provider.txt:Tests:       12 failed, 14 skipped, 23 passed, 49 total
+reports/nextcloud-server-webid-provider.txt:Tests:       14 skipped, 35 passed, 49 total
 reports/node-solid-server-webid-provider.txt:Tests:       9 failed, 14 skipped, 26 passed, 49 total
-reports/php-solid-server-webid-provider.txt:Tests:       12 failed, 14 skipped, 23 passed, 49 total
+reports/php-solid-server-webid-provider.txt:Tests:       11 failed, 14 skipped, 24 passed, 49 total
 reports/solid-app-kit-webid-provider.txt:Tests:       35 failed, 14 skipped, 49 total
 ```
 
