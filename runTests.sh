@@ -1,6 +1,8 @@
 echo Testing $1...
-echo Building image...
-docker build -t $1 servers/$1
+echo Building images...
+docker build -t $1-base servers/$1/base
+docker build -t $1 servers/$1/server
+docker build -t $1-cookie servers/$1/cookie
 
 echo Starting server...
 docker run -d --name=server --rm --network=testnet $1
@@ -13,6 +15,9 @@ if [[ "$1" == nextcloud-server ]]
     docker exec -u www-data -it server sh /init.sh
     docker exec -u root -it server service apache2 reload
 fi
+
+echo Getting cookie...
+export COOKIE="`docker run  --cap-add=SYS_ADMIN --network=testnet --env-file servers/$1/env.list $1-cookie`"
 
 echo Running webid-provider tester...
 docker run  --cap-add=SYS_ADMIN --network=testnet --env-file servers/$1/env.list webid-provider 2> reports/$1-webid-provider.txt
