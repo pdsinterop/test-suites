@@ -1,8 +1,4 @@
-FROM node
-RUN apt-get update && apt-get install -yq \
-  redis-server \
-  vim \
-  && apt-get clean
+FROM solid-app-kit-base:latest
 RUN git clone https://github.com/michielbdejong/solid-app-kit
 WORKDIR solid-app-kit
 RUN npm install
