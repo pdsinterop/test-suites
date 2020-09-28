@@ -1,4 +1,4 @@
-FROM nextcloud-base:latest
+FROM nextcloud-server-base:latest
 RUN git clone https://github.com/pdsinterop/solid-nextcloud /solid-nextcloud
 RUN cd /solid-nextcloud && git checkout dev
 RUN mv /solid-nextcloud/solid /usr/src/nextcloud/apps/solid
