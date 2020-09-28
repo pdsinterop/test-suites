@@ -1,4 +1,4 @@
-FROM node
+FROM node-solid-server-base:latest
 RUN git clone https://github.com/solid/node-solid-server
 WORKDIR node-solid-server
 RUN git checkout master

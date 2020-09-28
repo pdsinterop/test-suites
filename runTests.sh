@@ -17,10 +17,10 @@ if [[ "$1" == nextcloud-server ]]
 fi
 
 echo Getting cookie...
-export COOKIE="`docker run  --cap-add=SYS_ADMIN --network=testnet --env-file servers/$1/env.list $1-cookie`"
+export COOKIE="`docker run --cap-add=SYS_ADMIN --network=testnet --env-file servers/$1/env.list $1-cookie`"
 
 echo Running webid-provider tester...
-docker run  --cap-add=SYS_ADMIN --network=testnet --env COOKIE="$COOKIE" --env-file servers/$1/env.list webid-provider 2> reports/$1-webid-provider.txt
+docker run --network=testnet --env COOKIE="$COOKIE" --env-file servers/$1/env.list webid-provider 2> reports/$1-webid-provider.txt
 
 # echo Running solid-crud tester...
 # docker run --network=testnet --env-file servers/$1/env.list solid-crud 2> reports/$1-solid-crud.txt
