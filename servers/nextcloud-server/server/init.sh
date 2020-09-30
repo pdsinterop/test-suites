@@ -2,7 +2,8 @@
 php console.php maintenance:install --admin-user alice --admin-pass alice123
 php console.php status
 php console.php app:enable solid
-sed -i "109 i\  RewriteCond %{REQUEST_URI} !^/\.well-known/openid-configuration" .htaccess
+sed -i "109 i\  RewriteCond %{REQUEST_URI} \!^/\\\.well-known/openid-configuration" .htaccess
+sed -i "72 i\  RewriteCond %{REQUEST_URI} \!^/\\\.well-known/openid-configuration" .htaccess
 echo "<IfModule mod_headers.c>\n    Header set Access-Control-Allow-Origin \"*\"\n</IfModule>" >> .htaccess
 mkdir -p .well-known
 SERVER_ROOT_ESCAPED=$(printf '%s\n' "$SERVER_ROOT" | sed -e 's/[\/&]/\\&/g')
