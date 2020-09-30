@@ -19,7 +19,7 @@ if [[ "$1" == nextcloud-server ]]
     sleep 10
     docker logs server
     echo Running init script for Nextcloud server ...
-    docker exec -u www-data -it server sh /init.sh
+    docker exec -u www-data -it -e SERVER_ROOT=https://server server sh /init.sh
     docker exec -u root -it server service apache2 reload
 fi
 
