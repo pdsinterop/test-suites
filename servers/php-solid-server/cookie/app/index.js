@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 
 const SERVER_ROOT = process.env.SERVER_ROOT || "https://server";
-const LOGIN_URL = `${SERVER_ROOT}/login/password`;
+const LOGIN_URL = process.env.LOGIN_URL || `${SERVER_ROOT}/login/`;
 const USERNAME = process.env.USERNAME || "alice";
 const PASSWORD = process.env.PASSWORD || "alice123";
 
