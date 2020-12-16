@@ -9,17 +9,6 @@ RUN openssl req -new -x509 -days 365 -nodes \
 RUN apt-get update && apt-get install -yq \
   git \
   vim
-WORKDIR /install
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php
-RUN php -r "unlink('composer-setup.php');"
-ADD ./solid /usr/src/nextcloud/apps/solid
-# Run composer:
-WORKDIR /usr/src/nextcloud/apps/solid
-RUN ls
-RUN php /install/composer.phar require lcobucci/jwt:3.3.3
-RUN php /install/composer.phar update
-RUN php /install/composer.phar install --no-dev --prefer-dist
 WORKDIR /var/www/html
 ADD init.sh /
 EXPOSE 443

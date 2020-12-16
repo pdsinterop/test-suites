@@ -3,10 +3,9 @@ set -e
 
 function setup {
   docker network create testnet
-  docker build -t solid-nextcloud servers/nextcloud-server/
-  docker build -t pubsub-server  https://github.com/pdsinterop/php-solid-pubsub-server.git#master
+  docker build -t nextcloud-server servers/nextcloud-server/
   docker pull michielbdejong/nextcloud-cookie
-  docker pull solidtestsuite/webid-provider-tests:v1.2.0
+  docker build -t open-cloud-mesh testers/open-cloud-mesh
 }
 function teardown {
   docker stop `docker ps --filter network=testnet -q`
@@ -15,9 +14,8 @@ function teardown {
 }
 
 function startSolidNextcloud {
-  docker run -d --name pubsub --network=testnet pubsub-server
-  docker run -d --name $1 --network=testnet --env-file ./env-vars-$1.list solid-nextcloud
-  until docker run --rm --network=testnet solidtestsuite/webid-provider-tests curl -kI https://$1 2> /dev/null > /dev/null
+  docker run -d --name $1 --network=testnet --env-file ./env-vars-$1.list nextcloud-server
+  until docker run --rm --network=testnet open-cloud-mesh curl -kI https://$1 2> /dev/null > /dev/null
   do
     echo Waiting for $1 to start, this can take up to a minute ...
     docker ps -a
@@ -39,15 +37,12 @@ function runTests {
     --env COOKIE="$COOKIE_server" \
     --env COOKIE_ALICE="$COOKIE_server" \
     --env COOKIE_BOB="$COOKIE_thirdparty" \
-    --env-file ./env-vars-testers.list solidtestsuite/$1-tests
+    --env-file ./env-vars-testers.list $1
 }
 
 # ...
 teardown || true
 setup
 startSolidNextcloud server
-runTests webid-provider
-runTests solid-crud
-# startSolidNextcloud thirdparty
-# runTests web-access-control
+runTests open-cloud-mesh
 teardown
