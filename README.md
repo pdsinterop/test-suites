@@ -38,3 +38,11 @@ Time:        6.315 s
 Ran all test suites.
 [...]
 ```
+
+# To run a few servers in the testnet
+
+```sh
+./startServer.sh owncloud-server 8080
+./startServer.sh nextcloud-server 443
+./startServer.sh seafile-server 8080
+```

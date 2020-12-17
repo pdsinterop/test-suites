@@ -1,0 +1,3 @@
+FROM owncloud/server
+ENV OWNCLOUD_DOMAIN=localhost:8080
+EXPOSE 8080
