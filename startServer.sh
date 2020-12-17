@@ -4,5 +4,5 @@ echo : docker build -t $1 servers/$1
 docker build -t $1 servers/$1
 
 echo Starting server ...
-docker run -d --network=testnet -p $2:$2 --env-file servers/$1/env.list $1
+docker run -d --network=testnet --name=server.com --env-file servers/$1/env.list $1
 echo Started
