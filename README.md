@@ -40,13 +40,21 @@ Ran all test suites.
 ```
 
 # To run a few servers in the testnet
-
+## ownCloud
 ```sh
+./stopAndRemoveAll.sh
 ./startServer.sh owncloud-server
+sleep 10
 ./runOcmTester.sh owncloud-server
 ./stopAndRemoveAll.sh
+```
+## Nextcloud
+```sh
 ./startServer.sh nextcloud-server
+sleep 10
 docker exec -u www-data -it -e SERVER_ROOT=https://server server sh /init.sh
 docker exec -u root -it server service apache2 reload
 ./runOcmTester.sh nextcloud-server
 ```
+## Seafile
+(coming soon)

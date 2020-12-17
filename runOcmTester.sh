@@ -11,4 +11,4 @@ docker build -t open-cloud-mesh testers/open-cloud-mesh
 # done
 
 echo Starting tester ...
-docker run --rm --network=testnet --env-file servers/$1/env.list open-cloud-mesh
+docker run --rm --network=testnet --env-file servers/$1/env.list -v `pwd`/testers/open-cloud-mesh/tester/:/app open-cloud-mesh
