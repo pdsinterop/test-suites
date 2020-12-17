@@ -40,16 +40,21 @@ Ran all test suites.
 ```
 
 # To run a few servers in the testnet
+While this is under development I'm running the tester from a mounted folder, so
+make sure you have Node.js installed and run `npm install` in testers/open-cloud-mesh/tester.
+Once it's stable I'll move that step back into testers/open-cloud-mesh/Dockerfile, where I
+temporarily commented it out.
+
 ## ownCloud
 ```sh
 ./stopAndRemoveAll.sh
 ./startServer.sh owncloud-server
 sleep 10
 ./runOcmTester.sh owncloud-server
-./stopAndRemoveAll.sh
 ```
 ## Nextcloud
 ```sh
+./stopAndRemoveAll.sh
 ./startServer.sh nextcloud-server
 sleep 10
 docker exec -u www-data -it -e SERVER_ROOT=https://server server sh /init.sh
