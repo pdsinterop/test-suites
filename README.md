@@ -102,7 +102,7 @@ git checkout ocm
 ## Start ownCloud
 ```sh
 docker build -t owncloud-server servers/owncloud-server/
-docker run -d -e SERVER_ROOT=https://`hostname`.pdsinterop.net -p 443:443 --name=server owncloud-server
+docker run -d -e SERVER_ROOT=https://`hostname`.pdsinterop.net -p 443:443 -p 80:80 --name=server owncloud-server
 curl -kI https://`hostname`.pdsinterop.net
 // ...?
 ```
@@ -110,9 +110,11 @@ curl -kI https://`hostname`.pdsinterop.net
 ## Start Nextcloud
 ```sh
 docker build -t nextcloud-server servers/nextcloud-server/
-docker run -d -e SERVER_ROOT=https://`hostname`.pdsinterop.net -p 443:443 --name=server nextcloud-server
+docker run -d -e SERVER_ROOT=https://`hostname`.pdsinterop.net -p 443:443 -p 80:80 --name=server nextcloud-server
 curl -kI https://`hostname`.pdsinterop.net
 docker exec -u www-data -it -e SERVER_ROOT=https://`hostname`.pdsinterop.net server php console.php maintenance:install --admin-user alice --admin-pass alice123
 docker exec -u www-data -it -e SERVER_ROOT=https://`hostname`.pdsinterop.net server sed -i "25 i\    1 => '`hostname`.pdsinterop.net'," config/config.php
 docker exec -u root -it server service apache2 reload
+docker exec -u root -it server apt install -y certbot python3-certbot-apache
+docker exec -u root -it server certbot --apache
 ```

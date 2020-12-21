@@ -7,7 +7,9 @@ RUN openssl req -new -x509 -days 365 -nodes \
   -keyout /tls/server.key \
   -subj "/C=RO/ST=Bucharest/L=Bucharest/O=IT/CN=www.example.ro"
 RUN apt-get update && apt-get install -yq \
+  certbot \
   git \
+  python3-certbot-apache \
   vim
 WORKDIR /var/www/html
 ADD init.sh /
