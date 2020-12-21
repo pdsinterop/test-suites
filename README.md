@@ -63,3 +63,12 @@ docker exec -u root -it server service apache2 reload
 ```
 ## Seafile
 (coming soon)
+
+# Manual testing
+See https://github.com/michielbdejong/ocm-test-suite/issues/3
+Add `127.0.0.1 host.docker.internal` to your /etc/hosts. Then:
+
+```sh
+./stopAndRemoveAll.sh
+./manualTesting.sh
+```
