@@ -84,15 +84,17 @@ the servers back up if I shut them down:
 * ssh root@{o,n}c{1,2}.pdsinterop.net
 * In ech, run (see https://docs.docker.com/engine/install/ubuntu/):
 ```sh
-apt-get update
-apt-get install -y apt-transport-https     ca-certificates     curl     gnupg-agent     software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-apt-get update
-apt-get install -y docker-ce docker-ce-cli containerd.io
+snap install docker
+apt install -y docker-compose
+# apt-get update
+# apt-get install -y apt-transport-https     ca-certificates     curl     gnupg-agent     software-properties-common
+# curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# add-apt-repository \
+#    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+#    $(lsb_release -cs) \
+#    stable"
+# apt-get update
+# apt-get install -y docker-ce docker-ce-cli containerd.io
 docker run hello-world
 git clone https://github.com/michielbdejong/ocm-test-suite
 cd ocm-test-suite
@@ -101,10 +103,9 @@ git checkout ocm
 
 ## Start ownCloud
 ```sh
-docker build -t owncloud-server servers/owncloud-server/
-docker run -d -e SERVER_ROOT=https://`hostname`.pdsinterop.net -p 443:443 -p 80:80 --name=server owncloud-server
-curl -kI https://`hostname`.pdsinterop.net
-// ...?
+cd owncloud-compose
+vim .env
+docker-compose up -d
 ```
 
 ## Start Nextcloud
