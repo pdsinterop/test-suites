@@ -6,9 +6,16 @@ async function getBrowser() {
   context.overridePermissions(/* browser origin */ undefined, ['clipboard-read']);
   return browser;
 }
+async function loginO(page, serverRoot, username, password) {
+  const loginUrl = `${serverRoot}/login`;
+  await page.goto(loginUrl);
+  console.log('on', loginUrl);
+  await page.type("#user", username);
+  await page.type("#password", password);
+  await page.click("input.login");
+}
 
 async function goPO_(serverRoot, username, password, shareWithUser, shareWithHost) {
-  const loginUrl = `${serverRoot}/login`;
   const browser = await getBrowser();
   const page = await browser.newPage();
 
@@ -26,11 +33,7 @@ async function goPO_(serverRoot, username, password, shareWithUser, shareWithHos
     await page.goto(newUrl);
   }
 
-  await page.goto(loginUrl);
-  console.log('on', loginUrl);
-  await page.type("#user", username);
-  await page.type("#password", password);
-  await page.click("input.login");
+  await loginO(page, serverRoot, username, password);
   // FIXME: create public share for the first time
   await go('span.icon-public');
   await go('li.subtab-publicshare');
@@ -43,17 +46,9 @@ async function goPO_(serverRoot, username, password, shareWithUser, shareWithHos
   await browser.close();
 }
 
-async function goPN_(serverRoot, username, password, shareWithUser, shareWithHost) {
+async function loginN(page, serverRoot, username, password) {
   const loginUrl = `${serverRoot}/login`;
   const filesUrl = `${serverRoot}/apps/files`;
-  const browser = await puppeteer.launch({ headless: false });
-  const page = await browser.newPage();
-  async function go(selector) {
-    await page.waitForSelector(selector);
-    console.log(`Found ${selector}, clicking`);
-    await page.click(selector);
-  }
-
   await page.goto(loginUrl);
   console.log('on', loginUrl);
   await page.type("#user", username);
@@ -65,6 +60,19 @@ async function goPN_(serverRoot, username, password, shareWithUser, shareWithHos
   // FIXME deal with first-time-use splash screen for Nextcloud Hub
   await page.waitForSelector('image.app-icon');
   console.log('on', filesUrl);
+}
+
+async function goPN_(serverRoot, username, password, shareWithUser, shareWithHost) {
+  const browser = await getBrowser();
+  const page = await browser.newPage();
+  async function go(selector) {
+    await page.waitForSelector(selector);
+    console.log(`Found ${selector}, clicking`);
+    await page.click(selector);
+  }
+
+  await loginN(page, serverRoot, username, password);
+
   await go('a.action-share');
 
   // FIXME: create public share for the first time
@@ -87,9 +95,8 @@ async function goPN_(serverRoot, username, password, shareWithUser, shareWithHos
 }
 
 async function goP_O(serverRoot, username, password) {
-  const loginUrl = `${serverRoot}/login`;
   const sharedWithYouUrl = `${serverRoot}/apps/files/?dir=/&view=sharingin`;
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await getBrowser();
   const page = await browser.newPage();
   async function go(selector, hover = false) {
     await page.waitForSelector(selector);
@@ -102,23 +109,19 @@ async function goP_O(serverRoot, username, password) {
     await page.click(selector);
   }
 
-  await page.goto(loginUrl);
-  console.log('on', loginUrl);
-  await page.type("#user", username);
-  await page.type("#password", password);
-  await page.click("#submit-form");
-  await page.waitForSelector('image.app-icon');
-  console.log('logged in');
-  await go('div.notifications-button');
-  await go('button.action-button.pull-right.primary');
-  await page.goto(sharedWithYouUrl);
+  await loginO(page, serverRoot, username, password);
+
   // FIXME: avoid hard-coded timer here:
   await new Promise((resolve) => setTimeout(resolve, 5000));
-  await go('a.action-menu');
-  await go('li.action-delete-container');
 
   // go to 'shared with you'
+  await page.goto(sharedWithYouUrl);
+  await go('a.action-accept');
+
   // remove the share so the test can be run again
+  // TODO:
+  // click ...
+  // click Unshare
 
   console.log('waiting before closing');
   await new Promise((resolve) => setTimeout(resolve, 20000));
@@ -126,9 +129,8 @@ async function goP_O(serverRoot, username, password) {
 }
 
 async function goP_N(serverRoot, username, password) {
-  const loginUrl = `${serverRoot}/login`;
   const sharedWithYouUrl = `${serverRoot}/apps/files/?dir=/&view=sharingin`;
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await getBrowser();
   const page = await browser.newPage();
   async function go(selector, hover = false) {
     await page.waitForSelector(selector);
@@ -141,23 +143,16 @@ async function goP_N(serverRoot, username, password) {
     await page.click(selector);
   }
 
-  await page.goto(loginUrl);
-  console.log('on', loginUrl);
-  await page.type("#user", username);
-  await page.type("#password", password);
-  await page.click("#submit-form");
-  await page.waitForSelector('image.app-icon');
-  console.log('logged in');
+  await loginN(page, serverRoot, username, password);
   await go('div.notifications-button');
   await go('button.action-button.pull-right.primary');
+  // go to 'shared with you'
   await page.goto(sharedWithYouUrl);
   // FIXME: avoid hard-coded timer here:
   await new Promise((resolve) => setTimeout(resolve, 5000));
+  // remove the share so the test can be run again
   await go('a.action-menu');
   await go('li.action-delete-container');
-  
-  // go to 'shared with you'
-  // remove the share so the test can be run again
 
   console.log('waiting before closing');
   await new Promise((resolve) => setTimeout(resolve, 20000));  
@@ -165,10 +160,11 @@ async function goP_N(serverRoot, username, password) {
 }
 
 async function run () {
-  await goPO_('https://oc1.pdsinterop.net', 'admin', 'admin', 'alice', 'nc2.pdsinterop.net');
-  // await goPN_('https://nc2.pdsinterop.net', 'alice', 'alice123', 'alice', 'oc2.pdsinterop.net');
+  // await goPO_('https://oc1.pdsinterop.net', 'admin', 'admin', 'admin', 'oc2.pdsinterop.net');
+  // await goPN_('https://nc1.pdsinterop.net', 'alice', 'alice123', 'admin', 'oc2.pdsinterop.net');
+  await goPN_('https://nc1.pdsinterop.net', 'alice', 'alice123', 'alice', 'nc2.pdsinterop.net');
   // await goP_O('https://oc2.pdsinterop.net', 'admin', 'admin');
-  // await goP_N('https://nc1.pdsinterop.net', 'alice', 'alice123');
+  await goP_N('https://nc2.pdsinterop.net', 'alice', 'alice123');
 }
 
 // ..
