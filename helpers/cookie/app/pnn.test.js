@@ -110,6 +110,32 @@ class User {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
   }
+  async shareWith(shareWithUser, shareWithHost) {
+    if (this.guiType === GUI_TYPE_OWNCLOUD) {
+      // FIXME: create public share for the first time
+      await this.go('span.icon-public');
+      await this.go('li.subtab-localshare'); // sic
+      await this.type('input.shareWithField', `${shareWithUser}@${shareWithHost}`);
+      await this.go('div.share-autocomplete-item');
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
+      const filesUrl = `${this.serverRoot}/apps/files`;
+      await this.page.goto(filesUrl);
+      // FIXME deal with first-time-use splash screen for Nextcloud Hub
+      await this.page.waitForSelector('image.app-icon');
+      console.log('on', this.page.url());
+      await this.go('a.action-share');
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      console.log('will type into', 'div.multiselect__tags input.multiselect__input', `${shareWithUser}@${shareWithHost}`);
+      await this.type('div.multiselect__tags input.multiselect__input', `${shareWithUser}@${shareWithHost}`);
+      await this.go('span.option__desc--lineone');
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    } else if (this.guiType === GUI_TYPE_SEAFILE) {
+      throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
+    } else {
+      throw new Error(`GUI type "${this.guiType}" not recognized`);
+    }
+  }
   async acceptPublicLink(url, remoteGuiType) {
     await this.page.goto(url);
     if (remoteGuiType === GUI_TYPE_OWNCLOUD) {
@@ -193,6 +219,20 @@ async function runCreatePublicLink(params) {
   await user.exit();
   return url;
 }
+async function runShareWith(params, shareWithUser, shareWithHost) {
+  console.log('1.1');
+
+  const user = new User(params);
+  console.log('1.1');
+  await user.init();
+  console.log('1.2');
+  await user.login(false);
+  console.log('1.3');
+  await user.shareWith(shareWithUser, shareWithHost);
+  console.log('1.4');
+  await user.exit();
+  console.log('1.5');
+}
 async function receivePublicLink(params, url, remoteGuiType, logInFirst) {
   const user = new User(params);
   await user.init();
@@ -205,13 +245,27 @@ async function receivePublicLink(params, url, remoteGuiType, logInFirst) {
   }
   await user.acceptShare();
   await user.deleteAcceptedShare();
-  await user.exit();  
+  await user.exit();
+}
+async function receiveShare(params) {
+  console.log('2.1');
+  const user = new User(params);
+  console.log('2.2');
+  await user.init();
+  console.log('2.3');
+  await user.login(false);
+  console.log('2.4');
+  await user.acceptShare();
+  console.log('2.5');
+  await user.deleteAcceptedShare();
+  console.log('2.6');
+  await user.exit();
+  console.log('2.7');
 }
 
 // ...
 [true, false].forEach((loginFirst) => {
-  describe(`Public link flow, ${(loginFirst ? 'log in first' : 'log in after')}`, () => {
-
+  describe(`Public link flow, ${(loginFirst ? 'log in first' : 'log in after')}`, async () => {
     // Known not to work, uses OCS instead of OCM:
     describe.skip('From ownCloud', () => {
       let publicLink;
@@ -227,8 +281,9 @@ async function receivePublicLink(params, url, remoteGuiType, logInFirst) {
       it('To Nextcloud', async () => {
         await receivePublicLink(params.nc2, publicLink, remoteGuiType, loginFirst);
       }, 30000);
-        });
-    describe('From Nextcloud', () => {
+    });
+
+    describe('From Nextcloud', async () => {
       let publicLink;
       let remoteGuiType;
       beforeAll(async () => {
@@ -242,6 +297,39 @@ async function receivePublicLink(params, url, remoteGuiType, logInFirst) {
       it('To Nextcloud', async () => {
         await receivePublicLink(params.nc2, publicLink, remoteGuiType, loginFirst);
       }, 30000);
-        });
+    });
+  });
+});
+
+describe('Share With flow', async () => {
+  describe('From ownCloud', async () => {
+    it('To ownCloud', async () => {
+      await runShareWith(params.oc1, params.oc2.username, params.oc2.serverRoot);
+      await receiveShare(params.oc2);
+      // Not sure why this is necessary (is there an 'await' missing somewhere?):
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }, 60000);
+    it('To Nextcloud', async () => {
+      await runShareWith(params.oc1, params.nc2.username, params.nc2.serverRoot);
+      await receiveShare(params.nc2);
+      // Not sure why this is necessary (is there an 'await' missing somewhere?):
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }, 60000);
+  });
+  describe('From Nextcloud', async () => {
+    it('To ownCloud', async () => {
+      await runShareWith(params.nc1, params.oc2.username, params.oc2.serverRoot);
+      await receiveShare(params.oc2);
+      // Not sure why this is necessary (is there an 'await' missing somewhere?):
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }, 60000);
+    it('To Nextcloud', async () => {
+      await runShareWith(params.nc1, params.nc2.username, params.nc2.serverRoot);
+      console.log('runShareWith done');
+      await receiveShare(params.nc2);
+      console.log('receiveShare done');
+      // Not sure why this is necessary (is there an 'await' missing somewhere?):
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }, 60000);
   });
 });
