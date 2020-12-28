@@ -4,6 +4,33 @@ const GUI_TYPE_OWNCLOUD = 'GUI ownCloud';
 const GUI_TYPE_NEXTCLOUD = 'GUI Nextloud';
 const GUI_TYPE_SEAFILE = 'GUI Seafile';
 
+const params = {
+  oc1: {
+    serverRoot: 'https://oc1.pdsinterop.net',
+    guiType: GUI_TYPE_OWNCLOUD,
+    username: 'admin',
+    password: 'admin'
+  },
+  oc2: {
+    serverRoot: 'https://oc2.pdsinterop.net',
+    guiType: GUI_TYPE_OWNCLOUD,
+    username: 'admin',
+    password: 'admin'
+  },
+  nc1: {
+    serverRoot: 'https://nc1.pdsinterop.net',
+    guiType: GUI_TYPE_NEXTCLOUD,
+    username: 'alice',
+    password: 'alice123'
+  },
+  nc2: {
+    serverRoot: 'https://nc2.pdsinterop.net',
+    guiType: GUI_TYPE_NEXTCLOUD,
+    username: 'alice',
+    password: 'alice123'
+  }
+};
+
 class User {
   constructor({ serverRoot, guiType, username, password }) {
     this.serverRoot = serverRoot;
@@ -31,6 +58,8 @@ class User {
     if (this.guiType === GUI_TYPE_OWNCLOUD) {
       await commonSteps();
       await this.go('input.login');
+      // FIXME, work around https://github.com/michielbdejong/ocm-test-suite/issues/16 :
+      await new Promise((resolve) => setTimeout(resolve, 5000));
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
       await commonSteps();
       await this.page.click("#submit-form");
@@ -88,6 +117,8 @@ class User {
       await this.page.type('#remote_address', this.serverRoot);
       await this.page.click('#save-button-confirm');
       console.log('Saved public link (from ownCloud GUI), now at', this.page.url());
+      // FIXME: avoid hard-coded timer here:
+      await new Promise((resolve) => setTimeout(resolve, 5000));
     } else if (remoteGuiType === GUI_TYPE_NEXTCLOUD) {
       await this.go('button.menutoggle');
       await this.go('button#save-external-share');
@@ -124,18 +155,18 @@ class User {
       // go to 'shared with you'
       await this.page.goto(sharedWithYouUrl);
       // FIXME: avoid hard-coded timer here:
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+      // await new Promise((resolve) => setTimeout(resolve, 5000));
       console.log('at', sharedWithYouUrl);
       await this.go('span.icon-more');
       // FIXME: avoid hard-coded timer here:
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      await this.go('span.icon-delete');
+      // await new Promise((resolve) => setTimeout(resolve, 5000));
+      await this.go('a.action-delete');
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
       const sharedWithYouUrl = `${this.serverRoot}/apps/files/?dir=/&view=sharingin`;
         // go to 'shared with you'
         await this.page.goto(sharedWithYouUrl);
         // FIXME: avoid hard-coded timer here:
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+        // await new Promise((resolve) => setTimeout(resolve, 5000));
         // remove the share so the test can be run again
         await this.go('a.action-menu');
         await this.go('li.action-delete-container');
@@ -147,8 +178,8 @@ class User {
   }
 
   async exit () {
-    console.log('waiting for bit ...');
-    await new Promise((resolve) => setTimeout(resolve, 10000));  
+    // console.log('waiting for bit ...');
+    // await new Promise((resolve) => setTimeout(resolve, 10000));  
     await this.browser.close();
   }
   
@@ -177,63 +208,40 @@ async function receivePublicLink(params, url, remoteGuiType, logInFirst) {
   await user.exit();  
 }
 
-async function run () {
-  const params = {
-    oc1: {
-      serverRoot: 'https://oc1.pdsinterop.net',
-      guiType: GUI_TYPE_OWNCLOUD,
-      username: 'admin',
-      password: 'admin'
-    },
-    oc2: {
-      serverRoot: 'https://oc2.pdsinterop.net',
-      guiType: GUI_TYPE_OWNCLOUD,
-      username: 'admin',
-      password: 'admin'
-    },
-    nc1: {
-      serverRoot: 'https://nc1.pdsinterop.net',
-      guiType: GUI_TYPE_NEXTCLOUD,
-      username: 'alice',
-      password: 'alice123'
-    },
-    nc2: {
-      serverRoot: 'https://nc2.pdsinterop.net',
-      guiType: GUI_TYPE_NEXTCLOUD,
-      username: 'alice',
-      password: 'alice123'
-    }
-  };
-  // const oc1Link = await runCreatePublicLink(params.oc1);
-  const oc1Link = 'https://oc1.pdsinterop.net/s/XZLUoeka49SgFss';
-  // const nc1Link = await runCreatePublicLink(params.nc1);
-  const nc1Link = 'https://nc1.pdsinterop.net/s/fq4fWk4xyfqcopZ';
+// ...
+[true, false].forEach((loginFirst) => {
+  describe(`Public link flow, ${(loginFirst ? 'log in first' : 'log in after')}`, () => {
 
-  // console.log('oC -> oC public-link flow, login first');
-  // await receivePublicLink(params.oc2, oc1Link, GUI_TYPE_OWNCLOUD, true);
-  // console.log('oC-> Nc public-link flow, login first');
-  // await receivePublicLink(params.nc2, oc1Link, GUI_TYPE_OWNCLOUD, true);
-
-  // console.log('Nc -> oC public-link flow, login first');
-  // await receivePublicLink(params.oc2, nc1Link, GUI_TYPE_NEXTCLOUD, true);
-
-  // console.log('Nc -> Nc public-link flow, login first');
-  // await receivePublicLink(params.nc2, nc1Link, GUI_TYPE_NEXTCLOUD, true);
-
-  // FIXME: in oC -> oC it uses OCS instead of OCM and you see a modal where
-  // you have to click 'div.oc-dialog button.primary'
-  // console.log('oC -> oC public-link flow, login after');
-  // await receivePublicLink(params.oc2, oc1Link, GUI_TYPE_OWNCLOUD, false);
-  
-  // console.log('oC-> Nc public-link flow, login after');
-  // await receivePublicLink(params.nc2, oc1Link, GUI_TYPE_OWNCLOUD, false);
-
-  console.log('Nc -> oC public-link flow, login after');
-  await receivePublicLink(params.oc2, nc1Link, GUI_TYPE_NEXTCLOUD, false);
-
-  // console.log('Nc -> Nc public-link flow, login after');
-  // await receivePublicLink(params.nc2, nc1Link, GUI_TYPE_NEXTCLOUD, false);
-}
-
-// ..
-run();
+    // Known not to work, uses OCS instead of OCM:
+    describe.skip('From ownCloud', () => {
+      let publicLink;
+      let remoteGuiType;
+      beforeAll(async () => {
+        publicLink = await runCreatePublicLink(params.oc1);
+        // publicLink = 'https://oc1.pdsinterop.net/s/XZLUoeka49SgFss';
+        remoteGuiType = GUI_TYPE_OWNCLOUD;
+      }, 30000);
+      it('To ownCloud', async () => {
+        await receivePublicLink(params.oc2, publicLink, remoteGuiType, loginFirst);
+      }, 30000);
+      it('To Nextcloud', async () => {
+        await receivePublicLink(params.nc2, publicLink, remoteGuiType, loginFirst);
+      }, 30000);
+        });
+    describe('From Nextcloud', () => {
+      let publicLink;
+      let remoteGuiType;
+      beforeAll(async () => {
+        publicLink = await runCreatePublicLink(params.nc1);
+        // publicLink = 'https://nc1.pdsinterop.net/s/fq4fWk4xyfqcopZ';
+        remoteGuiType = GUI_TYPE_NEXTCLOUD;
+      }, 30000);
+      it('To ownCloud', async () => {
+        await receivePublicLink(params.oc2, publicLink, remoteGuiType, loginFirst);
+      }, 60000);
+      it('To Nextcloud', async () => {
+        await receivePublicLink(params.nc2, publicLink, remoteGuiType, loginFirst);
+      }, 30000);
+        });
+  });
+});
