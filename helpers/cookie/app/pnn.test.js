@@ -133,7 +133,11 @@ class User {
       // FIXME deal with first-time-use splash screen for Nextcloud Hub
       await this.page.waitForSelector('image.app-icon');
       await this.go('a.action-share');
-      await this.type('div.multiselect__tags input.multiselect__input', `${shareWithUser}@${shareWithHost}`);
+      // Careful that it types into the top multiselect input and not the bottom one:
+      // FIXME: Find a nicer way to do this:
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      await this.type('div.multiselect__tags input.multiselect__input', `${shareWithUser}@https://${shareWithHost}`);
       await this.go('span.option__desc--lineone');
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
