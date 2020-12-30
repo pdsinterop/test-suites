@@ -4,10 +4,12 @@ const GUI_TYPE_OWNCLOUD = 'GUI ownCloud';
 const GUI_TYPE_NEXTCLOUD = 'GUI Nextloud';
 const GUI_TYPE_SEAFILE = 'GUI Seafile';
 
+const JEST_TIMEOUT = 60000;
+
 const flows = [
-  'Public link flow, log in first',
+  // 'Public link flow, log in first',
   // 'Public link flow, log in after',
-  // 'Share-with flow'
+  'Share-with flow'
 ];
 const froms = [
   // 'From Stub',
@@ -223,60 +225,8 @@ class User {
     // await new Promise((resolve) => setTimeout(resolve, 10000));  
     await this.browser.close();
   }
-  
 }
 
-async function runCreatePublicLink(params) {
-  const user = new User(params);
-  await user.init();
-  await user.login(false);
-  const url = await user.createPublicLink();
-  await user.exit();
-  return url;
-}
-async function runShareWith(params, shareWithUser, shareWithHost) {
-  // console.log('1.1');
-
-  const user = new User(params);
-  // console.log('1.1');
-  await user.init();
-  // console.log('1.2');
-  await user.login(false);
-  // console.log('1.3');
-  await user.shareWith(shareWithUser, shareWithHost);
-  // console.log('1.4');
-  await user.exit();
-  // console.log('1.5');
-}
-async function receivePublicLink(params, url, remoteGuiType, logInFirst) {
-  const user = new User(params);
-  await user.init();
-  if (logInFirst) {
-    await user.login(false);
-    await user.acceptPublicLink(url, remoteGuiType);
-  } else {
-    await user.acceptPublicLink(url, remoteGuiType);
-    await user.login(true);
-  }
-  await user.acceptShare();
-  await user.deleteAcceptedShare();
-  await user.exit();
-}
-async function receiveShare(params) {
-  // console.log('2.1');
-  const user = new User(params);
-  // console.log('2.2');
-  await user.init();
-  // console.log('2.3');
-  await user.login(false);
-  // console.log('2.4');
-  await user.acceptShare();
-  // console.log('2.5');
-  await user.deleteAcceptedShare();
-  // console.log('2.6');
-  await user.exit();
-  // console.log('2.7');
-}
 
 flows.forEach((flow) => {
   describe(flow, () => {
@@ -284,25 +234,70 @@ flows.forEach((flow) => {
       const tester = () => {
         if (flow === 'Share-with flow') {
           tos.forEach((to) => {
+            let fromUser;
+            let toUser;
+            beforeEach(async () => {
+              fromUser = new User(params[from]);
+              toUser = new User(params[to]);
+              await fromUser.init();
+              await toUser.init();
+            });
+            afterEach(async () => {
+              await fromUser.exit();
+              await toUser.exit();
+            });
+            
             it(to, async () => {
-              await runShareWith(params[from], params[from].username, params[from].serverRoot);
-              await receiveShare(params[to]);
+              // console.log('1.2');
+              await fromUser.login(false);
+              // console.log('1.3');
+              await fromUser.shareWith(params[to].username, params[to].serverRoot);
+              // console.log('1.4');
+            
+              // console.log('2.3');
+              await toUser.login(false);
+              // console.log('2.4');
+              await toUser.acceptShare();
+              // console.log('2.5');
+              await toUser.deleteAcceptedShare();
+              // console.log('2.6');
+            
               // Not sure why this is necessary (is there an 'await' missing somewhere?):
               await new Promise((resolve) => setTimeout(resolve, 1000));
-            });
+            }, JEST_TIMEOUT);
           });
         } else {
-          let publicLink;
-          let remoteGuiType;    
-          beforeAll(async () => {
-            publicLink = await runCreatePublicLink(params[from]);
-            // publicLink = 'https://nc1.pdsinterop.net/s/fq4fWk4xyfqcopZ';
-            remoteGuiType = GUI_TYPE_NEXTCLOUD;
-          }, 30000);
           tos.forEach((to) => {
-              it(to, async () => {
-                await receivePublicLink(params[to], publicLink, remoteGuiType, 'Public link flow, log in first');
-             }, 30000);
+            let fromUser;
+            let toUser;
+            beforeEach(async () => {
+              fromUser = new User(params[from]);
+              toUser = new User(params[to]);
+              await fromUser.init();
+              await toUser.init();
+            });
+            afterEach(async () => {
+              await fromUser.exit();
+              await toUser.exit();
+            });
+
+            it(to, async () => {
+              await fromUser.login(false);
+              const url = await fromUser.createPublicLink();
+            
+              // publicLink = 'https://nc1.pdsinterop.net/s/fq4fWk4xyfqcopZ';
+              const remoteGuiType = fromUser.guiType;
+  
+              if (flow === 'Public link flow, log in first') {
+                await toUser.login(false);
+                await toUser.acceptPublicLink(url, remoteGuiType);
+              } else {
+                await toUser.acceptPublicLink(url, remoteGuiType);
+                await toUser.login(true);
+              }
+              await toUser.acceptShare();
+              await toUser.deleteAcceptedShare();
+            }, JEST_TIMEOUT);
           });
         }
       }
