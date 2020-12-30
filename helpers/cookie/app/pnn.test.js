@@ -154,7 +154,7 @@ class User {
     } else if (remoteGuiType === GUI_TYPE_NEXTCLOUD) {
       await this.go('button.menutoggle');
       await this.go('button#save-external-share');
-      await this.page.type('#remote_address', `${this.username}@${this.host}`);
+      await this.page.type('#remote_address', `${this.username}@https://${this.host}`);
       await this.page.click('#save-button-confirm');
     } else if (remoteGuiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
