@@ -2,7 +2,14 @@
 ##
 Run:
 ```sh
-sh ./test.sh
+npm install
+npm test
+```
+
+Debug:
+```sh
+npm install
+npm run debug
 ```
 
 ## Start ownCloud

@@ -4,8 +4,8 @@
   "description": "script that obtains a cookie from a Nextcloud server",
   "main": "index.js",
   "scripts": {
-    "test": "HEADLESS=1 jest *.test.js",
-    "debug": "jest *.test.js"
+    "test": "HEADLESS=1 jest *.test.js --runInBand",
+    "debug": "jest *.test.js --runInBand"
   },
   "author": "",
   "license": "ISC",

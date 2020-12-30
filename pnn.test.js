@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 
+const GUI_TYPE_STUB = 'GUI Stub';
 const GUI_TYPE_OWNCLOUD = 'GUI ownCloud';
 const GUI_TYPE_NEXTCLOUD = 'GUI Nextloud';
 const GUI_TYPE_SEAFILE = 'GUI Seafile';
@@ -14,14 +15,28 @@ const flows = [
   'Share-with flow'
 ];
 const froms = [
+  // 'From Stub',
   'From ownCloud',
   'From Nextcloud'
 ];
 const tos = [
+  // 'To Stub',
   'To ownCloud',
   'To Nextcloud'
 ];
 const params = {
+  'From Stub': {
+    host: 'sf1.pdsinterop.net',
+    guiType: GUI_TYPE_STUB,
+    username: 'admin',
+    password: 'admin'
+  },
+  'To Stub': {
+    host: 'sf1.pdsinterop.net',
+    guiType: GUI_TYPE_STUB,
+    username: 'admin',
+    password: 'admin'
+  },
   'From ownCloud': {
     host: 'oc1.pdsinterop.net',
     guiType: GUI_TYPE_OWNCLOUD,
@@ -71,7 +86,9 @@ class User {
       await this.type('#password', this.password);
     };
 
-    if (this.guiType === GUI_TYPE_OWNCLOUD) {
+    if (this.guiType === GUI_TYPE_STUB) {
+      // nothing to do
+    } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
       await commonSteps();
       await this.go('input.login');
       await this.page.waitForNavigation();
@@ -95,7 +112,9 @@ class User {
     await this.page.type(selector, text);
   }
   async createPublicLink() {
-    if (this.guiType === GUI_TYPE_OWNCLOUD) {
+    if (this.guiType === GUI_TYPE_STUB) {
+      return `https://${this.host}/publicLink`;
+    } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
       // FIXME: create public share for the first time
       await this.go('span.icon-public');
       await this.go('li.subtab-publicshare');
@@ -121,7 +140,10 @@ class User {
     }
   }
   async shareWith(shareWithUser, shareWithHost) {
-    if (this.guiType === GUI_TYPE_OWNCLOUD) {
+    if (this.guiType === GUI_TYPE_STUB) {
+      const consumer = encodeURIComponent(`${shareWithUser}@${shareWithHost}`);
+      await this.page.goto(`https://${this.host}/shareWith?${consumer}`);
+    } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
       // FIXME: create public share for the first time
       await this.go('span.icon-public');
       await this.go('li.subtab-localshare'); // sic
@@ -147,7 +169,10 @@ class User {
   }
   async acceptPublicLink(url, remoteGuiType) {
     await this.page.goto(url);
-    if (remoteGuiType === GUI_TYPE_OWNCLOUD) {
+    if (this.guiType === GUI_TYPE_STUB) {
+      const consumer = encodeURIComponent(`${shareWithUser}@${shareWithHost}`);
+      await this.page.goto(`?saveTo=${consumer}`);
+    } else if (remoteGuiType === GUI_TYPE_OWNCLOUD) {
       await this.go('button#save-button');
       await this.page.type('#remote_address', this.host);
       await this.page.click('#save-button-confirm');
@@ -163,7 +188,9 @@ class User {
     }
   }
   async acceptShare() {
-    if (this.guiType === GUI_TYPE_OWNCLOUD) {
+    if (this.guiType === GUI_TYPE_STUB) {
+      await this.page.goto(`https://${this.host}/acceptShare`);
+    } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
       const sharedWithYouUrl = `https://${this.host}/apps/files/?dir=/&view=sharingin`;
       await this.page.goto(sharedWithYouUrl);
       await this.go('a.action-accept'); 
@@ -177,7 +204,9 @@ class User {
     }
   }
   async deleteAcceptedShare() {
-    if (this.guiType === GUI_TYPE_OWNCLOUD) {
+    if (this.guiType === GUI_TYPE_STUB) {
+      await this.page.goto(`https://${this.host}/deleteAcceptedShare`);
+    } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
       const sharedWithYouUrl = `https://${this.host}/apps/files/?dir=/&view=sharingin`;
       await this.page.goto(sharedWithYouUrl);
       await this.go('span.icon-more');
