@@ -5,6 +5,8 @@ const GUI_TYPE_NEXTCLOUD = 'GUI Nextloud';
 const GUI_TYPE_SEAFILE = 'GUI Seafile';
 
 const JEST_TIMEOUT = 60000;
+const HEADLESS = !!process.env.HEADLESS;
+console.log({ HEADLESS });
 
 const flows = [
   // 'Public link flow, log in first',
@@ -56,7 +58,7 @@ class User {
     this.password = password;
   }
   async init() {
-    this.browser = await puppeteer.launch({ headless: false });
+    this.browser = await puppeteer.launch({ headless: HEADLESS });
     this.context = this.browser.defaultBrowserContext();
     this.context.overridePermissions(/* browser origin */ undefined, ['clipboard-read']);
     this.page = await this.browser.newPage();
