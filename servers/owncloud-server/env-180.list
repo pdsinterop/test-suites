@@ -1,2 +1,0 @@
-OWNCLOUD_DOMAIN=host.docker.internal:180
-SERVER_ROOT=http://host.docker.internal:180
