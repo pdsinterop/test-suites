@@ -11,17 +11,17 @@ console.log({ HEADLESS });
 
 const flows = [
   'Public link flow, log in first',
-  'Public link flow, log in after',
-  'Share-with flow'
+  // 'Public link flow, log in after',
+  // 'Share-with flow'
 ];
 const froms = [
   // 'From Stub',
-  'From ownCloud',
+  // 'From ownCloud',
   'From Nextcloud'
 ];
 const tos = [
   // 'To Stub',
-  'To ownCloud',
+  // 'To ownCloud',
   'To Nextcloud'
 ];
 const params = {
@@ -71,6 +71,10 @@ class User {
     this.password = password;
   }
   async init() {
+    if (this.browser) {
+      return
+    }
+    this.browser = true; // claim the semaphore, will be overwritten:
     this.browser = await puppeteer.launch({ headless: HEADLESS });
     this.context = this.browser.defaultBrowserContext();
     this.context.overridePermissions(/* browser origin */ undefined, ['clipboard-read']);
@@ -130,7 +134,7 @@ class User {
       // FIXME: create public share for the first time
       // await this.go('button.action-item__menutoggle');
       // await this.go('li.new-share-link');
-    
+
       await this.page.waitForSelector('a.sharing-entry__copy');
       return this.page.evaluate("document.querySelector('a.sharing-entry__copy').getAttribute('href')");
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
@@ -193,10 +197,11 @@ class User {
     } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
       const sharedWithYouUrl = `https://${this.host}/apps/files/?dir=/&view=sharingin`;
       await this.page.goto(sharedWithYouUrl);
-      await this.go('a.action-accept'); 
+      await this.go('a.action-accept');
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
       await this.go('div.notifications-button');
-      await this.go('button.action-button.pull-right.primary');    
+      await this.go('button.action-button.pull-right.primary');
+      await this.page.waitForSelector('div.icon-notifications-dark');
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else {
@@ -217,6 +222,7 @@ class User {
         // remove the share so the test can be run again
         await this.go('a.action-menu');
         await this.go('li.action-delete-container');
+        await this.page.waitForSelector('div.icon-shared');
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else {
@@ -225,7 +231,11 @@ class User {
   }
 
   async exit () {
+    if (!this.browser) {
+      return
+    }
     await this.browser.close();
+    this.browser = false; // give back the semaphore
   }
 }
 
@@ -234,52 +244,39 @@ flows.forEach((flow) => {
   describe(flow, () => {
     froms.forEach((from) => {
       const tester = () => {
-        if (flow === 'Share-with flow') {
-          tos.forEach((to) => {
-            let fromUser;
-            let toUser;
-            beforeEach(async () => {
-              fromUser = new User(params[from]);
-              toUser = new User(params[to]);
-              await fromUser.init();
-              await toUser.init();
-            });
-            afterEach(async () => {
-              await fromUser.exit();
-              await toUser.exit();
-            });
-            
-            it(to, async () => {
+        tos.forEach((to) => {
+          let fromUser;
+          let toUser;
+          beforeEach(async () => {
+            fromUser = new User(params[from]);
+            toUser = new User(params[to]);
+            console.log('init from', flow, from, to);
+            await fromUser.init();
+            console.log('init to', flow, from, to);
+            await toUser.init();
+          }, JEST_TIMEOUT);
+          afterEach(async () => {
+            console.log('exit from', flow, from, to);
+            await fromUser.exit();
+            console.log('exit to', flow, from, to);
+            await toUser.exit();
+          }, JEST_TIMEOUT);
+
+          it(to, async () => {
+            if (flow === 'Share-with flow') {
               await fromUser.login(false);
               await fromUser.shareWith(params[to].username, params[to].host);
-            
+
               await toUser.login(false);
               await toUser.acceptShare();
               await toUser.deleteAcceptedShare();
-            }, JEST_TIMEOUT);
-          });
-        } else {
-          tos.forEach((to) => {
-            let fromUser;
-            let toUser;
-            beforeEach(async () => {
-              fromUser = new User(params[from]);
-              toUser = new User(params[to]);
-              await fromUser.init();
-              await toUser.init();
-            });
-            afterEach(async () => {
-              await fromUser.exit();
-              await toUser.exit();
-            });
-
-            it(to, async () => {
+            } else {
               await fromUser.login(false);
               const url = await fromUser.createPublicLink();
-            
+
               // publicLink = 'https://nc1.pdsinterop.net/s/fq4fWk4xyfqcopZ';
               const remoteGuiType = fromUser.guiType;
-  
+
               if (flow === 'Public link flow, log in first') {
                 await toUser.login(false);
                 await toUser.acceptPublicLink(url, remoteGuiType);
@@ -289,9 +286,9 @@ flows.forEach((flow) => {
               }
               await toUser.acceptShare();
               await toUser.deleteAcceptedShare();
-            }, JEST_TIMEOUT);
-          });
-        }
+            }
+          }, JEST_TIMEOUT);
+        });
       }
       if ((flow !== 'Share-with flow') && (from === 'From ownCloud')) {
         // Known not to work, uses OCS instead of OCM:
