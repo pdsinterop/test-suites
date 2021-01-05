@@ -21,7 +21,7 @@ const froms = [
   // 'From Seafile',
 ];
 const tos = [
-  // 'To Stub',
+  'To Stub',
   'To ownCloud',
   'To Nextcloud',
   // 'To Seafile',
@@ -175,8 +175,8 @@ class User {
   }
   async acceptPublicLink(url, remoteGuiType) {
     await this.page.goto(url);
-    if (this.guiType === GUI_TYPE_STUB) {
-      const consumer = encodeURIComponent(`${shareWithUser}@${shareWithHost}`);
+    if (this.remoteGuiType === GUI_TYPE_STUB) {
+      const consumer = encodeURIComponent(`${this.username}@https://${this.host}`);
       await this.page.goto(`?saveTo=${consumer}`);
     } else if (remoteGuiType === GUI_TYPE_OWNCLOUD) {
       await this.go('button#save-button');
