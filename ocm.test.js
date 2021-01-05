@@ -11,18 +11,20 @@ console.log({ HEADLESS });
 
 const flows = [
   'Public link flow, log in first',
-  // 'Public link flow, log in after',
-  // 'Share-with flow'
+  'Public link flow, log in after',
+  'Share-with flow'
 ];
 const froms = [
   // 'From Stub',
-  // 'From ownCloud',
-  'From Nextcloud'
+  'From ownCloud',
+  'From Nextcloud',
+  // 'From Seafile',
 ];
 const tos = [
   // 'To Stub',
-  // 'To ownCloud',
-  'To Nextcloud'
+  'To ownCloud',
+  'To Nextcloud',
+  // 'To Seafile',
 ];
 const params = {
   'From Stub': {
