@@ -28,13 +28,13 @@ const tos = [
 ];
 const params = {
   'From Stub': {
-    host: 'sf1.pdsinterop.net',
+    host: 'stub1.pdsinterop.net',
     guiType: GUI_TYPE_STUB,
     username: 'admin',
     password: 'admin'
   },
   'To Stub': {
-    host: 'sf1.pdsinterop.net',
+    host: 'stub1.pdsinterop.net',
     guiType: GUI_TYPE_STUB,
     username: 'admin',
     password: 'admin'
@@ -197,9 +197,12 @@ class User {
     if (this.guiType === GUI_TYPE_STUB) {
       await this.page.goto(`https://${this.host}/acceptShare`);
     } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
-      const sharedWithYouUrl = `https://${this.host}/apps/files/?dir=/&view=sharingin`;
-      await this.page.goto(sharedWithYouUrl);
-      await this.go('a.action-accept');
+      // const sharedWithYouUrl = `https://${this.host}/apps/files/?dir=/&view=sharingin`;
+      // await this.page.goto(sharedWithYouUrl);
+      // await this.go('a.action-accept');
+      await this.go('div.notifications-button');
+      await this.go('button.notification-action-button.primary');
+      await this.go('a.nav-icon-sharingin');
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
       await this.go('div.notifications-button');
       await this.go('button.action-button.pull-right.primary');
