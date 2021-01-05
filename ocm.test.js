@@ -218,6 +218,7 @@ class User {
       await this.page.goto(sharedWithYouUrl);
       await this.go('span.icon-more');
       await this.go('a.action-delete');
+      await this.page.waitForSelector('div.icon-shared');
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
       const sharedWithYouUrl = `https://${this.host}/apps/files/?dir=/&view=sharingin`;
         await this.page.goto(sharedWithYouUrl);
