@@ -15,16 +15,16 @@ const flows = [
   'Share-with flow'
 ];
 const froms = [
-  // 'From Stub',
+  'From Stub',
   'From ownCloud',
   'From Nextcloud',
-  // 'From Seafile',
+  'From Seafile',
 ];
 const tos = [
   'To Stub',
   'To ownCloud',
   'To Nextcloud',
-  // 'To Seafile',
+  'To Seafile',
 ];
 const params = {
   'From Stub': {
@@ -155,6 +155,7 @@ class User {
       await this.go('li.subtab-localshare'); // sic
       await this.type('input.shareWithField', `${shareWithUser}@${shareWithHost}`);
       await this.go('div.share-autocomplete-item');
+      await this.page.waitForSelector(`li[data-share-with=\'${shareWithUser}@${shareWithHost}\']`);
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
       const filesUrl = `https://${this.host}/apps/files`;
       await this.page.goto(filesUrl);
@@ -175,9 +176,11 @@ class User {
   }
   async acceptPublicLink(url, remoteGuiType) {
     await this.page.goto(url);
-    if (this.remoteGuiType === GUI_TYPE_STUB) {
+    if (remoteGuiType === GUI_TYPE_STUB) {
       const consumer = encodeURIComponent(`${this.username}@https://${this.host}`);
-      await this.page.goto(`?saveTo=${consumer}`);
+      const newUrl = new URL(`?saveTo=${consumer}`, url).toString();
+      console.log('accepting public link', newUrl);
+      await this.page.goto(newUrl);
     } else if (remoteGuiType === GUI_TYPE_OWNCLOUD) {
       await this.go('button#save-button');
       await this.page.type('#remote_address', this.host);
@@ -197,9 +200,11 @@ class User {
     if (this.guiType === GUI_TYPE_STUB) {
       await this.page.goto(`https://${this.host}/acceptShare`);
     } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
+      // In ownCloud GUI, there are two ways to accept a share, from the shared-with-you page: ...
       // const sharedWithYouUrl = `https://${this.host}/apps/files/?dir=/&view=sharingin`;
       // await this.page.goto(sharedWithYouUrl);
       // await this.go('a.action-accept');
+      // ... or from the notifications:
       await this.go('div.notifications-button');
       await this.go('button.notification-action-button.primary');
       await this.go('a.nav-icon-sharingin');
@@ -251,53 +256,61 @@ flows.forEach((flow) => {
     froms.forEach((from) => {
       const tester = () => {
         tos.forEach((to) => {
-          let fromUser;
-          let toUser;
-          beforeEach(async () => {
-            fromUser = new User(params[from]);
-            toUser = new User(params[to]);
-            console.log('init from', flow, from, to);
-            await fromUser.init();
-            console.log('init to', flow, from, to);
-            await toUser.init();
-          }, JEST_TIMEOUT);
-          afterEach(async () => {
-            console.log('exit from', flow, from, to);
-            await fromUser.exit();
-            console.log('exit to', flow, from, to);
-            await toUser.exit();
-          }, JEST_TIMEOUT);
+          if (to === 'To Seafile') {
+            // Coming soon
+            it.skip(to, () => {});
+          } else {
+            let fromUser;
+            let toUser;
+            beforeEach(async () => {
+              fromUser = new User(params[from]);
+              toUser = new User(params[to]);
+              // console.log('init from', flow, from, to);
+              await fromUser.init();
+              // console.log('init to', flow, from, to);
+              await toUser.init();
+            }, JEST_TIMEOUT);
+            afterEach(async () => {
+              console.log('exit from', flow, from, to);
+              await fromUser.exit();
+              console.log('exit to', flow, from, to);
+              await toUser.exit();
+            }, JEST_TIMEOUT);
 
-          it(to, async () => {
-            if (flow === 'Share-with flow') {
-              await fromUser.login(false);
-              await fromUser.shareWith(params[to].username, params[to].host);
+            it(to, async () => {
+              if (flow === 'Share-with flow') {
+                await fromUser.login(false);
+                await fromUser.shareWith(params[to].username, params[to].host);
 
-              await toUser.login(false);
-              await toUser.acceptShare();
-              await toUser.deleteAcceptedShare();
-            } else {
-              await fromUser.login(false);
-              const url = await fromUser.createPublicLink();
-
-              // publicLink = 'https://nc1.pdsinterop.net/s/fq4fWk4xyfqcopZ';
-              const remoteGuiType = fromUser.guiType;
-
-              if (flow === 'Public link flow, log in first') {
                 await toUser.login(false);
-                await toUser.acceptPublicLink(url, remoteGuiType);
+                await toUser.acceptShare();
+                await toUser.deleteAcceptedShare();
               } else {
-                await toUser.acceptPublicLink(url, remoteGuiType);
-                await toUser.login(true);
+                await fromUser.login(false);
+                const url = await fromUser.createPublicLink();
+
+                // publicLink = 'https://nc1.pdsinterop.net/s/fq4fWk4xyfqcopZ';
+                const remoteGuiType = fromUser.guiType;
+
+                if (flow === 'Public link flow, log in first') {
+                  await toUser.login(false);
+                  await toUser.acceptPublicLink(url, remoteGuiType);
+                } else {
+                  await toUser.acceptPublicLink(url, remoteGuiType);
+                  await toUser.login(true);
+                }
+                await toUser.acceptShare();
+                await toUser.deleteAcceptedShare();
               }
-              await toUser.acceptShare();
-              await toUser.deleteAcceptedShare();
-            }
-          }, JEST_TIMEOUT);
+            }, JEST_TIMEOUT);
+          }
         });
       }
       if ((flow !== 'Share-with flow') && (from === 'From ownCloud')) {
         // Known not to work, uses OCS instead of OCM:
+        describe.skip(from, tester);
+      } else if (from === 'From Seafile') {
+        // Coming soon:
         describe.skip(from, tester);
       } else {
         describe(from, tester);
