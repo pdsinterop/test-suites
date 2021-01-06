@@ -1,5 +1,28 @@
 # OCM Test Suite
-##
+This test suite tests various implementations of [Open Cloud Mesh (OCM)](https://github.com/cs3org/OCM-API) against each other.
+
+## Overview
+It is run automatically on GitHub Actions, against:
+* https://stub1.pdsinterop.net (a stub server running [ocm-stub](https://github.com/michielbdejong/ocm-stub))
+* https://oc1.pdsinterop.net (an OCM provider running ownCloud)
+* https://oc2.pdsinterop.net (an OCM consumer running ownCloud)
+* https://nc1.pdsinterop.net (an OCM provider running Nextcloud)
+* https://nc2.pdsinterop.net (an OCM consumer running Nextcloud)
+
+It tests three flows:
+
+### Public-link flow (login first)
+In the public-link flow, the provider gives the consumer a public link, and the consumer clicks 'save to my personal cloud' on there.
+In this flow, it is assumed that the consumer is already logged in to their personal cloud account before clicking 'save to my personal cloud' on the public link. After clicking, the consumer is redirected to their personal cloud account GUI, accepts the share, and then leaves it again.
+
+### Public-link flow (login first)
+Same as the previous flow, except the consumer is not logged in to their own personal cloud account yet when they get redirected to it
+from the public link.
+
+### Share-with flow
+In this flow, the provider uses their own personal cloud account GUI to share a resource with the consumer, and the consumer notices this from the notification in their personal cloud acccount GUI, accepts the share, then leaves it again.
+
+## Running the tester locally
 Run:
 ```sh
 npm install
