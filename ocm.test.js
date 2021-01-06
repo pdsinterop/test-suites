@@ -111,7 +111,12 @@ class User {
 
   async go(selector) {
     await this.page.waitForSelector(selector);
-    await this.page.click(selector);
+    // console.log('clicking', selector, await this.page.$(selector));
+    try {
+      await this.page.click(selector);
+    } catch (e) {
+      console.error('Could not click!', selector);
+    }
   }
   async type(selector, text) {
     await this.page.waitForSelector(selector);
@@ -150,12 +155,15 @@ class User {
       const consumer = encodeURIComponent(`${shareWithUser}@${shareWithHost}`);
       await this.page.goto(`https://${this.host}/shareWith?${consumer}`);
     } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
-      // FIXME: create public share for the first time
       await this.go('span.icon-public');
       await this.go('li.subtab-localshare'); // sic
       await this.type('input.shareWithField', `${shareWithUser}@${shareWithHost}`);
-      await this.go('div.share-autocomplete-item');
-      await this.page.waitForSelector(`li[data-share-with=\'${shareWithUser}@${shareWithHost}\']`);
+      const exists = await this.page.$(`li[data-share-with=\'${shareWithUser}@${shareWithHost}\']`);
+      // console.log({ exists });
+      if (exists === null) {
+        await this.go('div.share-autocomplete-item');
+        await this.page.waitForSelector(`li[data-share-with=\'${shareWithUser}@${shareWithHost}\']`);
+      }
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
       const filesUrl = `https://${this.host}/apps/files`;
       await this.page.goto(filesUrl);
@@ -179,7 +187,7 @@ class User {
     if (remoteGuiType === GUI_TYPE_STUB) {
       const consumer = encodeURIComponent(`${this.username}@https://${this.host}`);
       const newUrl = new URL(`?saveTo=${consumer}`, url).toString();
-      console.log('accepting public link', newUrl);
+      // console.log('accepting public link', newUrl);
       await this.page.goto(newUrl);
     } else if (remoteGuiType === GUI_TYPE_OWNCLOUD) {
       await this.go('button#save-button');
@@ -196,6 +204,28 @@ class User {
       throw new Error(`Remote GUI type "${remoteGuiType}" not recognized`);
     }
   }
+
+  // Common GUI flow between ownCloud and Nextcloud:
+  async acceptNotifications(notifsSelector, buttonSelector, doneSelector) {
+    // console.log('clicking notifications');
+    await this.go(notifsSelector);
+    // console.log('waiting for accept button');
+    await this.page.waitForSelector(buttonSelector);
+    let buttonsLeft;
+    do {
+      try {
+        await this.page.click(buttonSelector);
+      } catch (e) {
+        console.error('Could not click', buttonSelector, await this.page.$(buttonSelector));
+      }
+      buttonsLeft = await this.page.$(buttonSelector);
+      // console.log({ buttonsLeft });
+    } while (buttonsLeft !== null);
+    // console.log('waiting for empty notifications');
+    await this.page.waitForSelector(doneSelector);
+    // console.log('acceptNotifications done');
+  }
+
   async acceptShare() {
     if (this.guiType === GUI_TYPE_STUB) {
       await this.page.goto(`https://${this.host}/acceptShare`);
@@ -205,35 +235,56 @@ class User {
       // await this.page.goto(sharedWithYouUrl);
       // await this.go('a.action-accept');
       // ... or from the notifications:
-      await this.go('div.notifications-button');
-      await this.go('button.notification-action-button.primary');
-      await this.go('a.nav-icon-sharingin');
+      await this.acceptNotifications(
+        'div.notifications-button',
+        'button.notification-action-button.primary',
+        'a.nav-icon-sharingin'
+      );
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
-      await this.go('div.notifications-button');
-      await this.go('button.action-button.pull-right.primary');
-      await this.page.waitForSelector('div.icon-notifications-dark');
+      await this.acceptNotifications(
+        'div.notifications-button',
+        'button.action-button.pull-right.primary',
+        'div.icon-notifications-dark'
+      );
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
   }
+
+  // Common GUI flow between ownCloud and Nextcloud:
+  async deleteShares(sharedWithYouUrl, contextMenuSelector, unshareSelector, doneSelector) {
+    await this.page.goto(sharedWithYouUrl);
+    // FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/20
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    while (await this.page.$(contextMenuSelector) !== null) {
+      await this.go(contextMenuSelector);
+      await this.go(unshareSelector);
+      await this.page.waitForSelector(doneSelector);
+      await this.page.goto(sharedWithYouUrl);
+      // FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/20
+      await new Promise(resolve => setTimeout(resolve, 3000));
+    }
+  }
+
   async deleteAcceptedShare() {
     if (this.guiType === GUI_TYPE_STUB) {
       await this.page.goto(`https://${this.host}/deleteAcceptedShare`);
     } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
-      const sharedWithYouUrl = `https://${this.host}/apps/files/?dir=/&view=sharingin`;
-      await this.page.goto(sharedWithYouUrl);
-      await this.go('span.icon-more');
-      await this.go('a.action-delete');
-      await this.page.waitForSelector('div.icon-shared');
+      await this.deleteShares(
+        `https://${this.host}/apps/files/?dir=/&view=sharingin`,
+        'span.icon-more',
+        'a.action-delete',
+        'div.icon-shared'
+      );
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
-      const sharedWithYouUrl = `https://${this.host}/apps/files/?dir=/&view=sharingin`;
-        await this.page.goto(sharedWithYouUrl);
-        // remove the share so the test can be run again
-        await this.go('a.action-menu');
-        await this.go('li.action-delete-container');
-        await this.page.waitForSelector('div.icon-shared');
+      await this.deleteShares(
+        `https://${this.host}/apps/files/?dir=/&view=sharingin`,
+        'a.action-menu',
+        'li.action-delete-container',
+        'div.icon-shared'
+      );
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else {
@@ -271,9 +322,9 @@ flows.forEach((flow) => {
               await toUser.init();
             }, JEST_TIMEOUT);
             afterEach(async () => {
-              console.log('exit from', flow, from, to);
+              // console.log('exit from', flow, from, to);
               await fromUser.exit();
-              console.log('exit to', flow, from, to);
+              // console.log('exit to', flow, from, to);
               await toUser.exit();
             }, JEST_TIMEOUT);
 
