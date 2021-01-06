@@ -220,7 +220,7 @@ class User {
       }
       buttonsLeft = await this.page.$(buttonSelector);
       // console.log({ buttonsLeft });
-    } while (buttonsLeft !== null);
+    } while (false); //buttonsLeft !== null);
     // console.log('waiting for empty notifications');
     await this.page.waitForSelector(doneSelector);
     // console.log('acceptNotifications done');
