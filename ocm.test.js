@@ -115,7 +115,7 @@ class User {
     try {
       await this.page.click(selector);
     } catch (e) {
-      console.error('Could not click!', selector);
+      // console.error('Could not click!', selector);
     }
   }
   async type(selector, text) {
@@ -216,7 +216,7 @@ class User {
       try {
         await this.page.click(buttonSelector);
       } catch (e) {
-        console.error('Could not click', buttonSelector, await this.page.$(buttonSelector));
+        // console.error('Could not click', buttonSelector, await this.page.$(buttonSelector));
       }
       buttonsLeft = await this.page.$(buttonSelector);
       // console.log({ buttonsLeft });
