@@ -9,7 +9,6 @@ RUN openssl req -new -x509 -days 365 -nodes \
 RUN apt-get update && apt-get install -yq \
   git \
   vim
-WORKDIR /install
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php
-RUN php -r "unlink('composer-setup.php');"
+WORKDIR /var/www/html
+ADD init.sh /
+EXPOSE 443

@@ -8,7 +8,7 @@ describe("Discovery at /ocm-provider/", () => {
     expect(jsonParsed).toEqual({
       "enabled":true,
       "apiVersion":"1.0-proposal1",
-      "endPoint":"https://localhost/ocm",
+      "endPoint":"https://server/ocm",
       "resourceTypes": [
         {
           "name": "file",
