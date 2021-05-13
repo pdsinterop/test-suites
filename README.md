@@ -15,7 +15,7 @@ It tests three flows:
 In the public-link flow, the provider gives the consumer a public link, and the consumer clicks 'save to my personal cloud' on there.
 In this flow, it is assumed that the consumer is already logged in to their personal cloud account before clicking 'save to my personal cloud' on the public link. After clicking, the consumer is redirected to their personal cloud account GUI, accepts the share, and then leaves it again.
 
-### Public-link flow (login first)
+### Public-link flow (login after)
 Same as the previous flow, except the consumer is not logged in to their own personal cloud account yet when they get redirected to it
 from the public link.
 
