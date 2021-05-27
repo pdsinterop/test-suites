@@ -1,7 +1,7 @@
 {
-  "name": "nextcloud-cookie-getter",
+  "name": "ocm-test-suite",
   "version": "1.0.0",
-  "description": "script that obtains a cookie from a Nextcloud server",
+  "description": "Test Suite that test interaction between servers that are federated through Open Cloud Mesh (OCM)",
   "main": "index.js",
   "scripts": {
     "test": "HEADLESS=1 jest *.test.js --runInBand",
