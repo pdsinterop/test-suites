@@ -17,8 +17,8 @@ services:
     ports:
       - ${HTTP_PORT}:8080
     depends_on:
-      - db
-      - redis
+      - ownclouddb
+      - owncloudredis
     environment:
       - OWNCLOUD_DOMAIN=${OWNCLOUD_DOMAIN}
       - OWNCLOUD_DB_TYPE=mysql
@@ -39,7 +39,7 @@ services:
     volumes:
       - files:/mnt/data
 
-  db:
+  ownclouddb:
     image: webhippie/mariadb:latest
     restart: always
     environment:
@@ -58,7 +58,7 @@ services:
       - mysql:/var/lib/mysql
       - backup:/var/lib/backup
 
-  redis:
+  owncloudredis:
     image: webhippie/redis:latest
     restart: always
     environment:
@@ -70,4 +70,13 @@ services:
       retries: 5
     volumes:
       - redis:/var/lib/redis
-
+  nextcloud:
+    image: nextcloud
+  revad:
+    image: revad
+  stub:
+    image: stub
+  tester:
+    image: tester
+    cap_add: SYS_ADMIN
+  
