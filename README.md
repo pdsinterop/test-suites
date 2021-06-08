@@ -3,8 +3,8 @@ This test suite tests various implementations of [Open Cloud Mesh (OCM)](https:/
 
 ## Overview
 ```sh
-docker build -t tester .
-docker run --cap-add=SYS_ADMIN -it tester
+./build.sh
+docker compose up
 ```
 
 It tests three flows:
