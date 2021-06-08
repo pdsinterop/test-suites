@@ -39,7 +39,7 @@ class User {
       return
     }
     this.browser = true; // claim the semaphore, will be overwritten:
-    this.browser = await puppeteer.launch({ headless: HEADLESS });
+    this.browser = await puppeteer.launch({ headless: HEADLESS, ignoreHTTPSErrors: true });
     this.context = this.browser.defaultBrowserContext();
     this.context.overridePermissions(/* browser origin */ undefined, ['clipboard-read']);
     this.page = await this.browser.newPage();
