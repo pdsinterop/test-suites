@@ -2,12 +2,10 @@
 This test suite tests various implementations of [Open Cloud Mesh (OCM)](https://github.com/cs3org/OCM-API) against each other.
 
 ## Overview
-It is run automatically on GitHub Actions, against:
-* https://stub1.pdsinterop.net (a stub server running [ocm-stub](https://github.com/michielbdejong/ocm-stub))
-* https://oc1.pdsinterop.net (an OCM provider running ownCloud)
-* https://oc2.pdsinterop.net (an OCM consumer running ownCloud)
-* https://nc1.pdsinterop.net (an OCM provider running Nextcloud)
-* https://nc2.pdsinterop.net (an OCM consumer running Nextcloud)
+```sh
+docker build --name tester .
+docker run --cap-add=SYS_ADMIN -it tester
+```
 
 It tests three flows:
 
