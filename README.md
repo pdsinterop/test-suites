@@ -5,7 +5,8 @@ This test suite tests various implementations of [Open Cloud Mesh (OCM)](https:/
 ```sh
 ./build.sh
 docker compose up
-docker run -it --network=ocm-test-suite_default tester /bin/bash # FIXME: --no-sandbox error for this?
+docker logs -t ocm-test-suite_tester_1
+# docker run -it --network=ocm-test-suite_default tester /bin/bash --> FIXME: --no-sandbox error for this?
 ```
 
 It tests three flows:
