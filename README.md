@@ -5,6 +5,7 @@ This test suite tests various implementations of [Open Cloud Mesh (OCM)](https:/
 ```sh
 ./build.sh
 docker compose up
+docker run -it --network=ocm-test-suite_default tester /bin/bash
 ```
 
 It tests three flows:

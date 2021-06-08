@@ -147,5 +147,6 @@ services:
     image: stub
   tester:
     image: tester
-    cap_add: SYS_ADMIN
+    cap_add:
+      - SYS_ADMIN
   

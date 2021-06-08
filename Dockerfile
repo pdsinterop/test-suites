@@ -40,5 +40,7 @@ RUN npm i puppeteer \
 # Run everything after as non-privileged user.
 USER pptruser
 
+ENV NODE_TLS_REJECT_UNAUTHENTICATED=0
+
 # CMD ["google-chrome-stable"]
 CMD npm test
