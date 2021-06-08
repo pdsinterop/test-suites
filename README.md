@@ -3,7 +3,7 @@ This test suite tests various implementations of [Open Cloud Mesh (OCM)](https:/
 
 ## Overview
 ```sh
-docker build --name tester .
+docker build -t tester .
 docker run --cap-add=SYS_ADMIN -it tester
 ```
 
