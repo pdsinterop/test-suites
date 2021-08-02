@@ -6,6 +6,9 @@ This test suite tests various implementations of [Open Cloud Mesh (OCM)](https:/
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
 git checkout wip-docker
+git clone https://github.com/michielbdejong/ocm-stub
+git clone https://github.com/cs3org/reva
+
 ./build.sh
 docker compose up
 docker logs -t ocm-test-suite_tester_1
