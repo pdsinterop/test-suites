@@ -39,7 +39,11 @@ class User {
       return
     }
     this.browser = true; // claim the semaphore, will be overwritten:
-    this.browser = await puppeteer.launch({ headless: HEADLESS, ignoreHTTPSErrors: true });
+    this.browser = await puppeteer.launch({
+      headless: HEADLESS,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'], // FIXME: should be possible to avoid this, even when running in Docker
+      ignoreHTTPSErrors: true
+    });
     this.context = this.browser.defaultBrowserContext();
     this.context.overridePermissions(/* browser origin */ undefined, ['clipboard-read']);
     this.page = await this.browser.newPage();

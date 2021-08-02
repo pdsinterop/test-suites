@@ -2,10 +2,17 @@
 This test suite tests various implementations of [Open Cloud Mesh (OCM)](https://github.com/cs3org/OCM-API) against each other.
 
 ## Overview
-Requirements:
-* [docker engine](https://docs.docker.com/engine/install/)
-* [docker-compose](https://docs.docker.com/compose/install/)
+The following script runs the testnet on an empty Ubuntu server:
 ```sh
+apt-het update -yq
+apt-get install -yq    apt-transport-https     ca-certificates     curl     gnupg     lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update -yq
+apt-get install -yq docker-ce docker-ce-cli containerd.io
+docker ps
+
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
 git checkout wip-docker
@@ -13,17 +20,22 @@ git clone https://github.com/michielbdejong/ocm-stub
 git clone https://github.com/cs3org/reva
 
 ./build.sh
-docker-compose up
-docker logs -t ocm-test-suite_tester_1
-docker run -it --network=ocm-test-suite_default --cap-add=SYS_ADMIN --user=root tester /bin/bash
-docker start ocm-test-suite_nc1.docker_1
-docker run -d --network=ocm-test-suite_default --name=ocm-test-suite_nc1.docker_1 nextcloud
-docker exec -it --user=www-data ocm-test-suite_nc1.docker_1 /bin/bash
-$ export PHP_MEMORY_LIMIT="512M"
-$ php console.php maintenance:install --admin-user alice --admin-pass alice123
-$ php console.php status
-$ vim config/config.php +24 # add ocm-test-suite_nc1.docker_1 as a trusted domain
-$ exit
+docker network create testnet
+docker run -d --network=testnet --name=nc1 nextcloud
+docker run -d --network=testnet --name=nc2 nextcloud
+docker run --network=testnet --cap-add=SYS_ADMIN tester
+
+# docker-compose up
+# docker logs -t ocm-test-suite_tester_1
+# docker run -it --network=ocm-test-suite_default --cap-add=SYS_ADMIN --user=root tester /bin/bash
+# docker start ocm-test-suite_nc1.docker_1
+# docker run -d --network=ocm-test-suite_default --name=ocm-test-suite_nc1.docker_1 nextcloud
+# docker exec -it --user=www-data ocm-test-suite_nc1.docker_1 /bin/bash
+# $ export PHP_MEMORY_LIMIT="512M"
+# $ php console.php maintenance:install --admin-user alice --admin-pass alice123
+# $ php console.php status
+# $ vim config/config.php +24 # add ocm-test-suite_nc1.docker_1 as a trusted domain
+# $ exit
 ```
 
 It tests three flows:

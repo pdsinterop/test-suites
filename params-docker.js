@@ -9,38 +9,38 @@ module.exports = {
   GUI_TYPE_NEXTCLOUD,
   GUI_TYPE_SEAFILE,
   params: {
-    'From Stub': {
-      host: 'ocm-test-suite_stub1.docker_1',
-      guiType: GUI_TYPE_STUB,
-      username: 'admin',
-      password: 'admin'
-    },
-    'To Stub': {
-      host: 'ocm-test-suite_stub1.docker_1',
-      guiType: GUI_TYPE_STUB,
-      username: 'admin',
-      password: 'admin'
-    },
-    'From ownCloud': {
-      host: 'ocm-test-suite_oc1.docker_1',
-      guiType: GUI_TYPE_OWNCLOUD,
-      username: 'admin',
-      password: 'admin'
-    },
-    'To ownCloud': {
-      host: 'ocm-test-suite_oc2.docker_1',
-      guiType: GUI_TYPE_OWNCLOUD,
-      username: 'admin',
-      password: 'admin'
-    },
+    // 'From Stub': {
+    //   host: 'ocm-test-suite_stub1.docker_1',
+    //   guiType: GUI_TYPE_STUB,
+    //   username: 'admin',
+    //   password: 'admin'
+    // },
+    // 'To Stub': {
+    //   host: 'ocm-test-suite_stub1.docker_1',
+    //   guiType: GUI_TYPE_STUB,
+    //   username: 'admin',
+    //   password: 'admin'
+    // },
+    // 'From ownCloud': {
+    //   host: 'ocm-test-suite_oc1.docker_1',
+    //   guiType: GUI_TYPE_OWNCLOUD,
+    //   username: 'admin',
+    //   password: 'admin'
+    // },
+    // 'To ownCloud': {
+    //   host: 'ocm-test-suite_oc2.docker_1',
+    //   guiType: GUI_TYPE_OWNCLOUD,
+    //   username: 'admin',
+    //   password: 'admin'
+    // },
     'From Nextcloud': {
-      host: 'ocm-test-suite_nc1.docker_1',
+      host: 'nc1',
       guiType: GUI_TYPE_NEXTCLOUD,
       username: 'alice',
       password: 'alice123'
     },
     'To Nextcloud': {
-      host: 'ocm-test-suite_nc2.docker_1',
+      host: 'nc2',
       guiType: GUI_TYPE_NEXTCLOUD,
       username: 'alice',
       password: 'alice123'
