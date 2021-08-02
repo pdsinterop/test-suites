@@ -37,10 +37,19 @@ RUN npm i puppeteer \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /app/node_modules
 
+RUN apt-get install -y x11vnc xvfb
+
 # Run everything after as non-privileged user.
 USER pptruser
 
+RUN     mkdir ~/.vnc
+# Setup a password
+RUN     x11vnc -storepasswd 1234 ~/.vnc/passwd
+
 ENV NODE_TLS_REJECT_UNAUTHENTICATED=0
 
+# Autostart puppeteer (might not be the best way to do it, but it does the trick)
+RUN bash -c 'echo "npm test" >> /.bashrc'
+
 # CMD ["google-chrome-stable"]
-CMD npm test
+CMD x11vnc -forever -usepw -create
