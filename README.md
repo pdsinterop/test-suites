@@ -2,6 +2,9 @@
 This test suite tests various implementations of [Open Cloud Mesh (OCM)](https://github.com/cs3org/OCM-API) against each other.
 
 ## Overview
+Requirements:
+* [docker engine](https://docs.docker.com/engine/install/)
+* [docker-compose](https://docs.docker.com/compose/install/)
 ```sh
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
@@ -10,7 +13,7 @@ git clone https://github.com/michielbdejong/ocm-stub
 git clone https://github.com/cs3org/reva
 
 ./build.sh
-docker compose up
+docker-compose up
 docker logs -t ocm-test-suite_tester_1
 docker run -it --network=ocm-test-suite_default --cap-add=SYS_ADMIN --user=root tester /bin/bash
 docker start ocm-test-suite_nc1.docker_1
