@@ -3,6 +3,9 @@ This test suite tests various implementations of [Open Cloud Mesh (OCM)](https:/
 
 ## Overview
 ```sh
+git clone https://github.com/cs3org/ocm-test-suite
+cd ocm-test-suite
+git checkout wip-docker
 ./build.sh
 docker compose up
 docker logs -t ocm-test-suite_tester_1
@@ -13,6 +16,8 @@ docker exec -it --user=www-data ocm-test-suite_nc1.docker_1 /bin/bash
 $ export PHP_MEMORY_LIMIT="512M"
 $ php console.php maintenance:install --admin-user alice --admin-pass alice123
 $ php console.php status
+$ vim config/config.php +24 # add ocm-test-suite_nc1.docker_1 as a trusted domain
+$ exit
 ```
 
 It tests three flows:
