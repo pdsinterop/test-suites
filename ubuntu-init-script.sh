@@ -1,7 +1,7 @@
 #!/bin/bash
 
-apt-get update
-apt-get install -y git vim
+sudo apt-get update
+sudo apt-get install -y git vim
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 source $NVM_DIR/nvm.sh
 nvm install 14
