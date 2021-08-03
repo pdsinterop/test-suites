@@ -45,6 +45,7 @@ And same for `nc2`.
 Then from your laptop connect using VNC (e.g. open `vnc://dockerhost` in Safari), password 1234, you should see an Ubuntu desktop.
 You can test that you made it into the testnet by opening Start->Internet->Firefox Web Browser and browsing to https://nc1, once you
 click 'accept the risk and continue', you should be able to log in to Nextcloud with 'alice'/'alice123'.
+For both nc1 and nc2, click the 'X' on the first-time-use splash screen (see https://github.com/cs3org/ocm-test-suite/issues/32).
 
 Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
 ```sh
@@ -53,6 +54,9 @@ source ~/.bashrc
 cd ~/ocm-test-suite
 npm run debug
 `
+
+NB: When running public-link flow from NC for the first time since starting up the `nc1` instance, you will have to manually click the '+'
+(see https://github.com/cs3org/ocm-test-suite/issues/33).
 
 It tests three flows:
 
