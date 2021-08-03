@@ -16,8 +16,8 @@ git clone https://github.com/cs3org/reva
 
 ./build.sh
 docker network create testnet
-docker run -d --network=testnet --name=nc1 nextcloud
-docker run -d --network=testnet --name=nc2 nextcloud
+docker run -d --network=testnet --name=nc1.docker nextcloud
+docker run -d --network=testnet --name=nc2.docker nextcloud
 docker run -p 6080:80 -p 5900:5900 -v /dev/shm:/dev/shm --network=testnet --name=tester -d --cap-add=SYS_ADMIN tester
 
 TESTER_IP_ADDR=`docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tester`
@@ -29,23 +29,23 @@ iptables -t nat -A PREROUTING -p tcp --dport 5900 -j DNAT --to-destination $TEST
 
 While still on the host system, run maintenance:install and set trusted domains in the Nextcloud servers:
 ```sh
-docker exec -it --user=www-data nc1 /bin/bash
+docker exec -it --user=www-data nc1.docker /bin/bash
 ```
 And then:
 ```sh
 export PHP_MEMORY_LIMIT="512M"
 php console.php maintenance:install --admin-user alice --admin-pass alice123
 php console.php status
-vim config/config.php +24 # add nc1 as a trusted domain
+vim config/config.php +24 # add nc1.docker as a trusted domain
 exit
 ```
-And same for `nc2`.
+And same for `nc2.docker`.
 
 
 Then from your laptop connect using VNC (e.g. open `vnc://dockerhost` in Safari), password 1234, you should see an Ubuntu desktop.
-You can test that you made it into the testnet by opening Start->Internet->Firefox Web Browser and browsing to https://nc1, once you
+You can test that you made it into the testnet by opening Start->Internet->Firefox Web Browser and browsing to https://nc1.docker, once you
 click 'accept the risk and continue', you should be able to log in to Nextcloud with 'alice'/'alice123'.
-For both nc1 and nc2, click the 'X' on the first-time-use splash screen (see https://github.com/cs3org/ocm-test-suite/issues/32).
+For both nc1.docker and nc2.docker, click the 'X' on the first-time-use splash screen (see https://github.com/cs3org/ocm-test-suite/issues/32).
 
 Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
 ```sh
@@ -55,7 +55,7 @@ cd ~/ocm-test-suite
 npm run debug
 `
 
-NB: When running public-link flow from NC for the first time since starting up the `nc1` instance, you will have to manually click the '+'
+NB: When running public-link flow from NC for the first time since starting up the `nc1.docker` instance, you will have to manually click the '+'
 (see https://github.com/cs3org/ocm-test-suite/issues/33).
 
 It tests three flows:

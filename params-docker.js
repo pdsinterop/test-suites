@@ -34,13 +34,13 @@ module.exports = {
     //   password: 'admin'
     // },
     'From Nextcloud': {
-      host: 'nc1',
+      host: 'nc1.docker',
       guiType: GUI_TYPE_NEXTCLOUD,
       username: 'alice',
       password: 'alice123'
     },
     'To Nextcloud': {
-      host: 'nc2',
+      host: 'nc2.docker',
       guiType: GUI_TYPE_NEXTCLOUD,
       username: 'alice',
       password: 'alice123'
