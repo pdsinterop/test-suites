@@ -48,7 +48,8 @@ click 'accept the risk and continue', you should be able to log in to Nextcloud 
 
 Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
 ```sh
-sh /ubuntu-init-script.sh
+/bin/bash /ubuntu-init-script.sh
+source ~/.bashrc
 cd ~/ocm-test-suite
 npm run debug
 `
