@@ -1,13 +1,4 @@
-FROM ubuntu
-RUN apt update && apt install -y curl
-SHELL ["/bin/bash", "--login", "-c"]
-ENV NVM_DIR /root/.nvm
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-RUN source $NVM_DIR/nvm.sh && nvm install 14
-RUN source $NVM_DIR/nvm.sh && node --version
-
-# Set debconf to run non-interactively
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+FROM node:12-slim
 
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
@@ -35,10 +26,10 @@ RUN apt-get update \
 ADD . /app
 WORKDIR /app
 RUN rm package-lock.json
-RUN source $NVM_DIR/nvm.sh && npm install
+RUN npm install
 
 # Install puppeteer so it's available in the container.
-RUN source $NVM_DIR/nvm.sh && npm i puppeteer \
+RUN npm i puppeteer \
     # Add user so we don't need --no-sandbox.
     # same layer as npm install to keep re-chowned files from using up several hundred MBs more space
     && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
