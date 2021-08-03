@@ -24,14 +24,15 @@ docker network create testnet
 docker run -d --network=testnet --name=nc1 nextcloud
 docker run -d --network=testnet --name=nc2 nextcloud
 # docker run --network=testnet --cap-add=SYS_ADMIN tester
-docker run -p 5900:5900 --network=testnet -d tester
+docker run -p 5900:5900 --name=tester --network=testnet -d tester
 
+TESTER_IP_ADDR=`docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tester`
+echo $TESTER_IP_ADDR
 # set up port forwarding from host to testnet for vnc:
 sysctl net.ipv4.ip_forward=1
-# docker inspect exciting_einstein | grep IPAddress
-iptables -t nat -A PREROUTING -p tcp -d 142.93.234.44 --dport 5900 -j DNAT --to-destination 172.18.0.2:5900
-iptables -t nat -A POSTROUTING -j MASQUERADE
+iptables -t nat -A PREROUTING -p tcp --dport 5900 -j DNAT --to-destination $TESTER_IP_ADDR:5900
 ```
+
 Then connect using VNC (e.g. open `vnc://dockerhost` in Safari), password 1234, you should see a black screen with a white rectangle in the top-left.
 Type: `HEADLESS= ./node_modules/.bin/jest ocm.test.js --runInBand`
 
