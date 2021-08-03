@@ -1,69 +1,31 @@
 const puppeteer = require("puppeteer");
-
-const GUI_TYPE_STUB = 'GUI Stub';
-const GUI_TYPE_OWNCLOUD = 'GUI ownCloud';
-const GUI_TYPE_NEXTCLOUD = 'GUI Nextloud';
-const GUI_TYPE_SEAFILE = 'GUI Seafile';
+const { GUI_TYPE_STUB,
+  GUI_TYPE_OWNCLOUD,
+  GUI_TYPE_NEXTCLOUD,
+  GUI_TYPE_SEAFILE,
+  params } = (process.env.LIVE ? require("./params-live") : require("./params-docker"));
 
 const JEST_TIMEOUT = 60000;
 const HEADLESS = !!process.env.HEADLESS;
 console.log({ HEADLESS });
 
 const flows = [
-  'Public link flow, log in first',
+  // 'Public link flow, log in first',
   'Public link flow, log in after',
-  'Share-with flow'
+  // 'Share-with flow'
 ];
 const froms = [
-  'From Stub',
-  'From ownCloud',
+  // 'From Stub',
+  // 'From ownCloud',
   'From Nextcloud',
-  'From Seafile',
+  // 'From Seafile',
 ];
 const tos = [
-  'To Stub',
-  'To ownCloud',
+  // 'To Stub',
+  // 'To ownCloud',
   'To Nextcloud',
-  'To Seafile',
+  // 'To Seafile',
 ];
-const params = {
-  'From Stub': {
-    host: 'stub1.pdsinterop.net',
-    guiType: GUI_TYPE_STUB,
-    username: 'admin',
-    password: 'admin'
-  },
-  'To Stub': {
-    host: 'stub1.pdsinterop.net',
-    guiType: GUI_TYPE_STUB,
-    username: 'admin',
-    password: 'admin'
-  },
-  'From ownCloud': {
-    host: 'oc1.pdsinterop.net',
-    guiType: GUI_TYPE_OWNCLOUD,
-    username: 'admin',
-    password: 'admin'
-  },
-  'To ownCloud': {
-    host: 'oc2.pdsinterop.net',
-    guiType: GUI_TYPE_OWNCLOUD,
-    username: 'admin',
-    password: 'admin'
-  },
-  'From Nextcloud': {
-    host: 'nc1.pdsinterop.net',
-    guiType: GUI_TYPE_NEXTCLOUD,
-    username: 'alice',
-    password: 'alice123'
-  },
-  'To Nextcloud': {
-    host: 'nc2.pdsinterop.net',
-    guiType: GUI_TYPE_NEXTCLOUD,
-    username: 'alice',
-    password: 'alice123'
-  }
-};
 
 class User {
   constructor({ host, guiType, username, password }) {
@@ -77,7 +39,11 @@ class User {
       return
     }
     this.browser = true; // claim the semaphore, will be overwritten:
-    this.browser = await puppeteer.launch({ headless: HEADLESS });
+    this.browser = await puppeteer.launch({
+      headless: HEADLESS,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'], // FIXME: should be possible to avoid this, even when running in Docker
+      ignoreHTTPSErrors: true
+    });
     this.context = this.browser.defaultBrowserContext();
     this.context.overridePermissions(/* browser origin */ undefined, ['clipboard-read']);
     this.page = await this.browser.newPage();

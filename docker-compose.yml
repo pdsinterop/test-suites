@@ -1,0 +1,152 @@
+version: '2.1'
+
+# volumes:
+  # oc1.files:
+  #   driver: local
+  # oc1.mysql:
+  #   driver: local
+  # oc1.backup:
+  #   driver: local
+  # oc1.redis:
+  #   driver: local
+  # oc2.files:
+  #   driver: local
+  # oc2.mysql:
+  #   driver: local
+  # oc2.backup:
+  #   driver: local
+  # oc2.redis:
+  #   driver: local
+
+services:
+  # oc1.docker:
+  #   image: owncloud/server:${OWNCLOUD_VERSION}
+  #   restart: always
+  #   ports:
+  #     - ${HTTP_PORT}:8080
+  #   depends_on:
+  #     - oc1.db
+  #     - oc1.redis
+  #   environment:
+  #     - OWNCLOUD_DOMAIN=${OWNCLOUD_DOMAIN}
+  #     - OWNCLOUD_DB_TYPE=mysql
+  #     - OWNCLOUD_DB_NAME=owncloud
+  #     - OWNCLOUD_DB_USERNAME=owncloud
+  #     - OWNCLOUD_DB_PASSWORD=owncloud
+  #     - OWNCLOUD_DB_HOST=oc1.db
+  #     - OWNCLOUD_ADMIN_USERNAME=${ADMIN_USERNAME}
+  #     - OWNCLOUD_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+  #     - OWNCLOUD_MYSQL_UTF8MB4=true
+  #     - OWNCLOUD_REDIS_ENABLED=true
+  #     - OWNCLOUD_REDIS_HOST=oc1.redis
+  #   healthcheck:
+  #     test: ["CMD", "/usr/bin/healthcheck"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #   volumes:
+  #     - oc1.files:/mnt/data
+  # oc1.db:
+  #   image: webhippie/mariadb:latest
+  #   restart: always
+  #   environment:
+  #     - MARIADB_ROOT_PASSWORD=owncloud
+  #     - MARIADB_USERNAME=owncloud
+  #     - MARIADB_PASSWORD=owncloud
+  #     - MARIADB_DATABASE=owncloud
+  #     - MARIADB_MAX_ALLOWED_PACKET=128M
+  #     - MARIADB_INNODB_LOG_FILE_SIZE=64M
+  #   healthcheck:
+  #     test: ["CMD", "/usr/bin/healthcheck"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #   volumes:
+  #     - oc1.mysql:/var/lib/mysql
+  #     - oc1.backup:/var/lib/backup
+  # oc1.redis:
+  #   image: webhippie/redis:latest
+  #   restart: always
+  #   environment:
+  #     - REDIS_DATABASES=1
+  #   healthcheck:
+  #     test: ["CMD", "/usr/bin/healthcheck"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #   volumes:
+  #     - oc1.redis:/var/lib/redis
+  nc1.docker:
+    image: nextcloud
+  # revad1.docker:
+  #   image: revad
+  # stub1.docker:
+  #   image: stub
+  # oc2.docker:
+  #   image: owncloud/server:${OWNCLOUD_VERSION}
+  #   restart: always
+  #   ports:
+  #     - ${HTTP_PORT}:8080
+  #   depends_on:
+  #     - oc2.db
+  #     - oc2.redis
+  #   environment:
+  #     - OWNCLOUD_DOMAIN=${OWNCLOUD_DOMAIN}
+  #     - OWNCLOUD_DB_TYPE=mysql
+  #     - OWNCLOUD_DB_NAME=owncloud
+  #     - OWNCLOUD_DB_USERNAME=owncloud
+  #     - OWNCLOUD_DB_PASSWORD=owncloud
+  #     - OWNCLOUD_DB_HOST=oc2.db
+  #     - OWNCLOUD_ADMIN_USERNAME=${ADMIN_USERNAME}
+  #     - OWNCLOUD_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+  #     - OWNCLOUD_MYSQL_UTF8MB4=true
+  #     - OWNCLOUD_REDIS_ENABLED=true
+  #     - OWNCLOUD_REDIS_HOST=oc2.redis
+  #   healthcheck:
+  #     test: ["CMD", "/usr/bin/healthcheck"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #   volumes:
+  #     - oc2.files:/mnt/data
+  # oc2.db:
+  #   image: webhippie/mariadb:latest
+  #   restart: always
+  #   environment:
+  #     - MARIADB_ROOT_PASSWORD=owncloud
+  #     - MARIADB_USERNAME=owncloud
+  #     - MARIADB_PASSWORD=owncloud
+  #     - MARIADB_DATABASE=owncloud
+  #     - MARIADB_MAX_ALLOWED_PACKET=128M
+  #     - MARIADB_INNODB_LOG_FILE_SIZE=64M
+  #   healthcheck:
+  #     test: ["CMD", "/usr/bin/healthcheck"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #   volumes:
+  #     - oc2.mysql:/var/lib/mysql
+  #     - oc2.backup:/var/lib/backup
+  # oc2.redis:
+  #   image: webhippie/redis:latest
+  #   restart: always
+  #   environment:
+  #     - REDIS_DATABASES=1
+  #   healthcheck:
+  #     test: ["CMD", "/usr/bin/healthcheck"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #   volumes:
+  #     - oc2.redis:/var/lib/redis
+  nc2.docker:
+    image: nextcloud
+  # revad2.docker:
+  #   image: revad
+  # stub2.docker:
+  #   image: stub
+  tester:
+    image: tester
+    cap_add:
+      - SYS_ADMIN
+  

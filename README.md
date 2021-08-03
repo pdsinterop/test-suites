@@ -2,12 +2,57 @@
 This test suite tests various implementations of [Open Cloud Mesh (OCM)](https://github.com/cs3org/OCM-API) against each other.
 
 ## Overview
-It is run automatically on GitHub Actions, against:
-* https://stub1.pdsinterop.net (a stub server running [ocm-stub](https://github.com/michielbdejong/ocm-stub))
-* https://oc1.pdsinterop.net (an OCM provider running ownCloud)
-* https://oc2.pdsinterop.net (an OCM consumer running ownCloud)
-* https://nc1.pdsinterop.net (an OCM provider running Nextcloud)
-* https://nc2.pdsinterop.net (an OCM consumer running Nextcloud)
+The following script runs the testnet on an empty Ubuntu server:
+```sh
+apt-get update
+apt-get install -yq docker.io
+docker ps
+
+git clone https://github.com/cs3org/ocm-test-suite
+cd ocm-test-suite
+git checkout wip-docker
+git clone https://github.com/michielbdejong/ocm-stub
+git clone https://github.com/cs3org/reva
+
+./build.sh
+docker network create testnet
+docker run -d --network=testnet --name=nc1 nextcloud
+docker run -d --network=testnet --name=nc2 nextcloud
+docker run -p 6080:80 -p 5900:5900 -v /dev/shm:/dev/shm --network=testnet --name=tester -d --cap-add=SYS_ADMIN tester
+
+TESTER_IP_ADDR=`docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tester`
+echo $TESTER_IP_ADDR
+# set up port forwarding from host to testnet for vnc:
+sysctl net.ipv4.ip_forward=1
+iptables -t nat -A PREROUTING -p tcp --dport 5900 -j DNAT --to-destination $TESTER_IP_ADDR:5900
+```
+
+While still on the host system, run maintenance:install and set trusted domains in the Nextcloud servers:
+```sh
+docker exec -it --user=www-data nc1 /bin/bash
+```
+And then:
+```sh
+export PHP_MEMORY_LIMIT="512M"
+php console.php maintenance:install --admin-user alice --admin-pass alice123
+php console.php status
+vim config/config.php +24 # add nc1 as a trusted domain
+exit
+```
+And same for `nc2`.
+
+
+Then from your laptop connect using VNC (e.g. open `vnc://dockerhost` in Safari), password 1234, you should see an Ubuntu desktop.
+You can test that you made it into the testnet by opening Start->Internet->Firefox Web Browser and browsing to https://nc1, once you
+click 'accept the risk and continue', you should be able to log in to Nextcloud with 'alice'/'alice123'.
+
+Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
+```sh
+/bin/bash /ubuntu-init-script.sh
+source ~/.bashrc
+cd ~/ocm-test-suite
+npm run debug
+`
 
 It tests three flows:
 
@@ -21,34 +66,3 @@ from the public link.
 
 ### Share-with flow
 In this flow, the provider uses their own personal cloud account GUI to share a resource with the consumer, and the consumer notices this from the notification in their personal cloud acccount GUI, accepts the share, then leaves it again.
-
-## Running the tester locally
-Run:
-```sh
-npm install
-npm test
-```
-
-Debug:
-```sh
-npm install
-npm run debug
-```
-
-## Start ownCloud
-```sh
-cd servers/owncloud-compose
-vim .env
-docker-compose up -d
-```
-
-## Start Nextcloud
-```sh
-docker build -t nextcloud-server servers/nextcloud-server/
-docker run -d -e SERVER_ROOT=https://`hostname`.pdsinterop.net -p 443:443 -p 80:80 --name=server nextcloud-server
-curl -kI https://`hostname`.pdsinterop.net
-docker exec -u www-data -it -e SERVER_ROOT=https://`hostname`.pdsinterop.net server php console.php maintenance:install --admin-user alice --admin-pass alice123
-docker exec -u www-data -it -e SERVER_ROOT=https://`hostname`.pdsinterop.net server sed -i "25 i\    1 => '`hostname`.pdsinterop.net'," config/config.php
-docker exec -u root -it server service apache2 reload
-docker exec -u root -it server certbot --apache
-```
