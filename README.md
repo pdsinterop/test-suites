@@ -46,7 +46,7 @@ You can test that you made it into the testnet by opening Start->Internet->Firef
 click 'accept the risk and continue', you should be able to log in to Nextcloud with 'alice'/'alice123'.
 
 ### Known Issues
-NB: We recently switch from vps-hosted to in-Docker, and the test suite is currently in active development. Here are some known issues we're working on:
+NB: We recently switched from vps-hosted to in-Docker, and the test suite is currently in active development. Here are some known issues we're working on:
 
 1. For both nc1.docker and nc2.docker, click the 'X' on the first-time-use splash screen (see https://github.com/cs3org/ocm-test-suite/issues/32).
 2. When running public-link flow from NC for the first time since starting up the `nc1.docker` instance, you will have to manually click the '+' (see https://github.com/cs3org/ocm-test-suite/issues/33).
