@@ -41,11 +41,21 @@ exit
 ```
 And same for `nc2.docker`.
 
-
 Then from your laptop connect using VNC (e.g. open `vnc://dockerhost` in Safari), password 1234, you should see an Ubuntu desktop.
 You can test that you made it into the testnet by opening Start->Internet->Firefox Web Browser and browsing to https://nc1.docker, once you
 click 'accept the risk and continue', you should be able to log in to Nextcloud with 'alice'/'alice123'.
-For both nc1.docker and nc2.docker, click the 'X' on the first-time-use splash screen (see https://github.com/cs3org/ocm-test-suite/issues/32).
+
+### Known Issues
+NB: We recently switch from vps-hosted to in-Docker, and the test suite is currently in active development. Here are some known issues we're working on:
+
+1. For both nc1.docker and nc2.docker, click the 'X' on the first-time-use splash screen (see https://github.com/cs3org/ocm-test-suite/issues/32).
+2. When running public-link flow from NC for the first time since starting up the `nc1.docker` instance, you will have to manually click the '+' (see https://github.com/cs3org/ocm-test-suite/issues/33).
+3. Only NC->NC public-link (login after) is currently being tested, the rest is commented out
+4. Reva has not been added yet (https://github.com/cs3org/ocm-test-suite/issues/25)
+5. Due to https://github.com/cs3org/ocm-test-suite/issues/34:
+   * add `'allow_local_remote_servers' => true` to /var/www/html/config/config.php on nc1.docker.
+   * add `'verify' => false` to /var/www/html/lib/private/Http/Client/ClientService.php line 75 on nc1.docker.
+   * even then it doesn't seem to work consistently yet.
 
 Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
 ```sh
@@ -55,8 +65,6 @@ cd ~/ocm-test-suite
 npm run debug
 `
 
-NB: When running public-link flow from NC for the first time since starting up the `nc1.docker` instance, you will have to manually click the '+'
-(see https://github.com/cs3org/ocm-test-suite/issues/33).
 
 It tests three flows:
 
