@@ -55,7 +55,7 @@ NB: We recently switched from vps-hosted to in-Docker, and the test suite is cur
 5. Due to https://github.com/cs3org/ocm-test-suite/issues/34:
    * add `'allow_local_remote_servers' => true` to /var/www/html/config/config.php on nc1.docker.
    * add `'verify' => false` to /var/www/html/lib/private/Http/Client/ClientService.php line 75 on nc1.docker.
-   * comment out line 79 of var/www/html/lib/private/Http/Client/Client.php
+   * comment out line 79 of /var/www/html/lib/private/Http/Client/Client.php
    * even then it doesn't seem to work consistently yet.
 
 Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
