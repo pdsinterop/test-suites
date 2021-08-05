@@ -9,18 +9,30 @@ module.exports = {
   GUI_TYPE_NEXTCLOUD,
   GUI_TYPE_SEAFILE,
   params: {
-    // 'From Stub': {
-    //   host: 'ocm-test-suite_stub1.docker_1',
-    //   guiType: GUI_TYPE_STUB,
-    //   username: 'admin',
-    //   password: 'admin'
-    // },
-    // 'To Stub': {
-    //   host: 'ocm-test-suite_stub1.docker_1',
-    //   guiType: GUI_TYPE_STUB,
-    //   username: 'admin',
-    //   password: 'admin'
-    // },
+    'From Stub': {
+      host: 'stub1.docker',
+      guiType: GUI_TYPE_STUB,
+      username: 'admin',
+      password: 'admin'
+    },
+    'To Stub': {
+      host: 'stub2.docker',
+      guiType: GUI_TYPE_STUB,
+      username: 'admin',
+      password: 'admin'
+    },
+    'From Reva': {
+      host: 'revad1.docker',
+      guiType: GUI_TYPE_REVA,
+      username: 'admin',
+      password: 'admin'
+    },
+    'To Reva': {
+      host: 'revad2.docker',
+      guiType: GUI_TYPE_REVA,
+      username: 'admin',
+      password: 'admin'
+    },
     // 'From ownCloud': {
     //   host: 'ocm-test-suite_oc1.docker_1',
     //   guiType: GUI_TYPE_OWNCLOUD,
