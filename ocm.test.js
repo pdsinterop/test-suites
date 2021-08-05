@@ -15,16 +15,18 @@ const flows = [
   // 'Share-with flow'
 ];
 const froms = [
-  // 'From Stub',
+  'From Stub',
   // 'From ownCloud',
-  'From Nextcloud',
+  // 'From Nextcloud',
   // 'From Seafile',
+  // 'From Reva',
 ];
 const tos = [
   // 'To Stub',
   // 'To ownCloud',
-  'To Nextcloud',
+  // 'To Nextcloud',
   // 'To Seafile',
+  'To Reva',
 ];
 
 class User {
