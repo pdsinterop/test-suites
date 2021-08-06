@@ -29,7 +29,7 @@ ocmshareprovidersvc = "localhost:19000"
 ocminvitemanagersvc = "localhost:19000"
 ocmproviderauthorizersvc = "localhost:19000"
 commit_share_to_storage_grant = false
-datagateway = "http://localhost:19001/data"
+datagateway = "http://localhost/data"
 transfer_expires = 6 # give it a moment
 
 [grpc.services.authregistry]
@@ -98,7 +98,7 @@ driver = "localhome"
 mount_path = "/home"
 mount_id = "123e4567-e89b-12d3-a456-426655440000"
 expose_data_server = true
-data_server_url = "http://localhost:19001/data"
+data_server_url = "http://localhost/data"
 enable_home_creation = true
 
 [grpc.services.storageprovider.mimetypes]
@@ -122,7 +122,7 @@ users = "users.demo.json"
 [http]
 enabled_services = ["ocmd"]
 enabled_middlewares = ["providerauthorizer", "cors"]
-address = "0.0.0.0:19001"
+address = "0.0.0.0:80"
 
 [http.services.dataprovider]
 driver = "localhome"
