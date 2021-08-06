@@ -134,7 +134,7 @@ driver = "localhome"
 user_layout = "{{.Username}}"
 
 [http.services.ocmd]
-prefix = "ocm"
+prefix = ""
 
 [http.middlewares.providerauthorizer]
 driver = "json"
