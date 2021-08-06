@@ -146,5 +146,6 @@ providers = "providers.demo.json"
 prefix = "ocs"
 
 [http.services.ocdav]
+prefix = "ocdav"
 
 [http.middlewares.cors]
