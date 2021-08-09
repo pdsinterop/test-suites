@@ -12,6 +12,9 @@ git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
 git checkout add-reva
 git clone https://github.com/michielbdejong/ocm-stub
+cd ocm-stub
+git checkout adapt-to-revad
+cd ..
 git clone https://github.com/michielbdejong/reva
 cd reva
 git checkout pass-ocm-test-suite
