@@ -20,12 +20,12 @@ cd ..
 
 ./build.sh
 docker network create testnet
-docker run -d --network=testnet --name=nc1.docker nextcloud
-docker run -d --network=testnet --name=nc2.docker nextcloud
-docker run -d --network=testnet --name=stub1.docker stub
-docker run -d --network=testnet --name=stub2.docker stub
-docker run -d --network=testnet --name=revad1.docker revad
-docker run -d --network=testnet --name=revad2.docker revad
+docker run -d --network=testnet --rm --name=nc1.docker nextcloud
+docker run -d --network=testnet --rm --name=nc2.docker nextcloud
+docker run -d --network=testnet --rm --name=stub1.docker stub
+docker run -d --network=testnet --rm --name=stub2.docker stub
+docker run -d --network=testnet --rm --name=revad1.docker revad
+docker run -d --network=testnet --rm --name=revad2.docker revad
 docker run -p 6080:80 -p 5900:5900 -v /dev/shm:/dev/shm --network=testnet --name=tester -d --cap-add=SYS_ADMIN tester
 
 TESTER_IP_ADDR=`docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tester`
