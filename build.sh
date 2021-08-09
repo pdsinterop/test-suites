@@ -7,9 +7,9 @@ docker build -t stub .
 cd ..
 # rm -rf ocm-stub
 
-# git clone https://github.com/cs3org/reva
+# git clone https://github.com/michielbdejong/reva
 cd reva
-git checkout v1.11.0
+# git checkout pass-ocm-test-suite
 docker build -t revadbase -f ./Dockerfile.revad .
 cd ..
 # rm -rf reva

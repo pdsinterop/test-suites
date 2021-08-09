@@ -12,9 +12,9 @@ git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
 git checkout add-reva
 git clone https://github.com/michielbdejong/ocm-stub
-git clone https://github.com/cs3org/reva
+git clone https://github.com/michielbdejong/reva
 cd reva
-git checkout v1.11.0
+git checkout pass-ocm-test-suite
 cd ..
 
 
@@ -71,6 +71,7 @@ Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type
 /bin/bash /ubuntu-init-script.sh
 source ~/.bashrc
 cd ~/ocm-test-suite
+git checkout add-reva
 npm run debug
 `
 
