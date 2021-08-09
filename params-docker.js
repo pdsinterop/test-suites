@@ -24,13 +24,13 @@ module.exports = {
       password: 'admin'
     },
     'From Reva': {
-      host: 'revad1.docker',
+      host: 'http://revad1.docker',
       guiType: GUI_TYPE_REVA,
       username: 'admin',
       password: 'admin'
     },
     'To Reva': {
-      host: 'revad2.docker',
+      host: 'http://revad2.docker',
       guiType: GUI_TYPE_REVA,
       username: 'admin',
       password: 'admin'

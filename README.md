@@ -10,9 +10,13 @@ docker ps
 
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
-git checkout wip-docker
+git checkout add-reva
 git clone https://github.com/michielbdejong/ocm-stub
 git clone https://github.com/cs3org/reva
+cd reva
+git checkout v1.11.0
+cd ..
+
 
 ./build.sh
 docker network create testnet
