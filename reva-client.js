@@ -62,7 +62,16 @@ module.exports = class RevaClient {
     const req = new ListReceivedOCMSharesRequest();
     // req.setToken(token);
     const shares = await this.grpcClient.listReceivedOCMShares(req, this.metadata);
-    console.log('SharesList from ListReceivedOCMSharesResponse:', shares.getSharesList());
+    console.log('SharesList from ListReceivedOCMSharesResponse:', shares.getSharesList()[0].getState(), shares.getSharesList()[0].getReferenceId());
   }
   
+  async updateReceivedOCMShares(shareReference, newState) {
+    await this.ensureConnected();
+    const req = new UpdateReceivedOCMSharesRequest();
+    req.setShareReference(shareReference);
+    req.setState(newState);
+
+    const res = await this.grpcClient.updateReceivedOCMShare(req, this.metadata);
+    // console.log('updated', res);
+  }
 }
