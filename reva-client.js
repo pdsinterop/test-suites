@@ -5,6 +5,7 @@ const { AuthenticateRequest } = require('@cs3org/node-cs3apis/cs3/gateway/v1beta
 const { ListReceivedOCMSharesRequest, UpdateReceivedOCMShareRequest, ShareReference, ShareId } = require('@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/ocm_api_pb');
 const { GranteeType } = require('@cs3org/node-cs3apis/cs3/storage/provider/v1beta1/resources_pb');
 const { Code } = require('@cs3org/node-cs3apis/cs3/rpc/v1beta1/code_pb');
+const { ShareState } = require('@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/resources_pb');
 
 // Specifies the name of the Reva access token used during requests.
 // Align this string with the server expects, in the case of revad see:
@@ -189,6 +190,15 @@ module.exports = class RevaClient {
     const ok = (res.getStatus().getCode() === Code.CODE_OK);
     // console.log({ ok });
     return ok;
+  }
+
+  async acceptShare() {
+    const ids = await this.listReceivedOCMShares();
+    // console.log({ ids });
+    const promises = ids.map(id => {
+      return this.updateReceivedOCMShare(id, ShareState.SHARE_STATE_ACCEPTED);
+    });
+    return Promise.all(promises);
   }
 }
 
