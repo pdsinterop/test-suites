@@ -1,9 +1,10 @@
 const util = require('util');
 const grpc = require('grpc');
 const { GatewayAPIClient } = require('@cs3org/node-cs3apis/cs3/gateway/v1beta1/gateway_api_grpc_pb');
-const { AuthenticateRequest, WhoAmIRequest } = require('@cs3org/node-cs3apis/cs3/gateway/v1beta1/gateway_api_pb');
-const { ListReceivedOCMSharesRequest } = require('@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/ocm_api_pb');
+const { AuthenticateRequest } = require('@cs3org/node-cs3apis/cs3/gateway/v1beta1/gateway_api_pb');
+const { ListReceivedOCMSharesRequest, UpdateReceivedOCMShareRequest, ShareReference, ShareId } = require('@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/ocm_api_pb');
 const { GranteeType } = require('@cs3org/node-cs3apis/cs3/storage/provider/v1beta1/resources_pb');
+const { Code } = require('@cs3org/node-cs3apis/cs3/rpc/v1beta1/code_pb');
 
 // Specifies the name of the Reva access token used during requests.
 // Align this string with the server expects, in the case of revad see:
@@ -37,8 +38,89 @@ module.exports = class RevaClient {
     }
     this.grpcClient = promisifyMethods(new GatewayAPIClient(this.host, grpc.credentials.createInsecure()), [
       'authenticate',
+      'whoAmI',
+      'generateAppPassword',
+      'listAppPasswords',
+      'invalidateAppPassword',
+      'getAppPassword',
+      'createContainer',
+      'delete',
+      'getPath',
+      'getQuota',
+      'initiateFileDownload',
+      'initiateFileUpload',
+      'listContainerStream',
+      'listContainer',
+      'listFileVersions',
+      'listRecycleStream',
+      'listRecycle',
+      'move',
+      'purgeRecycle',
+      'restoreFileVersion',
+      'restoreRecycleItem',
+      'stat',
+      'createSymlink',
+      'setArbitraryMetadata',
+      'unsetArbitraryMetadata',
+      'createHome',
+      'createStorageSpace',
+      'listStorageSpaces',
+      'updateStorageSpace',
+      'deleteStorageSpace',
+      'openInApp',
+      'createShare',
+      'removeShare',
+      'getShare',
+      'listShares',
+      'updateShare',
+      'listReceivedShares',
+      'updateReceivedShare',
+      'getReceivedShare',
+      'setKey',
+      'getKey',
+      'createPublicShare',
+      'removePublicShare',
+      'getPublicShare',
+      'getPublicShareByToken',
+      'listPublicShares',
+      'updatePublicShare',
+      'createOCMShare',
+      'removeOCMShare',
+      'getOCMShare',
+      'listOCMShares',
+      'updateOCMShare',
       'listReceivedOCMShares',
-      'whoAmI'
+      'updateReceivedOCMShare',
+      'getReceivedOCMShare',
+      'getAppProviders',
+      'addAppProvider',
+      'listAppProviders',
+      'listSupportedMimeTypes',
+      'getDefaultAppProviderForMimeType',
+      'setDefaultAppProviderForMimeType',
+      'getUser',
+      'getUserByClaim',
+      'getUserGroups',
+      'findUsers',
+      'getGroup',
+      'getGroupByClaim',
+      'getMembers',
+      'hasMember',
+      'findGroups',
+      'listAuthProviders',
+      'getHome',
+      'generateInviteToken',
+      'forwardInvite',
+      'acceptInvite',
+      'getAcceptedUser',
+      'findAcceptedUsers',
+      'isProviderAllowed',
+      'getInfoByDomain',
+      'listAllProviders',
+      'createOCMCoreShare',
+      'createTransfer',
+      'getTransferStatus',
+      'cancelTransfer'
     ]);
     this.metadata = new grpc.Metadata();
     const req = new AuthenticateRequest();
@@ -56,6 +138,7 @@ module.exports = class RevaClient {
     // add the token to the metadata for subsequent client calls
     const token = res.getToken();
     this.metadata.add(TOKEN_HEADER, token);
+    // console.log(this.grpcClient.prototype);
   }
 
   async listReceivedOCMShares() {
@@ -63,7 +146,7 @@ module.exports = class RevaClient {
     const req = new ListReceivedOCMSharesRequest();
     // req.setToken(token);
     const shares = await this.grpcClient.listReceivedOCMShares(req, this.metadata);
-    shares.getSharesList().forEach(share => {
+    return shares.getSharesList().map(share => {
       let idp, opaque;
       if (share.getShare().getGrantee().getType() == GranteeType.GRANTEE_TYPE_USER) {
         // console.log(share);
@@ -72,31 +155,40 @@ module.exports = class RevaClient {
       } else if (share.getShare().getGrantee().getType() == GranteeType.GRANTEE_TYPE_GROUP) {
         idp, opaque = share.getShare().getGrantee().getGroupId().getIdp(), share.getShare().getGrantee().getGroupId().getOpaqueId();
       }
-      console.log('share', [
-        share.getShare().getId().getOpaqueId(),
-        share.getShare().getOwner().getIdp(),
-        share.getShare().getOwner().getOpaqueId(),
-        share.getShare().getResourceId().getOpaqueId(),
-        share.getShare().getResourceId().getStorageId(),
-        share.getShare().getPermissions().getReshare(),
-        share.getShare().getGrantee().getType(),
-        idp,
-        opaque,
-        new Date(share.getShare().getCtime().getSeconds()),
-        new Date(share.getShare().getMtime().getSeconds()),
-        share.getState()
-        ]);  
+      // console.log('share', [
+      //   share.getShare().getId().getOpaqueId(),
+      //   share.getShare().getOwner().getIdp(),
+      //   share.getShare().getOwner().getOpaqueId(),
+      //   share.getShare().getResourceId().getOpaqueId(),
+      //   share.getShare().getResourceId().getStorageId(),
+      //   share.getShare().getPermissions().getReshare(),
+      //   share.getShare().getGrantee().getType(),
+      //   idp,
+      //   opaque,
+      //   new Date(share.getShare().getCtime().getSeconds()),
+      //   new Date(share.getShare().getMtime().getSeconds()),
+      //   share.getState()
+      //   ]);
+      return share.getShare().getId().getOpaqueId();
     });
   }
   
-  async updateReceivedOCMShares(shareReference, newState) {
+  async updateReceivedOCMShare(opaqueId, newState) {
     await this.ensureConnected();
-    const req = new UpdateReceivedOCMSharesRequest();
-    req.setShareReference(shareReference);
-    req.setState(newState);
+    const shareId = new ShareId();
+    shareId.setOpaqueId(opaqueId);
+    const ref = new ShareReference();
+    ref.setId(shareId);
+    const field = new UpdateReceivedOCMShareRequest.UpdateField();
+    field.setState(newState);
+    const req = new UpdateReceivedOCMShareRequest();
+    req.setRef(ref);
+    req.setField(field);
 
     const res = await this.grpcClient.updateReceivedOCMShare(req, this.metadata);
-    // console.log('updated', res);
+    const ok = (res.getStatus().getCode() === Code.CODE_OK);
+    // console.log({ ok });
+    return ok;
   }
 }
 
