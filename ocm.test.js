@@ -3,7 +3,10 @@ const { GUI_TYPE_STUB,
   GUI_TYPE_OWNCLOUD,
   GUI_TYPE_NEXTCLOUD,
   GUI_TYPE_SEAFILE,
+  GUI_TYPE_REVA,
   params } = (process.env.LIVE ? require("./params-live") : require("./params-docker"));
+
+const RevaClient = require("./reva-client");
 
 const JEST_TIMEOUT = 60000;
 const HEADLESS = !!process.env.HEADLESS;
@@ -15,16 +18,18 @@ const flows = [
   // 'Share-with flow'
 ];
 const froms = [
-  // 'From Stub',
+  'From Stub',
   // 'From ownCloud',
-  'From Nextcloud',
+  // 'From Nextcloud',
   // 'From Seafile',
+  // 'From Reva',
 ];
 const tos = [
   // 'To Stub',
   // 'To ownCloud',
-  'To Nextcloud',
+  // 'To Nextcloud',
   // 'To Seafile',
+  'To Reva',
 ];
 
 class User {
@@ -140,7 +145,7 @@ class User {
       // FIXME: Find a nicer way to do this:
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      await this.type('div.multiselect__tags input.multiselect__input', `${shareWithUser}@https://${shareWithHost}`);
+      await this.type('div.multiselect__tags input.multiselect__input', `${shareWithUser}@${shareWithHost}`);
       await this.go('span.option__desc--lineone');
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
@@ -151,7 +156,7 @@ class User {
   async acceptPublicLink(url, remoteGuiType) {
     await this.page.goto(url);
     if (remoteGuiType === GUI_TYPE_STUB) {
-      const consumer = encodeURIComponent(`${this.username}@https://${this.host}`);
+      const consumer = encodeURIComponent(`${this.username}@${this.host}`);
       const newUrl = new URL(`?saveTo=${consumer}`, url).toString();
       // console.log('accepting public link', newUrl);
       await this.page.goto(newUrl);
@@ -162,7 +167,7 @@ class User {
     } else if (remoteGuiType === GUI_TYPE_NEXTCLOUD) {
       await this.go('button.menutoggle');
       await this.go('button#save-external-share');
-      await this.page.type('#remote_address', `${this.username}@https://${this.host}`);
+      await this.page.type('#remote_address', `${this.username}@${this.host}`);
       await this.page.click('#save-button-confirm');
     } else if (remoteGuiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
@@ -214,6 +219,9 @@ class User {
       );
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
+    } else if (this.guiType === GUI_TYPE_REVA) {
+      const client = new RevaClient('revad2.docker:19000', 'marie', 'radioactivity');
+      await client.acceptAllShares();
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }

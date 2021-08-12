@@ -3,24 +3,38 @@ const GUI_TYPE_STUB = 'GUI Stub';
 const GUI_TYPE_OWNCLOUD = 'GUI ownCloud';
 const GUI_TYPE_NEXTCLOUD = 'GUI Nextloud';
 const GUI_TYPE_SEAFILE = 'GUI Seafile';
+const GUI_TYPE_REVA = 'GUI Reva (i.e., reva-cli)';
+
 module.exports = {
   GUI_TYPE_STUB,
   GUI_TYPE_OWNCLOUD,
   GUI_TYPE_NEXTCLOUD,
   GUI_TYPE_SEAFILE,
   params: {
-    // 'From Stub': {
-    //   host: 'ocm-test-suite_stub1.docker_1',
-    //   guiType: GUI_TYPE_STUB,
-    //   username: 'admin',
-    //   password: 'admin'
-    // },
-    // 'To Stub': {
-    //   host: 'ocm-test-suite_stub1.docker_1',
-    //   guiType: GUI_TYPE_STUB,
-    //   username: 'admin',
-    //   password: 'admin'
-    // },
+    'From Stub': {
+      host: 'stub1.docker',
+      guiType: GUI_TYPE_STUB,
+      username: 'admin',
+      password: 'admin'
+    },
+    'To Stub': {
+      host: 'stub2.docker',
+      guiType: GUI_TYPE_STUB,
+      username: 'admin',
+      password: 'admin'
+    },
+    'From Reva': {
+      host: 'http://revad1.docker',
+      guiType: GUI_TYPE_REVA,
+      username: 'admin',
+      password: 'admin'
+    },
+    'To Reva': {
+      host: 'http://revad2.docker',
+      guiType: GUI_TYPE_REVA,
+      username: 'admin',
+      password: 'admin'
+    },
     // 'From ownCloud': {
     //   host: 'ocm-test-suite_oc1.docker_1',
     //   guiType: GUI_TYPE_OWNCLOUD,
