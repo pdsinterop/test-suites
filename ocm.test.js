@@ -18,18 +18,18 @@ const flows = [
   // 'Share-with flow'
 ];
 const froms = [
-  'From Stub',
+  // 'From Stub',
   // 'From ownCloud',
-  // 'From Nextcloud',
+  'From Nextcloud',
   // 'From Seafile',
   // 'From Reva',
 ];
 const tos = [
-  // 'To Stub',
+  'To Stub',
   // 'To ownCloud',
   // 'To Nextcloud',
   // 'To Seafile',
-  'To Reva',
+  // 'To Reva',
 ];
 
 class User {
@@ -75,7 +75,7 @@ class User {
       await this.page.waitForSelector('image.app-icon');
       const FTU_CLOSE_BUTTON = 'button.action-item.action-item--single.header-close.icon-close.undefined';
       if (this.page.$(FTU_CLOSE_BUTTON)) {
-        await this.page.click(TU_CLOSE_BUTTON);
+        await this.page.click(FTU_CLOSE_BUTTON);
       }
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
