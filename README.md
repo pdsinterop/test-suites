@@ -11,6 +11,7 @@ docker ps
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
 git checkout add-reva
+cd ..
 git clone https://github.com/michielbdejong/ocm-stub
 cd ocm-stub
 git checkout adapt-to-revad
