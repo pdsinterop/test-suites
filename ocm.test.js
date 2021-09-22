@@ -73,6 +73,10 @@ class User {
       await commonSteps();
       await this.page.click("#submit-form");
       await this.page.waitForSelector('image.app-icon');
+      const FTU_CLOSE_BUTTON = 'button.action-item.action-item--single.header-close.icon-close.undefined';
+      if (this.page.$(FTU_CLOSE_BUTTON)) {
+        await this.page.click(TU_CLOSE_BUTTON);
+      }
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else {
