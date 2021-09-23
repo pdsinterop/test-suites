@@ -112,8 +112,8 @@ class User {
       await this.page.goto(filesUrl);
 
       await this.page.waitForSelector('image.app-icon');
-      await this.go('a.action-share');
-      const CREATE_PUBLIC_LINK_BUTTON = 'button.action-item.action-item--single.sharing-entry--actions';
+      await this.go('a#sharing');
+      const CREATE_PUBLIC_LINK_BUTTON = 'button.new-share-link';
       const elt = await this.page.$(CREATE_PUBLIC_LINK_BUTTON);
       if (elt) {
         await this.page.click(CREATE_PUBLIC_LINK_BUTTON);
