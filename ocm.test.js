@@ -110,11 +110,14 @@ class User {
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
       const filesUrl = `https://${this.host}/apps/files/?dir=/&openfile=15`; // select nextcloud.png file
       await this.page.goto(filesUrl);
-      // FIXME deal with first-time-use splash screen for Nextcloud Hub
+
       await this.page.waitForSelector('image.app-icon');
       await this.go('a.action-share');
-
-      // FIXME: create public share for the first time
+      const CREATE_PUBLIC_LINK_BUTTON = 'button.action-item.action-item--single.sharing-entry--actions';
+      const elt = await this.page.$(CREATE_PUBLIC_LINK_BUTTON);
+      if (elt) {
+        await this.page.click(CREATE_PUBLIC_LINK_BUTTON);
+      }
       // await this.go('button.action-item__menutoggle');
       // await this.go('li.new-share-link');
 
