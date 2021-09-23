@@ -67,10 +67,8 @@ from this situation. Please join https://gitter.im/cs3org/OCM and ping @michielb
 
 Here are some known issues we're working on:
 
-1. For both nc1.docker and nc2.docker, click the 'X' on the first-time-use splash screen (see https://github.com/cs3org/ocm-test-suite/issues/32).
-2. When running public-link flow from NC for the first time since starting up the `nc1.docker` instance, you will have to manually click the '+' (see https://github.com/cs3org/ocm-test-suite/issues/33).
-3. Only NC->NC public-link (login after) is currently being tested, the rest is commented out
-4. Reva has been added but is not passing the tests yet, due to a few open issues:
+1. Only some of the flows are currently being tested, the rest are [commented out](https://github.com/cs3org/ocm-test-suite/blob/ca8d043/ocm.test.js#L15-L33).
+2. Reva has been added but is not passing the tests yet, due to a few open issues:
   * https://github.com/cs3org/reva/issues/1752
   * https://github.com/cs3org/reva/issues/1753
   * https://github.com/cs3org/reva/issues/1962

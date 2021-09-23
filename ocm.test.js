@@ -25,9 +25,9 @@ const froms = [
   // 'From Reva',
 ];
 const tos = [
-  'To Stub',
+  // 'To Stub',
   // 'To ownCloud',
-  // 'To Nextcloud',
+  'To Nextcloud',
   // 'To Seafile',
   // 'To Reva',
 ];
