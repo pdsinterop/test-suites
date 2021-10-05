@@ -84,7 +84,7 @@ Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type
 source ~/.bashrc
 cd ~/ocm-test-suite
 npm run debug
-`
+```
 
 
 It tests three flows:
