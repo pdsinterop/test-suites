@@ -77,7 +77,9 @@ Here are some known issues we're working on:
    * add `'allow_local_remote_servers' => true` to /var/www/html/config/config.php on nc1.docker.
    * add `'verify' => false` to /var/www/html/lib/private/Http/Client/ClientService.php line 75 on nc1.docker.
    * comment out line 79 of /var/www/html/lib/private/Http/Client/Client.php
-   * even then it doesn't seem to work consistently yet.
+   * even then it doesn't seem to work consistently yet:
+     * https://github.com/cs3org/ocm-test-suite/issues/38
+     * https://github.com/cs3org/ocm-test-suite/issues/39
 
 Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
 ```sh
