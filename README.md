@@ -21,7 +21,6 @@ cd reva
 git checkout pass-ocm-test-suite
 cd ..
 
-cd ocm-test-suite
 ./build.sh
 docker network create testnet
 docker run -d --network=testnet --rm --name=nc1.docker nextcloud
@@ -73,7 +72,7 @@ Here are some known issues we're working on:
   * https://github.com/cs3org/reva/issues/1753
   * https://github.com/cs3org/reva/issues/1962
   * https://github.com/cs3org/reva/issues/1981
-5. Due to https://github.com/cs3org/ocm-test-suite/issues/34:
+3. Due to https://github.com/cs3org/ocm-test-suite/issues/34:
    * add `'allow_local_remote_servers' => true` to /var/www/html/config/config.php on nc1.docker.
    * add `'verify' => false` to /var/www/html/lib/private/Http/Client/ClientService.php line 75 on nc1.docker.
    * comment out line 79 of /var/www/html/lib/private/Http/Client/Client.php
@@ -87,7 +86,7 @@ Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type
 source ~/.bashrc
 cd ~/ocm-test-suite
 npm run debug
-`
+```
 
 
 It tests three flows:
