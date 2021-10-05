@@ -66,15 +66,13 @@ from this situation. Please join https://gitter.im/cs3org/OCM and ping @michielb
 
 Here are some known issues we're working on:
 
-1. For both nc1.docker and nc2.docker, click the 'X' on the first-time-use splash screen (see https://github.com/cs3org/ocm-test-suite/issues/32).
-2. When running public-link flow from NC for the first time since starting up the `nc1.docker` instance, you will have to manually click the '+' (see https://github.com/cs3org/ocm-test-suite/issues/33).
-3. Only NC->NC public-link (login after) is currently being tested, the rest is commented out
-4. Reva has been added but is not passing the tests yet, due to a few open issues:
+1. Only NC->NC public-link (login after) is currently being tested, the rest is commented out
+2. Reva has been added but is not passing the tests yet, due to a few open issues:
   * https://github.com/cs3org/reva/issues/1752
   * https://github.com/cs3org/reva/issues/1753
   * https://github.com/cs3org/reva/issues/1962
   * https://github.com/cs3org/reva/issues/1981
-5. Due to https://github.com/cs3org/ocm-test-suite/issues/34:
+3. Due to https://github.com/cs3org/ocm-test-suite/issues/34:
    * add `'allow_local_remote_servers' => true` to /var/www/html/config/config.php on nc1.docker.
    * add `'verify' => false` to /var/www/html/lib/private/Http/Client/ClientService.php line 75 on nc1.docker.
    * comment out line 79 of /var/www/html/lib/private/Http/Client/Client.php
