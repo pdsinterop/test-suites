@@ -21,7 +21,6 @@ cd reva
 git checkout pass-ocm-test-suite
 cd ..
 
-cd ocm-test-suite
 ./build.sh
 docker network create testnet
 docker run -d --network=testnet --rm --name=nc1.docker nextcloud
