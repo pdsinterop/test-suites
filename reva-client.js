@@ -18,6 +18,7 @@ const {
   GranteeType,
   Grantee,
   ResourceId,
+  ResourcePermissions,
 } = require('@cs3org/node-cs3apis/cs3/storage/provider/v1beta1/resources_pb');
 const { UserId } = require('@cs3org/node-cs3apis/cs3/identity/user/v1beta1/resources_pb');
 const { Code } = require('@cs3org/node-cs3apis/cs3/rpc/v1beta1/code_pb');
@@ -177,6 +178,9 @@ module.exports = class RevaClient {
           grantee.setUserId(userId);
       shareGrant.setGrantee(grantee);
         const sharePermissions = new SharePermissions();
+            const resourcePermissions = new ResourcePermissions();
+              resourcePermissions.setCreateContainer(true);
+          sharePermissions.setPermissions(resourcePermissions);
       shareGrant.setPermissions(sharePermissions);
     req.setGrant(shareGrant);
       const providerInfo = new ProviderInfo();
