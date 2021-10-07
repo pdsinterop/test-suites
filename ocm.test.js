@@ -159,7 +159,7 @@ class User {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else if (this.guiType === GUI_TYPE_REVA) {
       const client = new RevaClient('revad1.docker:19000', 'einstein', 'relativity');
-      await client.sendShares(shareWithUser, shareWithHost);
+      await client.createOCMShare(shareWithUser, shareWithHost);
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }

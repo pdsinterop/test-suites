@@ -2,8 +2,24 @@ const util = require('util');
 const grpc = require('grpc');
 const { GatewayAPIClient } = require('@cs3org/node-cs3apis/cs3/gateway/v1beta1/gateway_api_grpc_pb');
 const { AuthenticateRequest } = require('@cs3org/node-cs3apis/cs3/gateway/v1beta1/gateway_api_pb');
-const { ListReceivedOCMSharesRequest, UpdateReceivedOCMShareRequest, ShareReference, ShareId } = require('@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/ocm_api_pb');
-const { GranteeType } = require('@cs3org/node-cs3apis/cs3/storage/provider/v1beta1/resources_pb');
+const {
+  CreateOCMShareRequest,
+  ListReceivedOCMSharesRequest,
+  UpdateReceivedOCMShareRequest,
+  ShareReference,
+  SharePermissions,
+  ShareGrant,
+  ShareId,
+} = require('@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/ocm_api_pb');
+const {
+  ProviderInfo,
+} = require('@cs3org/node-cs3apis/cs3/ocm/provider/v1beta1/resources_pb');
+const {
+  GranteeType,
+  Grantee,
+  ResourceId,
+} = require('@cs3org/node-cs3apis/cs3/storage/provider/v1beta1/resources_pb');
+const { UserId } = require('@cs3org/node-cs3apis/cs3/identity/user/v1beta1/resources_pb');
 const { Code } = require('@cs3org/node-cs3apis/cs3/rpc/v1beta1/code_pb');
 const { ShareState } = require('@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/resources_pb');
 
@@ -142,6 +158,35 @@ module.exports = class RevaClient {
     // console.log(this.grpcClient.prototype);
   }
 
+  async createOCMShare(shareWithUser, shareWithHost) {
+    await this.ensureConnected();
+    // https://github.com/cs3org/cs3apis/blob/b33d2760f96a4305e269fda72c91b6f6c5374962/cs3/sharing/ocm/v1beta1/ocm_api.proto#L86-L99
+
+    // For readability, indentation here follow data structure nesting:
+    const req = new CreateOCMShareRequest();
+      const resourceId = new ResourceId();
+        resourceId.setStorageId('cernbox.cern.ch');
+        resourceId.setOpaqueId('some-file-to-share');
+    req.setResourceId(resourceId);
+      const shareGrant = new ShareGrant();
+        const grantee = new Grantee();
+          grantee.setType(GranteeType.GRANTEE_TYPE_USER);
+            const userId = new UserId();
+              userId.setIdp(shareWithHost);
+              userId.setOpaqueId(shareWithUser);
+          grantee.setUserId(userId);
+      shareGrant.setGrantee(grantee);
+        const sharePermissions = new SharePermissions();
+      shareGrant.setPermissions(sharePermissions);
+    req.setGrant(shareGrant);
+      const providerInfo = new ProviderInfo();
+        providerInfo.setName('cernbox.cern.ch');
+    req.setRecipientMeshProvider(providerInfo);
+
+    // req.setToken(token);
+    const res = await this.grpcClient.createOCMShare(req, this.metadata);
+    return res;
+  }
   async listReceivedOCMShares() {
     await this.ensureConnected();
     const req = new ListReceivedOCMSharesRequest();
