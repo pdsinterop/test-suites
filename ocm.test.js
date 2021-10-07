@@ -157,6 +157,9 @@ class User {
       await this.go('span.option__desc--lineone');
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
+    } else if (this.guiType === GUI_TYPE_REVA) {
+      const client = new RevaClient('revad1.docker:19000', 'einstein', 'relativity');
+      await client.sendShares(shareWithUser, shareWithHost);
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
