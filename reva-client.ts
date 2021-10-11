@@ -48,7 +48,7 @@ function promisifyMethods(instance, methodNames) {
   return result;
 }
 
-class RevaClient {
+export class RevaClient {
   grpcClient: any
   metadata: Metadata
   host: string
@@ -162,6 +162,7 @@ class RevaClient {
     // See AuthenticateResponse https://github.com/cs3org/cs3apis/blob/a86e5cb6ac360/cs3/gateway/v1beta1/gateway_api.proto#L415
     const user = res.getUser();
     // * User https://github.com/cs3org/cs3apis/blob/a86e5cb6ac360/cs3/identity/user/v1beta1/resources.proto#L53
+    console.log({ host: this.host, username: this.username, password: this.password });
     const displayName = user.getDisplayName();
     console.log('DisplayName from AuthenticateResponse:', displayName);
   
@@ -300,7 +301,3 @@ class RevaClient {
   // 'getUpdateGrant',
   // 'getDenyGrant'
 // ];
-
-module.exports = {
-  RevaClient
-}

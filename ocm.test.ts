@@ -288,6 +288,8 @@ class User {
       );
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
+    } else if (this.guiType === GUI_TYPE_REVA) {
+      console.log('we are reva');
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
