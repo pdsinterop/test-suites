@@ -1,8 +1,12 @@
 
-const GUI_TYPE_STUB = 'GUI Stub';
-const GUI_TYPE_OWNCLOUD = 'GUI ownCloud';
-const GUI_TYPE_NEXTCLOUD = 'GUI Nextloud';
-const GUI_TYPE_SEAFILE = 'GUI Seafile';
+const {
+  GUI_TYPE_STUB,
+  GUI_TYPE_OWNCLOUD,
+ GUI_TYPE_NEXTCLOUD,
+ GUI_TYPE_SEAFILE,
+ GUI_TYPE_REVA
+} = require('./guiTypes'); 
+
 module.exports = {
   GUI_TYPE_STUB,
   GUI_TYPE_OWNCLOUD,
@@ -44,6 +48,18 @@ module.exports = {
       guiType: GUI_TYPE_NEXTCLOUD,
       username: 'alice',
       password: 'alice123'
-    }
+    },
+    'From Reva': {
+      host: 'localhost:19000',
+      guiType: GUI_TYPE_REVA,
+      username: 'einstein',
+      password: 'relativity'
+    },
+    'To Reva': {
+      host: 'localhost:17000',
+      guiType: GUI_TYPE_REVA,
+      username: 'marie',
+      password: 'radioactivitiy'
+    },
   }
 };

@@ -20,16 +20,16 @@ const flows = [
 const froms = [
   // 'From Stub',
   // 'From ownCloud',
-  'From Nextcloud',
+  // 'From Nextcloud',
   // 'From Seafile',
-  // 'From Reva',
+  'From Reva',
 ];
 const tos = [
   // 'To Stub',
   // 'To ownCloud',
-  'To Nextcloud',
+  // 'To Nextcloud',
   // 'To Seafile',
-  // 'To Reva',
+  'To Reva',
 ];
 
 class User {
@@ -38,11 +38,18 @@ class User {
     this.guiType = guiType;
     this.username = username;
     this.password = password;
+    this.revaClient = null;
   }
   async init() {
     if (this.browser) {
       return
     }
+    if (this.guiType == GUI_TYPE_REVA) {
+      // will use grpc client
+      // no browser needed
+      return;
+    }
+  
     this.browser = true; // claim the semaphore, will be overwritten:
     this.browser = await puppeteer.launch({
       headless: HEADLESS,
@@ -80,6 +87,9 @@ class User {
       }
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
+    } else if (this.guiType === GUI_TYPE_REVA) {
+      console.log("Logging in reva client", this.host, this.username, this.password);
+      this.revaClient = new RevaClient(this.host, this.username, this.password);
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
@@ -158,8 +168,7 @@ class User {
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else if (this.guiType === GUI_TYPE_REVA) {
-      const client = new RevaClient('revad1.docker:19000', 'einstein', 'relativity');
-      await client.createOCMShare(shareWithUser, shareWithHost);
+      await this.revaClient.createOCMShare(shareWithUser, shareWithHost);
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
@@ -231,8 +240,7 @@ class User {
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else if (this.guiType === GUI_TYPE_REVA) {
-      const client = new RevaClient('revad2.docker:19000', 'marie', 'radioactivity');
-      await client.acceptAllShares();
+      await this.revaClient.acceptAllShares();
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
