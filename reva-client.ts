@@ -48,7 +48,7 @@ function promisifyMethods(instance, methodNames) {
   return result;
 }
 
-module.exports = class RevaClient {
+class RevaClient {
   grpcClient: any
   metadata: Metadata
   host: string
@@ -300,3 +300,7 @@ module.exports = class RevaClient {
   // 'getUpdateGrant',
   // 'getDenyGrant'
 // ];
+
+module.exports = {
+  RevaClient
+}

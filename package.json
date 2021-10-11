@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "HEADLESS=1 jest *.test.js --runInBand",
-    "debug": "jest *.test.js --runInBand"
+    "debug": "jest *.test.ts --runInBand"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/preset-env": "^7.15.8",
     "@cs3org/node-cs3apis": "cs3org/node-cs3apis#add-typings",
     "@grpc/grpc-js": "^1.3.7",
     "jest": "^27.0.6",

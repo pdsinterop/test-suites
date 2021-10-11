@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer");
+import puppeteer from "puppeteer";
 const { GUI_TYPE_STUB,
   GUI_TYPE_OWNCLOUD,
   GUI_TYPE_NEXTCLOUD,
@@ -6,7 +6,7 @@ const { GUI_TYPE_STUB,
   GUI_TYPE_REVA,
   params } = (process.env.LIVE ? require("./params-live") : require("./params-docker"));
 
-const RevaClient = require("./reva-client");
+import { RevaClient } from "./reva-client";
 
 const JEST_TIMEOUT = 60000;
 const HEADLESS = !!process.env.HEADLESS;
