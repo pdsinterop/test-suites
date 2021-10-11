@@ -1,4 +1,4 @@
-const util = require('util');
+import util from 'util';
 
 import { Metadata, credentials } from '@grpc/grpc-js';
 
