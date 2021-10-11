@@ -15,6 +15,10 @@ const {
   ProviderInfo,
 } = require('@cs3org/node-cs3apis/cs3/ocm/provider/v1beta1/resources_pb');
 const {
+  Opaque,
+  OpaqueEntry,
+} = require('@cs3org/node-cs3apis/cs3/types/v1beta1/types_pb');
+const {
   GranteeType,
   Grantee,
   ResourceId,
@@ -28,6 +32,26 @@ const { ShareState } = require('@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/res
 // Align this string with the server expects, in the case of revad see:
 // https://github.com/cs3org/reva/blob/v1.11.0/pkg/token/token.go#L30
 const TOKEN_HEADER = 'x-access-token';
+
+
+function tracePrototypeChainOf(obj, i) {
+  var n = Number(i || 0);
+  var indent = Array(2 + n).join("-");
+
+  for(var key in obj) {
+      if(obj.hasOwnProperty(key)) {
+          console.log(indent, key, ": ", obj[key]);
+      }
+  }
+
+  if(obj) {
+      if(Object.getPrototypeOf) {
+          printPrototype(Object.getPrototypeOf(obj), n + 1);
+      } else if(obj.__proto__) {
+          printPrototype(obj.__proto__, n + 1);
+      }
+  }
+}
 
 function promisifyMethods(instance, methodNames) {
   const result = {};
@@ -159,12 +183,25 @@ module.exports = class RevaClient {
     // console.log(this.grpcClient.prototype);
   }
 
+  
   async createOCMShare(shareWithUser, shareWithHost) {
     await this.ensureConnected();
     // https://github.com/cs3org/cs3apis/blob/b33d2760f96a4305e269fda72c91b6f6c5374962/cs3/sharing/ocm/v1beta1/ocm_api.proto#L86-L99
 
     // For readability, indentation here follow data structure nesting:
     const req = new CreateOCMShareRequest();
+      var m = new Opaque();
+        var perms = new OpaqueEntry();
+        perms.setValue("permissions");
+      m.setMapMap({
+        permissions: perms
+      });
+      console.log(m, tracePrototypeChainOf(m));
+      // m.setField('permissions', 'permissions');
+      //   name: 'name',
+      //   protocol: 'datatx',
+      // });
+    req.setOpaque(m);
       const resourceId = new ResourceId();
         resourceId.setStorageId('cernbox.cern.ch');
         resourceId.setOpaqueId('some-file-to-share');

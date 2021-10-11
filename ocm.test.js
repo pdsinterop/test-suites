@@ -240,7 +240,7 @@ class User {
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else if (this.guiType === GUI_TYPE_REVA) {
-      await this.revaClient.acceptAllShares();
+      await this.revaClient.acceptShare();
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
