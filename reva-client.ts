@@ -213,8 +213,10 @@ export class RevaClient {
         providerInfo.setName('cernbox.cern.ch');
     req.setRecipientMeshProvider(providerInfo);
 
+    console.log('createOCMShare sending');
     // req.setToken(token);
     const res = await this.grpcClient.createOCMShare(req, this.metadata);
+    console.log('createOCMShare sent');
     return res;
   }
   async listReceivedOCMShares() {

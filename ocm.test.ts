@@ -98,6 +98,7 @@ class User {
     } else if (this.guiType === GUI_TYPE_REVA) {
       console.log("Logging in reva client", this.host, this.username, this.password);
       this.revaClient = new RevaClient(this.host, this.username, this.password);
+      await this.revaClient.ensureConnected();
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
@@ -176,7 +177,9 @@ class User {
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else if (this.guiType === GUI_TYPE_REVA) {
+      console.log('createOCMShare start');
       await this.revaClient.createOCMShare(shareWithUser, shareWithHost);
+      console.log('createOCMShare finish');
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
@@ -248,7 +251,9 @@ class User {
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else if (this.guiType === GUI_TYPE_REVA) {
+      console.log('acceptShare start');
       await this.revaClient.acceptShare();
+      console.log('acceptShare finish');
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
@@ -333,12 +338,18 @@ flows.forEach((flow) => {
 
             it(to, async () => {
               if (flow === 'Share-with flow') {
+                console.log('fromUser.login');
                 await fromUser.login(false);
+                console.log('fromUser.shareWith');
                 await fromUser.shareWith(params[to].username, params[to].host);
 
+                console.log('toUser.login');
                 await toUser.login(false);
+                console.log('toUser.acceptShare');
                 await toUser.acceptShare();
+                console.log('toUser.deleteAcceptedShare');
                 await toUser.deleteAcceptedShare();
+                console.log('done');
               } else {
                 await fromUser.login(false);
                 const url = await fromUser.createPublicLink();
