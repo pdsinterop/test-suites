@@ -40,9 +40,10 @@ import { ShareState } from '@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/resourc
 // https://github.com/cs3org/reva/blob/v1.11.0/pkg/token/token.go#L30
 const TOKEN_HEADER = 'x-access-token';
 
-function promisifyMethods(instance, methodNames) {
-  const result = {};
-  methodNames.forEach(methodName => {
+function promisifyMethods(instance: any, methodNames: string[]) {
+  console.log('promisify', Object.keys(instance));
+  const result: { [methodName: string]: any } = {};
+  methodNames.forEach((methodName: string) => {
     result[methodName] = util.promisify(instance[methodName].bind(instance));
   });
   return result;
@@ -52,14 +53,11 @@ export class RevaClient {
   grpcClient: any
   metadata: Metadata
   host: string
-  username: string
-  password: string
   authenticated: boolean
-  constructor(host, username, password) {
+  constructor(host: string) {
     this.host = host;
-    this.username = username;
-    this.password = password;
     this.authenticated = false;
+    this.metadata = new Metadata();
   }
 
   async ensureConnected() {
@@ -152,17 +150,23 @@ export class RevaClient {
       'getTransferStatus',
       'cancelTransfer'
     ]);
-    this.metadata = new Metadata();
+  }
+  async login(username: string, password: string) {
+    console.log('in login function');
+    await this.ensureConnected();
+    console.log('ensureConnected done');
+
     const req = new AuthenticateRequest();
     req.setType('basic');
-    req.setClientId(this.username);
-    req.setClientSecret(this.password);
+    req.setClientId(username);
+    req.setClientSecret(password);
     const res = await this.grpcClient.authenticate(req);
+    console.log('authenticate done');
   
     // See AuthenticateResponse https://github.com/cs3org/cs3apis/blob/a86e5cb6ac360/cs3/gateway/v1beta1/gateway_api.proto#L415
     const user = res.getUser();
     // * User https://github.com/cs3org/cs3apis/blob/a86e5cb6ac360/cs3/identity/user/v1beta1/resources.proto#L53
-    console.log({ host: this.host, username: this.username, password: this.password });
+    console.log({ host: this.host, username, password });
     const displayName = user.getDisplayName();
     console.log('DisplayName from AuthenticateResponse:', displayName);
   
@@ -173,7 +177,7 @@ export class RevaClient {
   }
 
   
-  async createOCMShare(shareWithUser, shareWithHost) {
+  async createOCMShare(shareWithUser: string, shareWithHost: string) {
     await this.ensureConnected();
     // https://github.com/cs3org/cs3apis/blob/b33d2760f96a4305e269fda72c91b6f6c5374962/cs3/sharing/ocm/v1beta1/ocm_api.proto#L86-L99
 
@@ -224,7 +228,7 @@ export class RevaClient {
     const req = new ListReceivedOCMSharesRequest();
     // req.setToken(token);
     const shares = await this.grpcClient.listReceivedOCMShares(req, this.metadata);
-    return shares.getSharesList().map(share => {
+    return shares.getSharesList().map((share: any) => {
       let idp, opaque;
       if (share.getShare().getGrantee().getType() == GranteeType.GRANTEE_TYPE_USER) {
         // console.log(share);
@@ -254,7 +258,7 @@ export class RevaClient {
     });
   }
   
-  async updateReceivedOCMShare(opaqueId, newState) {
+  async updateReceivedOCMShare(opaqueId: string, newState: number) {
     await this.ensureConnected();
     const shareId = new ShareId();
     shareId.setOpaqueId(opaqueId);
@@ -275,7 +279,7 @@ export class RevaClient {
   async acceptShare() {
     const ids = await this.listReceivedOCMShares();
     // console.log({ ids });
-    const promises = ids.map(id => {
+    const promises = ids.map((id: any) => {
       return this.updateReceivedOCMShare(id, ShareState.SHARE_STATE_ACCEPTED);
     });
     return Promise.all(promises);

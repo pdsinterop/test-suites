@@ -54,6 +54,8 @@ class User {
     }
     if (this.guiType == GUI_TYPE_REVA) {
       // will use grpc client
+      this.revaClient = new RevaClient(this.host);
+      await this.revaClient.ensureConnected();
       // no browser needed
       return;
     }
@@ -97,8 +99,7 @@ class User {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else if (this.guiType === GUI_TYPE_REVA) {
       console.log("Logging in reva client", this.host, this.username, this.password);
-      this.revaClient = new RevaClient(this.host, this.username, this.password);
-      await this.revaClient.ensureConnected();
+      await this.revaClient.login(this.username, this.password);
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
@@ -342,7 +343,7 @@ flows.forEach((flow) => {
                 await fromUser.login(false);
                 console.log('fromUser.shareWith');
                 await fromUser.shareWith(params[to].username, params[to].host);
-
+// test seems to complete here????
                 console.log('toUser.login');
                 await toUser.login(false);
                 console.log('toUser.acceptShare');
