@@ -245,18 +245,18 @@ export class RevaClient {
       var m = new Opaque();
         var permissionsOpaqueEntry = new OpaqueEntry();
         permissionsOpaqueEntry.setDecoder("plain");
-        permissionsOpaqueEntry.setValue("permissions");
+        permissionsOpaqueEntry.setValue(Buffer.from("permissions"));
         // see https://stackoverflow.com/a/62709318/680454
         m.getMapMap().set("permissions", permissionsOpaqueEntry);
 
         var nameOpaqueEntry = new OpaqueEntry();
         nameOpaqueEntry.setDecoder("plain");
-        nameOpaqueEntry.setValue("name");
+        nameOpaqueEntry.setValue(Buffer.from("path/to/the/file/name.txt"));
         m.getMapMap().set("name", nameOpaqueEntry);
 
         var protocolOpaqueEntry = new OpaqueEntry();
         protocolOpaqueEntry.setDecoder("plain");
-        protocolOpaqueEntry.setValue("normal");
+        protocolOpaqueEntry.setValue(Buffer.from("normal"));
         m.getMapMap().set("protocol", protocolOpaqueEntry);
 
 
