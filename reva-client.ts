@@ -19,7 +19,7 @@ import {
 // } from '@cs3org/node-cs3apis/cs3/sharing/collaboration/v1beta1/resources_pb';
 } from '@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/resources_pb';
 import {
-  ProviderInfo,
+  ProviderInfo, Service, ServiceEndpoint, ServiceType,
 }  from '@cs3org/node-cs3apis/cs3/ocm/provider/v1beta1/resources_pb';
 import {
   Opaque,
@@ -31,9 +31,12 @@ import {
   ResourceId,
   ResourcePermissions,
 } from '@cs3org/node-cs3apis/cs3/storage/provider/v1beta1/resources_pb';
-import { UserId } from '@cs3org/node-cs3apis/cs3/identity/user/v1beta1/resources_pb';
+import { User, UserId } from '@cs3org/node-cs3apis/cs3/identity/user/v1beta1/resources_pb';
 import { Code } from '@cs3org/node-cs3apis/cs3/rpc/v1beta1/code_pb';
 import { ShareState } from '@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/resources_pb';
+import { AcceptInviteRequest, FindAcceptedUsersRequest, ForwardInviteRequest, GenerateInviteTokenRequest, GetAcceptedUserRequest } from '@cs3org/node-cs3apis/cs3/ocm/invite/v1beta1/invite_api_pb';
+import { InviteToken } from '@cs3org/node-cs3apis/cs3/ocm/invite/v1beta1/resources_pb';
+import { GetInfoByDomainRequest } from '@cs3org/node-cs3apis/cs3/ocm/provider/v1beta1/provider_api_pb';
 
 // Specifies the name of the Reva access token used during requests.
 // Align this string with the server expects, in the case of revad see:
@@ -41,7 +44,7 @@ import { ShareState } from '@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/resourc
 const TOKEN_HEADER = 'x-access-token';
 
 function promisifyMethods(instance: any, methodNames: string[]) {
-  console.log('promisify', Object.keys(instance));
+  // console.log('promisify', Object.keys(instance));
   const result: { [methodName: string]: any } = {};
   methodNames.forEach((methodName: string) => {
     result[methodName] = util.promisify(instance[methodName].bind(instance));
@@ -152,49 +155,114 @@ export class RevaClient {
     ]);
   }
   async login(username: string, password: string) {
-    console.log('in login function');
+    // console.log('in login function');
     await this.ensureConnected();
-    console.log('ensureConnected done');
+    // console.log('ensureConnected done');
 
     const req = new AuthenticateRequest();
     req.setType('basic');
     req.setClientId(username);
     req.setClientSecret(password);
     const res = await this.grpcClient.authenticate(req);
-    console.log('authenticate done');
+    // console.log('authenticate done');
   
     // See AuthenticateResponse https://github.com/cs3org/cs3apis/blob/a86e5cb6ac360/cs3/gateway/v1beta1/gateway_api.proto#L415
     const user = res.getUser();
     // * User https://github.com/cs3org/cs3apis/blob/a86e5cb6ac360/cs3/identity/user/v1beta1/resources.proto#L53
-    console.log({ host: this.host, username, password });
+    // console.log({ host: this.host, username, password });
     const displayName = user.getDisplayName();
-    console.log('DisplayName from AuthenticateResponse:', displayName);
+    // console.log('DisplayName from AuthenticateResponse:', displayName);
   
     // add the token to the metadata for subsequent client calls
     const token = res.getToken();
     this.metadata.add(TOKEN_HEADER, token);
+    // console.log({ username, password, token });
     // console.log(this.grpcClient.prototype);
   }
 
+  async generateInviteToken(): Promise<string> {
+    const req = new GenerateInviteTokenRequest();
+    const res = await this.grpcClient.generateInviteToken(req, this.metadata);
+    const inviteToken = res.getInviteToken();
+    return inviteToken.getToken();
+  }
+  async getInfoByDomain(idpName: string): Promise<ProviderInfo> {
+    const req = new GetInfoByDomainRequest();
+    req.setDomain(idpName);
+    const res = await this.grpcClient.getInfoByDomain(req, this.metadata);
+    return res.getProviderInfo();
+  }
   
-  async createOCMShare(shareWithUser: string, shareWithHost: string) {
+  
+  async forwardInviteToken(senderIdpName: string, tokenStr: string): Promise<void> {
+    const req = new ForwardInviteRequest();
+    const token = new InviteToken();
+    token.setToken(tokenStr);
+    req.setInviteToken(token);
+    const providerInfo = await this.getInfoByDomain(senderIdpName);
+    providerInfo.setName(senderIdpName);
+    req.setOriginSystemProvider(providerInfo);
+    const res = await this.grpcClient.forwardInvite(req, this.metadata);
+    console.log(res.toObject());
+  }
+
+  async acceptInviteToken(senderHost: string, senderUsername: string, tokenStr: string): Promise<void> {
+    const req = new AcceptInviteRequest();
+    const token = new InviteToken();
+    token.setToken(tokenStr);
+    req.setInviteToken(token);
+    const userId = new UserId();
+    userId.setIdp(senderHost);
+    const user = new User();
+    user.setUsername(senderUsername);
+    req.setRemoteUser(user);
+    await this.grpcClient.acceptInvite(req, this.metadata);
+  }
+  async  findAcceptedUsers(): Promise<any[]> {
+    const req = new FindAcceptedUsersRequest();
+    const res = await this.grpcClient.findAcceptedUsers(req, this.metadata);
+    const userList = await res.getAcceptedUsersList();
+    return userList.map((user: any) => user.toObject());
+  }
+
+  // async getAccepted(shareWithUser: string, shareWithHost: string): Promise<UserId> {
+  //   const userId = new UserId();
+  //   userId.setIdp(shareWithHost);
+  //   userId.setOpaqueId(shareWithUser);
+  //   const req = new GetAcceptedUserRequest();
+  //   req.setRemoteUserId(userId);
+  //   const res = await this.grpcClient.getAcceptedUser(req, this.metadata);
+  //   return res.get...
+  // }
+
+  async createOCMShare(shareWithUser: string, shareWithHost: string, filename: string): Promise<void> {
     await this.ensureConnected();
     // https://github.com/cs3org/cs3apis/blob/b33d2760f96a4305e269fda72c91b6f6c5374962/cs3/sharing/ocm/v1beta1/ocm_api.proto#L86-L99
 
     // For readability, indentation here follow data structure nesting:
+    
     const req = new CreateOCMShareRequest();
       var m = new Opaque();
-        var perms = new OpaqueEntry();
-        perms.setValue("permissions");
-      // m.setMapMap({
-      //   permissions: perms
-      // });
-      // console.log(m, tracePrototypeChainOf(m));
-      // m.setField('permissions', 'permissions');
-      //   name: 'name',
-      //   protocol: 'datatx',
-      // });
-    req.setOpaque(m);
+        var permissionsOpaqueEntry = new OpaqueEntry();
+        permissionsOpaqueEntry.setDecoder("plain");
+        permissionsOpaqueEntry.setValue("permissions");
+        // see https://stackoverflow.com/a/62709318/680454
+        m.getMapMap().set("permissions", permissionsOpaqueEntry);
+
+        var nameOpaqueEntry = new OpaqueEntry();
+        nameOpaqueEntry.setDecoder("plain");
+        nameOpaqueEntry.setValue("name");
+        m.getMapMap().set("name", nameOpaqueEntry);
+
+        var protocolOpaqueEntry = new OpaqueEntry();
+        protocolOpaqueEntry.setDecoder("plain");
+        protocolOpaqueEntry.setValue("normal");
+        m.getMapMap().set("protocol", protocolOpaqueEntry);
+
+
+        req.setOpaque(m);
+
+        console.log('req.opaque.mapMap', req.toObject()?.opaque?.mapMap);
       const resourceId = new ResourceId();
         resourceId.setStorageId('cernbox.cern.ch');
         resourceId.setOpaqueId('some-file-to-share');
@@ -213,8 +281,18 @@ export class RevaClient {
           sharePermissions.setPermissions(resourcePermissions);
       shareGrant.setPermissions(sharePermissions);
     req.setGrant(shareGrant);
-      const providerInfo = new ProviderInfo();
-        providerInfo.setName('cernbox.cern.ch');
+      // const providerInfo = new ProviderInfo();
+      //   providerInfo.setName('cernbox.cern.ch');
+      //     const service = new Service();
+      //       const endpoint = new ServiceEndpoint();
+      //         const serviceType = new ServiceType();
+      //         serviceType.setName("OCM");
+      //       endpoint.setType(serviceType);
+      //       endpoint.setPath("http://localhost:17001/ocm");
+      //     service.setEndpoint(endpoint);
+      //   providerInfo.setServicesList([ service ]);
+      const providerInfo = await this.getInfoByDomain(shareWithHost);
+      console.log('recipient mesh provider', providerInfo.toObject());
     req.setRecipientMeshProvider(providerInfo);
 
     console.log('createOCMShare sending');
