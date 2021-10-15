@@ -50,13 +50,15 @@ module.exports = {
       password: 'alice123'
     },
     'From Reva': {
-      host: 'localhost:19000',
+      host: '127.0.0.1:19000',
+      domain: 'cernbox.cern.ch',
       guiType: GUI_TYPE_REVA,
       username: 'einstein',
       password: 'relativity'
     },
     'To Reva': {
-      host: 'localhost:17000',
+      host: '127.0.0.1:17000',
+      domain: 'cesnet.cz',
       guiType: GUI_TYPE_REVA,
       username: 'marie',
       password: 'radioactivity'

@@ -149,7 +149,7 @@ class User {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
   }
-  async shareWith(shareWithUser, shareWithHost) {
+  async shareWith(shareWithUser, shareWithHost, shareWithDomain) {
     if (this.guiType === GUI_TYPE_STUB) {
       const consumer = encodeURIComponent(`${shareWithUser}@${shareWithHost}`);
       await this.page.goto(`https://${this.host}/shareWith?${consumer}`);
@@ -179,7 +179,8 @@ class User {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else if (this.guiType === GUI_TYPE_REVA) {
       console.log('createOCMShare start');
-      await this.revaClient.createOCMShare(shareWithUser, shareWithHost);
+
+      await this.revaClient.createOCMShare(shareWithUser, shareWithDomain);
       console.log('createOCMShare finish');
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
@@ -336,13 +337,18 @@ flows.forEach((flow) => {
               // console.log('exit to', flow, from, to);
               await toUser.exit();
             }, JEST_TIMEOUT);
+            afterAll(async (done) => {
+              if (!process.stdout.write('')) {
+                process.stdout.once('drain', () => { done(); });
+              }
+            }, JEST_TIMEOUT);
 
             it(to, async () => {
               if (flow === 'Share-with flow') {
                 console.log('fromUser.login');
                 await fromUser.login(false);
                 console.log('fromUser.shareWith');
-                await fromUser.shareWith(params[to].username, params[to].host);
+                await fromUser.shareWith(params[to].username, params[to].host, params[to].domain);
 // test seems to complete here????
                 console.log('toUser.login');
                 await toUser.login(false);
