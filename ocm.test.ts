@@ -15,7 +15,8 @@ console.log({ HEADLESS });
 const flows = [
   // 'Public link flow, log in first',
   // 'Public link flow, log in after',
-  'Share-with flow'
+  // 'Share-with flow'
+  'Invite flow'
 ];
 const froms = [
   // 'From Stub',
@@ -148,6 +149,18 @@ class User {
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
     }
+  }
+  async generateInvite() {
+    if (this.guiType !== GUI_TYPE_REVA) {
+      throw new Error('invite flow only supported from Reva');
+    }
+    return this.revaClient.generateInviteToken();
+  }
+  async forwardInvite(senderIdpName: string, tokenStr: string) {
+    if (this.guiType !== GUI_TYPE_REVA) {
+      throw new Error('invite flow only supported to Reva');
+    }
+    return this.revaClient.forwardInviteToken(senderIdpName, tokenStr);
   }
   async shareWith(shareWithUser, shareWithHost, shareWithDomain) {
     if (this.guiType === GUI_TYPE_STUB) {
@@ -349,7 +362,22 @@ flows.forEach((flow) => {
                 await fromUser.login(false);
                 console.log('fromUser.shareWith');
                 await fromUser.shareWith(params[to].username, params[to].host, params[to].domain);
-// test seems to complete here????
+                console.log('toUser.login');
+                await toUser.login(false);
+                console.log('toUser.acceptShare');
+                await toUser.acceptShare();
+                console.log('toUser.deleteAcceptedShare');
+                await toUser.deleteAcceptedShare();
+                console.log('done');
+              } else if (flow === 'Invite flow') {
+                console.log('fromUser.login');
+                await fromUser.login(false);
+                console.log('fromUser.generateToken');
+                const inviteToken = await fromUser.generateToken();
+                console.log('toUser.forwardToken');
+                await toUser.forwardToken(params[from].domain, inviteToken);
+                console.log('fromUser.shareWith');
+                await fromUser.shareWith(inviteToken, params[to].host, params[to].domain);
                 console.log('toUser.login');
                 await toUser.login(false);
                 console.log('toUser.acceptShare');
