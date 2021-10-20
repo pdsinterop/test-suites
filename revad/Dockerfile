@@ -2,10 +2,9 @@ FROM ubuntu
 # FROM revadbase as base
 # COPY --from=base /etc/ssl/certs/ /etc/ssl/certs/
 # COPY --from=base /usr/bin/revad /usr/bin/revad
-RUN apt update && apt install -y openssl build-essential wget
+RUN apt update && apt install -y openssl build-essential wget git vim
 RUN wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
 RUN tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
-RUN apt install -y git
 RUN git clone https://github.com/michielbdejong/reva
 WORKDIR reva
 RUN git checkout pass-ocm-test-suite
