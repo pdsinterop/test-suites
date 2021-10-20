@@ -1,6 +1,11 @@
-FROM revadbase
+FROM revadbase as base
+FROM ubuntu
+COPY --from=base /etc/ssl/certs/ /etc/ssl/certs/
+COPY --from=base /usr/bin/revad /usr/bin/revad
+
 ADD . /etc/revad
 WORKDIR /etc/revad
+RUN apt update && apt install -y openssl
 RUN openssl req -new -x509 -days 365 -nodes \
   -out ./server.cert \
   -keyout ./server.key \
