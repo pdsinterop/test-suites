@@ -370,16 +370,16 @@ flows.forEach((flow) => {
                 await toUser.deleteAcceptedShare();
                 console.log('done');
               } else if (flow === 'Invite flow') {
-                console.log('fromUser.login');
+                console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
                 await fromUser.login(false);
                 console.log('fromUser.generateToken');
                 const inviteToken = await fromUser.generateToken();
-                console.log('toUser.forwardToken');
-                await toUser.forwardToken(params[from].domain, inviteToken);
-                console.log('fromUser.shareWith');
-                await fromUser.shareWith(inviteToken, params[to].host, params[to].domain);
-                console.log('toUser.login');
+                console.log('toUser.login', toUser.host, toUser.username, toUser.password);
                 await toUser.login(false);
+                console.log('toUser.forwardToken', params[from].domain, inviteToken);
+                await toUser.forwardToken(params[from].domain, inviteToken);
+                console.log('fromUser.shareWith', inviteToken, params[to].host, params[to].domain);
+                await fromUser.shareWith(inviteToken, params[to].host, params[to].domain);
                 console.log('toUser.acceptShare');
                 await toUser.acceptShare();
                 console.log('toUser.deleteAcceptedShare');

@@ -17,7 +17,7 @@ const RECEIVER = {
 
 async function tester () {
   const sender = new RevaClient(SENDER.host);
-  await sender.ensureConnected();
+  // await sender.ensureConnected();
   console.log("Logging in sender", SENDER.host, SENDER.username, SENDER.password);
   await sender.login(SENDER.username, SENDER.password);
 
