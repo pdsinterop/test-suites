@@ -238,8 +238,8 @@ export class RevaClient {
   // }
 
   async createOCMShare(shareWithUser: string, shareWithHost: string, filename: string): Promise<void> {
-    conso
     await this.ensureConnected();
+    console.log({ shareWithUser, shareWithHost, filename});
     // https://github.com/cs3org/cs3apis/blob/b33d2760f96a4305e269fda72c91b6f6c5374962/cs3/sharing/ocm/v1beta1/ocm_api.proto#L86-L99
 
     // For readability, indentation here follow data structure nesting:
