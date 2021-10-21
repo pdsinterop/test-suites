@@ -1,5 +1,5 @@
 [shared]
-gatewaysvc = "localhost:19000"
+gatewaysvc = "revad1.docker:19000"
 
 # [registry]
 # driver = "static"
@@ -18,18 +18,18 @@ certfile = "/etc/revad/tls/revad1.crt"
 keyfile = "/etc/revad/tls/revad1.key"
 
 [grpc.services.gateway]
-authregistrysvc = "localhost:19000"
-appprovidersvc = "localhost:19000"
-appregistry = "localhost:19000"
-storageregistrysvc = "localhost:19000"
-preferencessvc = "localhost:19000"
-userprovidersvc = "localhost:19000"
-usershareprovidersvc = "localhost:19000"
-publicshareprovidersvc = "localhost:19000"
-ocmcoresvc = "localhost:19000"
-ocmshareprovidersvc = "localhost:19000"
-ocminvitemanagersvc = "localhost:19000"
-ocmproviderauthorizersvc = "localhost:19000"
+authregistrysvc = "revad1.docker:19000"
+appprovidersvc = "revad1.docker:19000"
+appregistry = "revad1.docker:19000"
+storageregistrysvc = "revad1.docker:19000"
+preferencessvc = "revad1.docker:19000"
+userprovidersvc = "revad1.docker:19000"
+usershareprovidersvc = "revad1.docker:19000"
+publicshareprovidersvc = "revad1.docker:19000"
+ocmcoresvc = "revad1.docker:19000"
+ocmshareprovidersvc = "revad1.docker:19000"
+ocminvitemanagersvc = "revad1.docker:19000"
+ocmproviderauthorizersvc = "revad1.docker:19000"
 commit_share_to_storage_grant = false
 datagateway = "http://localhost/data"
 transfer_expires = 6 # give it a moment
@@ -38,7 +38,7 @@ transfer_expires = 6 # give it a moment
 driver = "static"
 
 [grpc.services.authregistry.drivers.static.rules]
-basic = "localhost:19000"
+basic = "revad1.docker:19000"
 
 [grpc.services.storageregistry]
 driver = "static"
@@ -47,8 +47,8 @@ driver = "static"
 home_provider = "/home"
 
 [grpc.services.storageregistry.drivers.static.rules]
-"/home" = {"address" = "localhost:19000"}
-"123e4567-e89b-12d3-a456-426655440000" = {"address" = "localhost:19000"}
+"/home" = {"address" = "revad1.docker:19000"}
+"123e4567-e89b-12d3-a456-426655440000" = {"address" = "revad1.docker:19000"}
 
 [grpc.services.usershareprovider]
 driver = "memory"
@@ -88,12 +88,12 @@ wopibridgeurl = "http://localhost:8000/wopib"
 driver = "static"
 
 [grpc.services.appregistry.static.rules]
-"text/plain" = "localhost:19000"
-"text/markdown" = "localhost:19000"
-"application/compressed-markdown" = "localhost:19000"
-"application/vnd.oasis.opendocument.text" = "localhost:19000"
-"application/vnd.oasis.opendocument.spreadsheet" = "localhost:19000"
-"application/vnd.oasis.opendocument.presentation" = "localhost:19000"
+"text/plain" = "revad1.docker:19000"
+"text/markdown" = "revad1.docker:19000"
+"application/compressed-markdown" = "revad1.docker:19000"
+"application/vnd.oasis.opendocument.text" = "revad1.docker:19000"
+"application/vnd.oasis.opendocument.spreadsheet" = "revad1.docker:19000"
+"application/vnd.oasis.opendocument.presentation" = "revad1.docker:19000"
 
 [grpc.services.storageprovider]
 driver = "localhome"
