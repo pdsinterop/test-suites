@@ -24,4 +24,6 @@ WORKDIR /etc/revad
 RUN cp ./tls/*.crt /usr/local/share/ca-certificates/
 RUN update-ca-certificates
 RUN mkdir -p /var/tmp/reva/
-CMD /reva/cmd/revad/revad -c /etc/revad/$HOST.toml
+# see https://github.com/golang/go/issues/22846#issuecomment-380809416
+RUN echo "hosts: files dns" > /etc/nsswitch.conf
+CMD echo "127.0.0.1 $HOST.docker" >> /etc/hosts && /reva/cmd/revad/revad -c /etc/revad/$HOST.toml
