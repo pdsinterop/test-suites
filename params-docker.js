@@ -32,7 +32,7 @@ module.exports = {
       password: 'relativity'
     },
     'To Reva': {
-      host: 'http://revad2.docker', // https: port 443, grpc: port 19000
+      host: 'revad2.docker', // https: port 443, grpc: port 19000
       guiType: GUI_TYPE_REVA,
       username: 'marie',
       password: 'radioactivity'
