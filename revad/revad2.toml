@@ -1,5 +1,6 @@
 [shared]
-gatewaysvc = "localhost:19000"
+gatewaysvc = "revad2.docker:19000"
+gatewaycertfile = "/etc/revad/tls/revad2.crt"
 
 # [registry]
 # driver = "static"
@@ -14,22 +15,22 @@ gatewaysvc = "localhost:19000"
 
 [grpc]
 address = "0.0.0.0:19000"
-certfile = "/etc/revad/tls/revad1.crt"
-keyfile = "/etc/revad/tls/revad1.key"
+certfile = "/etc/revad/tls/revad2.crt"
+keyfile = "/etc/revad/tls/revad2.key"
 
 [grpc.services.gateway]
-authregistrysvc = "localhost:19000"
-appprovidersvc = "localhost:19000"
-appregistry = "localhost:19000"
-storageregistrysvc = "localhost:19000"
-preferencessvc = "localhost:19000"
-userprovidersvc = "localhost:19000"
-usershareprovidersvc = "localhost:19000"
-publicshareprovidersvc = "localhost:19000"
-ocmcoresvc = "localhost:19000"
-ocmshareprovidersvc = "localhost:19000"
-ocminvitemanagersvc = "localhost:19000"
-ocmproviderauthorizersvc = "localhost:19000"
+authregistrysvc = "revad2.docker:19000"
+appprovidersvc = "revad2.docker:19000"
+appregistry = "revad2.docker:19000"
+storageregistrysvc = "revad2.docker:19000"
+preferencessvc = "revad2.docker:19000"
+userprovidersvc = "revad2.docker:19000"
+usershareprovidersvc = "revad2.docker:19000"
+publicshareprovidersvc = "revad2.docker:19000"
+ocmcoresvc = "revad2.docker:19000"
+ocmshareprovidersvc = "revad2.docker:19000"
+ocminvitemanagersvc = "revad2.docker:19000"
+ocmproviderauthorizersvc = "revad2.docker:19000"
 commit_share_to_storage_grant = false
 datagateway = "http://localhost/data"
 transfer_expires = 6 # give it a moment
@@ -38,7 +39,7 @@ transfer_expires = 6 # give it a moment
 driver = "static"
 
 [grpc.services.authregistry.drivers.static.rules]
-basic = "localhost:19000"
+basic = "revad2.docker:19000"
 
 [grpc.services.storageregistry]
 driver = "static"
@@ -47,8 +48,8 @@ driver = "static"
 home_provider = "/home"
 
 [grpc.services.storageregistry.drivers.static.rules]
-"/home" = {"address" = "localhost:19000"}
-"123e4567-e89b-12d3-a456-426655440000" = {"address" = "localhost:19000"}
+"/home" = {"address" = "revad2.docker:19000"}
+"123e4567-e89b-12d3-a456-426655440000" = {"address" = "revad2.docker:19000"}
 
 [grpc.services.usershareprovider]
 driver = "memory"
@@ -88,12 +89,12 @@ wopibridgeurl = "http://localhost:8000/wopib"
 driver = "static"
 
 [grpc.services.appregistry.static.rules]
-"text/plain" = "localhost:19000"
-"text/markdown" = "localhost:19000"
-"application/compressed-markdown" = "localhost:19000"
-"application/vnd.oasis.opendocument.text" = "localhost:19000"
-"application/vnd.oasis.opendocument.spreadsheet" = "localhost:19000"
-"application/vnd.oasis.opendocument.presentation" = "localhost:19000"
+"text/plain" = "revad2.docker:19000"
+"text/markdown" = "revad2.docker:19000"
+"application/compressed-markdown" = "revad2.docker:19000"
+"application/vnd.oasis.opendocument.text" = "revad2.docker:19000"
+"application/vnd.oasis.opendocument.spreadsheet" = "revad2.docker:19000"
+"application/vnd.oasis.opendocument.presentation" = "revad2.docker:19000"
 
 [grpc.services.storageprovider]
 driver = "localhome"
@@ -125,8 +126,8 @@ users = "users.demo.json"
 enabled_services = ["ocmd"]
 enabled_middlewares = ["providerauthorizer", "cors"]
 address = "0.0.0.0:443"
-certfile = "/etc/revad/tls/revad1.crt"
-keyfile = "/etc/revad/tls/revad1.key"
+certfile = "/etc/revad/tls/revad2.crt"
+keyfile = "/etc/revad/tls/revad2.key"
 
 [http.services.dataprovider]
 driver = "localhome"
