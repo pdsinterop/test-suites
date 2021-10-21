@@ -350,11 +350,11 @@ flows.forEach((flow) => {
               // console.log('exit to', flow, from, to);
               await toUser.exit();
             }, JEST_TIMEOUT);
-            afterAll(async (done) => {
-              if (!process.stdout.write('')) {
-                process.stdout.once('drain', () => { done(); });
-              }
-            }, JEST_TIMEOUT);
+            // afterAll(async (done) => {   
+              // if (!process.stdout.write('')) {
+              //   process.stdout.once('drain', () => { done(); });
+              // }
+            // }, JEST_TIMEOUT);
 
             it(to, async () => {
               if (flow === 'Share-with flow') {
@@ -372,19 +372,19 @@ flows.forEach((flow) => {
               } else if (flow === 'Invite flow') {
 
                 const SENDER = {
-                  idp: 'cernbox.cern.ch',
+                  idp: params[from].domain,
                   // host: 'localhost:19000',
-                  host: 'revad1.docker',
-                  username: 'einstein',
-                  password: 'relativity',
+                  host: params[from].host,
+                  username: params[from].username,
+                  password: params[from].password,
                 };
                 
                 const RECEIVER = {
-                  idp: 'cesnet.cz',
+                  idp: params[to].domain,
                   // host: 'localhost:17000',
-                  host: 'revad2.docker',
-                  username: 'marie',
-                  password: 'radioactivity',
+                  host: params[to].host,
+                  username: params[to].username,
+                  password: params[to].password,
                 };
 
                 const sender = new RevaClient(SENDER.host);
@@ -423,7 +423,7 @@ flows.forEach((flow) => {
                 const receiverList = await receiver.listReceivedOCMShares();
                 console.log('listReceivedOCMShares finish', receiverList);
 
-                
+
                 // console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
                 // await fromUser.login(false);
                 // console.log('fromUser.generateToken');
