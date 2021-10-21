@@ -379,7 +379,7 @@ flows.forEach((flow) => {
                 console.log('toUser.forwardToken', params[from].domain, inviteToken);
                 await toUser.forwardInvite(params[from].domain, inviteToken);
                 console.log('fromUser.shareWith', inviteToken, params[to].host, params[to].domain);
-                await fromUser.shareWith(params[to].user, params[to].host, params[to].domain);
+                await fromUser.shareWith(params[to].username, params[to].host, params[to].domain);
                 console.log('toUser.acceptShare');
                 await toUser.acceptShare();
                 console.log('toUser.deleteAcceptedShare');
