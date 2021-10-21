@@ -1,6 +1,6 @@
 [shared]
 gatewaysvc = "revad1.docker:19000"
-gatewaycertfile = "/etc/revad/tls/revad1.crt"
+# gatewaycertfile = "/etc/revad/tls/revad1.crt"
 
 # [registry]
 # driver = "static"
@@ -15,8 +15,8 @@ gatewaycertfile = "/etc/revad/tls/revad1.crt"
 
 [grpc]
 address = "0.0.0.0:19000"
-certfile = "/etc/revad/tls/revad1.crt"
-keyfile = "/etc/revad/tls/revad1.key"
+# certfile = "/etc/revad/tls/revad1.crt"
+# keyfile = "/etc/revad/tls/revad1.key"
 
 [grpc.services.gateway]
 authregistrysvc = "revad1.docker:19000"
