@@ -26,16 +26,16 @@ module.exports = {
       password: 'admin'
     },
     'From Reva': {
-      host: 'http://revad1.docker',
+      host: 'revad1.docker', // https: port 443, grpc: port 19000
       guiType: GUI_TYPE_REVA,
-      username: 'admin',
-      password: 'admin'
+      username: 'einstein',
+      password: 'relativity'
     },
     'To Reva': {
-      host: 'http://revad2.docker',
+      host: 'http://revad2.docker', // https: port 443, grpc: port 19000
       guiType: GUI_TYPE_REVA,
-      username: 'admin',
-      password: 'admin'
+      username: 'marie',
+      password: 'radioactivity'
     },
     // 'From ownCloud': {
     //   host: 'ocm-test-suite_oc1.docker_1',
