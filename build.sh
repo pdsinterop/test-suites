@@ -1,4 +1,22 @@
 #!/bin/bash
+mkdir tls
+function createCert {
+  openssl req -new -x509 -days 365 -nodes \
+    -out ./tls/$1.crt \
+    -keyout ./tls/$1.key \
+    -subj "/C=RO/ST=Bucharest/L=Bucharest/O=IT/CN=$1" \
+    -addext "subjectAltName = DNS:$1.docker"
+}
+
+createCert nc1
+createCert nc2
+createCert oc1
+createCert oc2
+createCert stub1
+createCert stub2
+createCert revad1
+createCert revad2
+
 docker build -t tester .
 
 # git clone https://github.com/michielbdejong/ocm-stub
@@ -7,13 +25,14 @@ docker build -t stub .
 cd ..
 # rm -rf ocm-stub
 
-# git clone https://github.com/michielbdejong/reva
-cd reva
-# git checkout pass-ocm-test-suite
-docker build -t revadbase -f ./Dockerfile.revad .
-cd ..
+# # git clone https://github.com/michielbdejong/reva
+# cd reva
+# # git checkout pass-ocm-test-suite
+# docker build -t revadbase -f ./Dockerfile.revad .
+# cd ..
 # rm -rf reva
 cd revad
+cp -r ../tls .
 docker build -t revad .
 
 cd ../servers/nextcloud-server
