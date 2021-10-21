@@ -334,8 +334,8 @@ flows.forEach((flow) => {
             // Coming soon
             it.skip(to, () => {});
           } else {
-            let fromUser;
-            let toUser;
+            let fromUser: User;
+            let toUser: User;
             beforeEach(async () => {
               fromUser = new User(params[from]);
               toUser = new User(params[to]);
@@ -427,11 +427,11 @@ flows.forEach((flow) => {
                 console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
                 await fromUser.login(false);
                 console.log('fromUser.generateToken');
-                const inviteToken = await fromUser.generateToken();
+                const inviteToken = await fromUser.generateInvite();
                 console.log('toUser.login', toUser.host, toUser.username, toUser.password);
                 await toUser.login(false);
                 console.log('toUser.forwardToken', params[from].domain, inviteToken);
-                await toUser.forwardToken(params[from].domain, inviteToken);
+                await toUser.forwardInvite(params[from].domain, inviteToken);
                 console.log('fromUser.shareWith', inviteToken, params[to].host, params[to].domain);
                 await fromUser.shareWith(inviteToken, params[to].host, params[to].domain);
                 console.log('toUser.acceptShare');
