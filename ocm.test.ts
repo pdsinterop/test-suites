@@ -370,60 +370,6 @@ flows.forEach((flow) => {
                 await toUser.deleteAcceptedShare();
                 console.log('done');
               } else if (flow === 'Invite flow') {
-
-                const SENDER = {
-                  idp: params[from].domain,
-                  // host: 'localhost:19000',
-                  host: params[from].host,
-                  username: params[from].username,
-                  password: params[from].password,
-                };
-                
-                const RECEIVER = {
-                  idp: params[to].domain,
-                  // host: 'localhost:17000',
-                  host: params[to].host,
-                  username: params[to].username,
-                  password: params[to].password,
-                };
-
-                // const sender = new RevaClient(SENDER.host);
-                // // await sender.ensureConnected();
-                // console.log("Logging in sender", SENDER.host, SENDER.username, SENDER.password);
-                // await sender.login(SENDER.username, SENDER.password);
-              
-                // const receiver = new RevaClient(RECEIVER.host);
-                // await receiver.ensureConnected();
-                // console.log("Logging in receiver", RECEIVER.host, RECEIVER.username, RECEIVER.password);
-                // await receiver.login(RECEIVER.username, RECEIVER.password);
-              
-                // const inviteToken = await sender.generateInviteToken();
-                // console.log({ inviteToken });
-              
-                // await receiver.forwardInviteToken(SENDER.idp, inviteToken);
-                // console.log('token forwarded');
-                // const acceptedUsers = await sender.findAcceptedUsers();
-                // if (acceptedUsers.length !== 1) {
-                //   console.log("acceptedUsers.length", acceptedUsers.length);
-                //   return
-                // }
-                // const shareWithUser = acceptedUsers[0].id.opaqueId;
-                // const shareWithHost = acceptedUsers[0].id.idp;
-                // console.log(JSON.stringify(acceptedUsers, null, 2));
-                
-                // console.log('createOCMShare start');
-                // await sender.createOCMShare(shareWithUser, shareWithHost, '/home');
-                // console.log('createOCMShare finish');
-
-                // console.log('acceptShare start');
-                // await receiver.acceptShare();
-                // console.log('acceptShare finish');
-
-                // console.log('listReceivedOCMShares start');
-                // const receiverList = await receiver.listReceivedOCMShares();
-                // console.log('listReceivedOCMShares finish', receiverList);
-
-
                 console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
                 await fromUser.login(false);
                 console.log('fromUser.generateToken');

@@ -367,6 +367,8 @@ export class RevaClient {
   }
 }
 
+// docker stop revad1.docker ; docker rm revad1.docker ; docker run -d --network=testnet --rm --name=revad1.docker -e HOST=revad1 revad; docker logs -f revad1.docker
+// docker stop revad2.docker ; docker rm revad2.docker ; docker run -d --network=testnet --rm --name=revad2.docker -e HOST=revad2 revad; docker logs -f revad2.docker
 
 // const permFuncs = [
   // 'getAddGrant',
