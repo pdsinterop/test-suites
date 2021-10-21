@@ -358,8 +358,9 @@ export class RevaClient {
 
   async acceptShare() {
     const ids = await this.listReceivedOCMShares();
-    // console.log({ ids });
+    console.log({ ids });
     const promises = ids.map((id: any) => {
+      console.log("Accepting share", this.host, id);
       return this.updateReceivedOCMShare(id, ShareState.SHARE_STATE_ACCEPTED);
     });
     return Promise.all(promises);
