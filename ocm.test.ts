@@ -26,11 +26,11 @@ const froms = [
   'From Reva',
 ];
 const tos = [
-  // 'To Stub',
+  'To Stub',
   // 'To ownCloud',
   // 'To Nextcloud',
   // 'To Seafile',
-  'To Reva',
+  // 'To Reva',
 ];
 
 class User {
