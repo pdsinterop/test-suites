@@ -157,10 +157,14 @@ class User {
     return this.revaClient.generateInviteToken();
   }
   async forwardInvite(senderIdpName: string, tokenStr: string) {
-    if (this.guiType !== GUI_TYPE_REVA) {
+    if (this.guiType === GUI_TYPE_STUB) {
+      const invite = encodeURIComponent(`${tokenStr}@${senderIdpName}`);
+      await this.page.goto(`https://${this.host}/forwardInvite?${invite}`);
+    } else if (this.guiType === GUI_TYPE_REVA) {
+      return this.revaClient.forwardInviteToken(senderIdpName, tokenStr);
+    } else {
       throw new Error('invite flow only supported to Reva');
     }
-    return this.revaClient.forwardInviteToken(senderIdpName, tokenStr);
   }
   async shareWith(shareWithUser, shareWithHost, shareWithDomain) {
     if (this.guiType === GUI_TYPE_STUB) {
@@ -372,11 +376,11 @@ flows.forEach((flow) => {
               } else if (flow === 'Invite flow') {
                 console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
                 await fromUser.login(false);
-                console.log('fromUser.generateToken');
+                console.log('fromUser.generateInvite');
                 const inviteToken = await fromUser.generateInvite();
                 console.log('toUser.login', toUser.host, toUser.username, toUser.password);
                 await toUser.login(false);
-                console.log('toUser.forwardToken', params[from].domain, inviteToken);
+                console.log('toUser.forwardInvite', params[from].domain, inviteToken);
                 await toUser.forwardInvite(params[from].domain, inviteToken);
                 console.log('fromUser.shareWith', inviteToken, params[to].host, params[to].domain);
                 await fromUser.shareWith(params[to].username, params[to].host, params[to].domain);
