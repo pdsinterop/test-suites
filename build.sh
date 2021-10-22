@@ -22,6 +22,7 @@ docker build -t tester .
 
 # git clone https://github.com/michielbdejong/ocm-stub
 cd ocm-stub
+cp -r ../tls .
 docker build -t stub .
 cd ..
 # rm -rf ocm-stub
