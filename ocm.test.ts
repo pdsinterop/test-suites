@@ -26,11 +26,11 @@ const froms = [
   'From Reva',
 ];
 const tos = [
-  'To Stub',
+  // 'To Stub',
   // 'To ownCloud',
   // 'To Nextcloud',
   // 'To Seafile',
-  // 'To Reva',
+  'To Reva',
 ];
 
 class User {
@@ -338,8 +338,8 @@ flows.forEach((flow) => {
             // Coming soon
             it.skip(to, () => {});
           } else {
-            let fromUser: User;
-            let toUser: User;
+            let fromUser;
+            let toUser;
             beforeEach(async () => {
               fromUser = new User(params[from]);
               toUser = new User(params[to]);
@@ -354,11 +354,11 @@ flows.forEach((flow) => {
               // console.log('exit to', flow, from, to);
               await toUser.exit();
             }, JEST_TIMEOUT);
-            // afterAll(async (done) => {   
-              // if (!process.stdout.write('')) {
-              //   process.stdout.once('drain', () => { done(); });
-              // }
-            // }, JEST_TIMEOUT);
+            afterAll(async (done) => {
+              if (!process.stdout.write('')) {
+                process.stdout.once('drain', () => { done(); });
+              }
+            }, JEST_TIMEOUT);
 
             it(to, async () => {
               if (flow === 'Share-with flow') {
@@ -374,7 +374,7 @@ flows.forEach((flow) => {
                 await toUser.deleteAcceptedShare();
                 console.log('done');
               } else if (flow === 'Invite flow') {
-                console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
+                console.log('fromUser.login');
                 await fromUser.login(false);
                 console.log('fromUser.generateInvite');
                 const inviteToken = await fromUser.generateInvite();
