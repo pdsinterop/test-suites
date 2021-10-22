@@ -142,8 +142,8 @@ user_layout = "{{.Username}}"
 prefix = ""
 
 [http.services.ocmd.config]
-host = "revad2.docker"
-provider = "test-revad2"
+host = "revad1.docker"
+provider = "test-revad1"
 
 [http.middlewares.providerauthorizer]
 driver = "json"
