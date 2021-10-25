@@ -166,7 +166,7 @@ class User {
       throw new Error('invite flow only supported to Reva');
     }
   }
-  async shareWith(shareWithUser, shareWithHost, shareWithDomain) {
+  async shareWith(shareWithUser, shareWithHost, shareWithDomain, shareFromDomain) {
     if (this.guiType === GUI_TYPE_STUB) {
       const consumer = encodeURIComponent(`${shareWithUser}@${shareWithHost}`);
       await this.page.goto(`https://${this.host}/shareWith?${consumer}`);
@@ -197,7 +197,7 @@ class User {
     } else if (this.guiType === GUI_TYPE_REVA) {
       console.log('createOCMShare start');
 
-      await this.revaClient.createOCMShare(shareWithUser, shareWithDomain);
+      await this.revaClient.createOCMShare(shareWithUser, shareWithDomain, 'some/file/to/share.txt', shareFromDomain);
       console.log('createOCMShare finish');
     } else {
       throw new Error(`GUI type "${this.guiType}" not recognized`);
@@ -365,7 +365,7 @@ flows.forEach((flow) => {
                 console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
                 await fromUser.login(false);
                 console.log('fromUser.shareWith');
-                await fromUser.shareWith(params[to].username, params[to].host, params[to].domain);
+                await fromUser.shareWith(params[to].username, params[to].host, params[to].domain, params[from].domain);
                 console.log('toUser.login');
                 await toUser.login(false);
                 console.log('toUser.acceptShare');
@@ -382,8 +382,8 @@ flows.forEach((flow) => {
                 await toUser.login(false);
                 console.log('toUser.forwardInvite', params[from].domain, inviteToken);
                 await toUser.forwardInvite(params[from].domain, inviteToken);
-                console.log('fromUser.shareWith', inviteToken, params[to].host, params[to].domain);
-                await fromUser.shareWith(params[to].username, params[to].host, params[to].domain);
+                console.log('fromUser.shareWith', inviteToken, params[to].host, params[to].domain, params[from].domain);
+                await fromUser.shareWith(params[to].username, params[to].host, params[to].domain, params[from].domain);
                 console.log('toUser.acceptShare');
                 await toUser.acceptShare();
                 console.log('toUser.deleteAcceptedShare');

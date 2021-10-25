@@ -237,7 +237,7 @@ export class RevaClient {
   //   return res.get...
   // }
 
-  async createOCMShare(shareWithUser: string, shareWithHost: string, filename: string): Promise<void> {
+  async createOCMShare(shareWithUser: string, shareWithHost: string, filename: string, shareFromHost: string): Promise<void> {
     await this.ensureConnected();
     // https://github.com/cs3org/cs3apis/blob/b33d2760f96a4305e269fda72c91b6f6c5374962/cs3/sharing/ocm/v1beta1/ocm_api.proto#L86-L99
 
@@ -266,8 +266,8 @@ export class RevaClient {
 
         console.log('req.opaque.mapMap', req.toObject()?.opaque?.mapMap);
       const resourceId = new ResourceId();
-        resourceId.setStorageId('cernbox.cern.ch');
-        resourceId.setOpaqueId('some-file-to-share');
+        resourceId.setStorageId(shareFromHost);
+        resourceId.setOpaqueId(filename);
     req.setResourceId(resourceId);
       const shareGrant = new ShareGrant();
         const grantee = new Grantee();

@@ -48,7 +48,7 @@ async function tester () {
   // console.log('listReceivedOCMShares finish', senderList);
 
   console.log('createOCMShare start');
-  await sender.createOCMShare(shareWithUser, shareWithHost, '/home');
+  await sender.createOCMShare(shareWithUser, shareWithHost, '/home', SENDER.idp);
   console.log('createOCMShare finish');
 
 
