@@ -1,7 +1,7 @@
 import util from 'util';
 
 import { Metadata, credentials } from '@grpc/grpc-js';
-
+// import { generateFieldMask } from 'protobuf-fieldmask';
 import { GatewayAPIClient } from '@cs3org/node-cs3apis/cs3/gateway/v1beta1/gateway_api_grpc_pb';
 import { AuthenticateRequest } from '@cs3org/node-cs3apis/cs3/gateway/v1beta1/gateway_api_pb';
 import {
@@ -349,7 +349,8 @@ export class RevaClient {
     receivedShare.setState(newState);
     const req = new UpdateReceivedOCMShareRequest();
     req.setShare(receivedShare);
-
+    const mask = ['state'];
+    req.setUpdateMask(mask);
     const res = await this.grpcClient.updateReceivedOCMShare(req, this.metadata);
     const ok = (res.getStatus().getCode() === Code.CODE_OK);
     // console.log({ ok });
