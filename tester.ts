@@ -1,21 +1,23 @@
 import { RevaClient } from './reva-client';
 const SENDER = {
   idp: 'cernbox.cern.ch',
-  host: 'localhost:19000',
+  // host: 'localhost:19000',
+  host: 'revad1.docker',
   username: 'einstein',
   password: 'relativity',
 };
 
 const RECEIVER = {
   idp: 'cesnet.cz',
-  host: 'localhost:17000',
+  // host: 'localhost:17000',
+  host: 'stub2.docker',
   username: 'marie',
   password: 'radioactivity',
 };
 
 async function tester () {
   const sender = new RevaClient(SENDER.host);
-  await sender.ensureConnected();
+  // await sender.ensureConnected();
   console.log("Logging in sender", SENDER.host, SENDER.username, SENDER.password);
   await sender.login(SENDER.username, SENDER.password);
 

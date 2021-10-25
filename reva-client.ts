@@ -38,6 +38,8 @@ import { AcceptInviteRequest, FindAcceptedUsersRequest, ForwardInviteRequest, Ge
 import { InviteToken } from '@cs3org/node-cs3apis/cs3/ocm/invite/v1beta1/resources_pb';
 import { GetInfoByDomainRequest } from '@cs3org/node-cs3apis/cs3/ocm/provider/v1beta1/provider_api_pb';
 
+const GRPC_PORT = 19000;
+
 // Specifies the name of the Reva access token used during requests.
 // Align this string with the server expects, in the case of revad see:
 // https://github.com/cs3org/reva/blob/v1.11.0/pkg/token/token.go#L30
@@ -67,7 +69,7 @@ export class RevaClient {
     if (this.grpcClient) {
       return
     }
-    this.grpcClient = promisifyMethods(new GatewayAPIClient(this.host, credentials.createInsecure()), [
+    this.grpcClient = promisifyMethods(new GatewayAPIClient(`${this.host}:${GRPC_PORT}`, credentials.createInsecure()), [
       'authenticate',
       'whoAmI',
       'generateAppPassword',
@@ -356,13 +358,21 @@ export class RevaClient {
 
   async acceptShare() {
     const ids = await this.listReceivedOCMShares();
-    // console.log({ ids });
+    console.log({ ids });
     const promises = ids.map((id: any) => {
+      console.log("Accepting share", this.host, id);
       return this.updateReceivedOCMShare(id, ShareState.SHARE_STATE_ACCEPTED);
     });
     return Promise.all(promises);
   }
 }
+
+
+// docker stop revad1.docker ; docker rm revad1.docker ; docker run -d --network=testnet --rm --name=revad1.docker -e HOST=revad1 revad; docker logs -f revad1.docker
+// docker stop revad2.docker ; docker rm revad2.docker ; docker run -d --network=testnet --rm --name=revad2.docker -e HOST=revad2 revad; docker logs -f revad2.docker
+
+// docker stop stub1.docker ; docker rm stub1.docker ; docker run -d --network=testnet --rm --name=stub1.docker stub; docker logs -f stub1.docker
+// docker stop stub2.docker ; docker rm stub2.docker ; docker run -d --network=testnet --rm --name=stub2.docker stub; docker logs -f stub2.docker
 
 
 // const permFuncs = [

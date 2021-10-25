@@ -26,11 +26,11 @@ const froms = [
   'From Reva',
 ];
 const tos = [
-  // 'To Stub',
+  'To Stub',
   // 'To ownCloud',
   // 'To Nextcloud',
   // 'To Seafile',
-  'To Reva',
+  // 'To Reva',
 ];
 
 class User {
@@ -338,8 +338,8 @@ flows.forEach((flow) => {
             // Coming soon
             it.skip(to, () => {});
           } else {
-            let fromUser;
-            let toUser;
+            let fromUser: User;
+            let toUser: User;
             beforeEach(async () => {
               fromUser = new User(params[from]);
               toUser = new User(params[to]);
@@ -354,15 +354,15 @@ flows.forEach((flow) => {
               // console.log('exit to', flow, from, to);
               await toUser.exit();
             }, JEST_TIMEOUT);
-            afterAll(async (done) => {
-              if (!process.stdout.write('')) {
-                process.stdout.once('drain', () => { done(); });
-              }
-            }, JEST_TIMEOUT);
+            // afterAll(async (done) => {
+            //   if (!process.stdout.write('')) {
+            //     process.stdout.once('drain', () => { done(); });
+            //   }
+            // }, JEST_TIMEOUT);
 
             it(to, async () => {
               if (flow === 'Share-with flow') {
-                console.log('fromUser.login');
+                console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
                 await fromUser.login(false);
                 console.log('fromUser.shareWith');
                 await fromUser.shareWith(params[to].username, params[to].host, params[to].domain);
