@@ -15,8 +15,8 @@ console.log({ HEADLESS });
 const flows = [
   // 'Public link flow, log in first',
   // 'Public link flow, log in after',
-  // 'Share-with flow'
-  'Invite flow'
+  'Share-with flow'
+  // 'Invite flow'
 ];
 const froms = [
   'From Stub',
