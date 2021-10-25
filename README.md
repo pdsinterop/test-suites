@@ -84,6 +84,7 @@ Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type
 source ~/.bashrc
 cd ~/ocm-test-suite
 git checkout dev
+npm install
 npm run debug
 ```
 
