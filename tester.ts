@@ -16,15 +16,15 @@ const RECEIVER = {
 };
 
 async function tester () {
-  const sender = new RevaClient(SENDER.host);
+  // const sender = new RevaClient(SENDER.host);
   // await sender.ensureConnected();
-  console.log("Logging in sender", SENDER.host, SENDER.username, SENDER.password);
-  await sender.login(SENDER.username, SENDER.password);
+  // console.log("Logging in sender", SENDER.host, SENDER.username, SENDER.password);
+  // await sender.login(SENDER.username, SENDER.password);
 
-  // const receiver = new RevaClient(RECEIVER.host);
-  // await receiver.ensureConnected();
-  // console.log("Logging in receiver", RECEIVER.host, RECEIVER.username, RECEIVER.password);
-  // await receiver.login(RECEIVER.username, RECEIVER.password);
+  const receiver = new RevaClient(RECEIVER.host);
+  await receiver.ensureConnected();
+  console.log("Logging in receiver", RECEIVER.host, RECEIVER.username, RECEIVER.password);
+  await receiver.login(RECEIVER.username, RECEIVER.password);
 
   // const inviteToken = await sender.generateInviteToken();
   // console.log({ inviteToken });
@@ -33,13 +33,13 @@ async function tester () {
   // await receiver.acceptInviteToken(SENDER.host, SENDER.username, inviteToken);
   // console.log('token accepted');
 
-  const acceptedUsers = await sender.findAcceptedUsers();
-  if (acceptedUsers.length !== 1) {
-    console.log("acceptedUsers.length", acceptedUsers.length);
-    return
-  }
-  const shareWithUser = acceptedUsers[0].id.opaqueId;
-  const shareWithHost = acceptedUsers[0].id.idp;
+  // const acceptedUsers = await sender.findAcceptedUsers();
+  // if (acceptedUsers.length !== 1) {
+  //   console.log("acceptedUsers.length", acceptedUsers.length);
+  //   return
+  // }
+  // const shareWithUser = acceptedUsers[0].id.opaqueId;
+  // const shareWithHost = acceptedUsers[0].id.idp;
   // console.log(JSON.stringify(acceptedUsers, null, 2));
   
 
@@ -47,22 +47,22 @@ async function tester () {
   // const senderList = await sender.listReceivedOCMShares();
   // console.log('listReceivedOCMShares finish', senderList);
 
-  console.log('createOCMShare start');
-  await sender.createOCMShare(shareWithUser, shareWithHost, '/home', SENDER.idp);
-  console.log('createOCMShare finish');
+  // console.log('createOCMShare start');
+  // await sender.createOCMShare(shareWithUser, shareWithHost, '/home', SENDER.idp);
+  // console.log('createOCMShare finish');
 
 
-  // console.log('listReceivedOCMShares start');
-  // const receiverList1 = await receiver.listReceivedOCMShares();
-  // console.log('listReceivedOCMShares finish', receiverList1);
+  console.log('listReceivedOCMShares start');
+  const receiverList1 = await receiver.listReceivedOCMShares();
+  console.log('listReceivedOCMShares finish', receiverList1);
 
-  // console.log('acceptShare start');
-  // await receiver.acceptShare();
-  // console.log('acceptShare finish');
+  console.log('acceptShare start');
+  await receiver.acceptShare();
+  console.log('acceptShare finish');
 
-  // console.log('listReceivedOCMShares start');
-  // const receiverList2 = await receiver.listReceivedOCMShares();
-  // console.log('listReceivedOCMShares finish', receiverList1);
+  console.log('listReceivedOCMShares start');
+  const receiverList2 = await receiver.listReceivedOCMShares();
+  console.log('listReceivedOCMShares finish', receiverList1);
 
 
 }
