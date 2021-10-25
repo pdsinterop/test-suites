@@ -1,19 +1,215 @@
 [
 	{
-		"name": "cernbox",
-		"full_name": "CERNBox",
-		"organization": "CERN",
-		"domain": "cernbox.cern.ch",
-		"homepage": "https://cernbox.web.cern.ch",
-		"description": "CERNBox provides cloud data storage to all CERN users.",
+		"name": "nc1",
+		"full_name": "nc1",
+		"organization": "ocm-test-suite",
+		"domain": "nc1.docker",
+		"homepage": "https://nc1.docker",
+		"description": "nc1.docker",
 		"services": [
 			{
 				"endpoint": {
 					"type": {
 						"name": "OCM",
-						"description": "CERNBox Open Cloud Mesh API"
+						"description": "Open Cloud Mesh"
 					},
-					"name": "CERNBox - OCM API",
+					"name": "OCM API",
+					"path": "https://nc1.docker/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://nc1.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav",
+						"description": "Webdav"
+					},
+					"name": "Webdav API",
+					"path": "https://nc1.docker/webdav/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://nc1.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Gateway",
+						"description": "GRPC Gateway"
+					},
+					"name": "GRPC Gateway",
+					"path": "nc1.docker:19000",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "nc1.docker:19000"
+			}
+		]
+	},
+	{
+		"name": "nc2",
+		"full_name": "nc2",
+		"organization": "ocm-test-suite",
+		"domain": "nc2.docker",
+		"homepage": "https://nc2.docker",
+		"description": "nc2.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM",
+						"description": "Open Cloud Mesh"
+					},
+					"name": "OCM API",
+					"path": "https://nc2.docker/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://nc2.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav",
+						"description": "Webdav"
+					},
+					"name": "Webdav API",
+					"path": "https://nc2.docker/webdav/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://nc2.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Gateway",
+						"description": "GRPC Gateway"
+					},
+					"name": "GRPC Gateway",
+					"path": "nc2.docker:19000",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "nc2.docker:19000"
+			}
+		]
+	},
+	{
+		"name": "oc1",
+		"full_name": "oc1",
+		"organization": "ocm-test-suite",
+		"domain": "oc1.docker",
+		"homepage": "https://oc1.docker",
+		"description": "oc1.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM",
+						"description": "Open Cloud Mesh"
+					},
+					"name": "OCM API",
+					"path": "https://oc1.docker/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://oc1.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav",
+						"description": "Webdav"
+					},
+					"name": "Webdav API",
+					"path": "https://oc1.docker/webdav/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://oc1.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Gateway",
+						"description": "GRPC Gateway"
+					},
+					"name": "GRPC Gateway",
+					"path": "oc1.docker:19000",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "oc1.docker:19000"
+			}
+		]
+	},
+	{
+		"name": "oc2",
+		"full_name": "oc2",
+		"organization": "ocm-test-suite",
+		"domain": "oc2.docker",
+		"homepage": "https://oc2.docker",
+		"description": "oc2.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM",
+						"description": "Open Cloud Mesh"
+					},
+					"name": "OCM API",
+					"path": "https://oc2.docker/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://oc2.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav",
+						"description": "Webdav"
+					},
+					"name": "Webdav API",
+					"path": "https://oc2.docker/webdav/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://oc2.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Gateway",
+						"description": "GRPC Gateway"
+					},
+					"name": "GRPC Gateway",
+					"path": "oc2.docker:19000",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "oc2.docker:19000"
+			}
+		]
+	},
+	{
+		"name": "revad1",
+		"full_name": "revad1",
+		"organization": "ocm-test-suite",
+		"domain": "revad1.docker",
+		"homepage": "https://revad1.docker",
+		"description": "revad1.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM",
+						"description": "Open Cloud Mesh"
+					},
+					"name": "OCM API",
 					"path": "https://revad1.docker/",
 					"is_monitored": true
 				},
@@ -24,9 +220,9 @@
 				"endpoint": {
 					"type": {
 						"name": "Webdav",
-						"description": "CERNBox Webdav API"
+						"description": "Webdav"
 					},
-					"name": "CERNBox - Webdav API",
+					"name": "Webdav API",
 					"path": "https://revad1.docker/webdav/",
 					"is_monitored": true
 				},
@@ -37,9 +233,9 @@
 				"endpoint": {
 					"type": {
 						"name": "Gateway",
-						"description": "CERNBox GRPC Gateway"
+						"description": "GRPC Gateway"
 					},
-					"name": "CERNBox - GRPC Gateway",
+					"name": "GRPC Gateway",
 					"path": "revad1.docker:19000",
 					"is_monitored": true
 				},
@@ -49,20 +245,20 @@
 		]
 	},
 	{
-		"name": "oc-cesnet",
-		"full_name": "ownCloud@CESNET",
-		"organization": "CESNET",
-		"domain": "cesnet.cz",
-		"homepage": "https://owncloud.cesnet.cz",
-		"description": "OwnCloud has been designed for individual users.",
+		"name": "revad2",
+		"full_name": "revad2",
+		"organization": "ocm-test-suite",
+		"domain": "revad2.docker",
+		"homepage": "https://revad2.docker",
+		"description": "revad2.docker",
 		"services": [
 			{
 				"endpoint": {
 					"type": {
 						"name": "OCM",
-						"description": "CESNET Open Cloud Mesh API"
+						"description": "Open Cloud Mesh"
 					},
-					"name": "CESNET - OCM API",
+					"name": "OCM API",
 					"path": "https://revad2.docker/",
 					"is_monitored": true
 				},
@@ -73,9 +269,9 @@
 				"endpoint": {
 					"type": {
 						"name": "Webdav",
-						"description": "CESNET Webdav API"
+						"description": "Webdav"
 					},
-					"name": "CESNET - Webdav API",
+					"name": "Webdav API",
 					"path": "https://revad2.docker/webdav/",
 					"is_monitored": true
 				},
@@ -86,9 +282,9 @@
 				"endpoint": {
 					"type": {
 						"name": "Gateway",
-						"description": "CESNET GRPC Gateway"
+						"description": "GRPC Gateway"
 					},
-					"name": "CESNET - GRPC Gateway",
+					"name": "GRPC Gateway",
 					"path": "revad2.docker:19000",
 					"is_monitored": true
 				},
@@ -96,5 +292,103 @@
 				"host": "revad2.docker:19000"
 			}
 		]
-	}
+	},
+	{
+		"name": "stub1",
+		"full_name": "stub1",
+		"organization": "ocm-test-suite",
+		"domain": "stub1.docker",
+		"homepage": "https://stub1.docker",
+		"description": "stub1.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM",
+						"description": "Open Cloud Mesh"
+					},
+					"name": "OCM API",
+					"path": "https://stub1.docker/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://stub1.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav",
+						"description": "Webdav"
+					},
+					"name": "Webdav API",
+					"path": "https://stub1.docker/webdav/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://stub1.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Gateway",
+						"description": "GRPC Gateway"
+					},
+					"name": "GRPC Gateway",
+					"path": "stub1.docker:19000",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "stub1.docker:19000"
+			}
+		]
+	},
+	{
+		"name": "stub2",
+		"full_name": "stub2",
+		"organization": "ocm-test-suite",
+		"domain": "stub2.docker",
+		"homepage": "https://stub2.docker",
+		"description": "stub2.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM",
+						"description": "Open Cloud Mesh"
+					},
+					"name": "OCM API",
+					"path": "https://stub2.docker/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://stub2.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav",
+						"description": "Webdav"
+					},
+					"name": "Webdav API",
+					"path": "https://stub2.docker/webdav/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://stub2.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Gateway",
+						"description": "GRPC Gateway"
+					},
+					"name": "GRPC Gateway",
+					"path": "stub2.docker:19000",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "stub2.docker:19000"
+			}
+		]
+	},
 ]
