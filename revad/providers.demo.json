@@ -14,7 +14,7 @@
 						"description": "Open Cloud Mesh"
 					},
 					"name": "OCM API",
-					"path": "https://nc1.docker/",
+					"path": "https://nc1.docker/ocm",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
@@ -27,24 +27,11 @@
 						"description": "Webdav"
 					},
 					"name": "Webdav API",
-					"path": "https://nc1.docker/webdav/",
+					"path": "https://nc1.docker/public.php/webdav/",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
 				"host": "https://nc1.docker/"
-			},
-			{
-				"endpoint": {
-					"type": {
-						"name": "Gateway",
-						"description": "GRPC Gateway"
-					},
-					"name": "GRPC Gateway",
-					"path": "nc1.docker:19000",
-					"is_monitored": true
-				},
-				"api_version": "0.0.1",
-				"host": "nc1.docker:19000"
 			}
 		]
 	},
@@ -63,7 +50,7 @@
 						"description": "Open Cloud Mesh"
 					},
 					"name": "OCM API",
-					"path": "https://nc2.docker/",
+					"path": "https://nc2.docker/ocm",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
@@ -76,24 +63,11 @@
 						"description": "Webdav"
 					},
 					"name": "Webdav API",
-					"path": "https://nc2.docker/webdav/",
+					"path": "https://nc2.docker/public.php/webdav/",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
 				"host": "https://nc2.docker/"
-			},
-			{
-				"endpoint": {
-					"type": {
-						"name": "Gateway",
-						"description": "GRPC Gateway"
-					},
-					"name": "GRPC Gateway",
-					"path": "nc2.docker:19000",
-					"is_monitored": true
-				},
-				"api_version": "0.0.1",
-				"host": "nc2.docker:19000"
 			}
 		]
 	},
@@ -112,7 +86,7 @@
 						"description": "Open Cloud Mesh"
 					},
 					"name": "OCM API",
-					"path": "https://oc1.docker/",
+					"path": "https://oc1.docker/ocm",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
@@ -125,24 +99,11 @@
 						"description": "Webdav"
 					},
 					"name": "Webdav API",
-					"path": "https://oc1.docker/webdav/",
+					"path": "https://oc1.docker/public.php/webdav/",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
 				"host": "https://oc1.docker/"
-			},
-			{
-				"endpoint": {
-					"type": {
-						"name": "Gateway",
-						"description": "GRPC Gateway"
-					},
-					"name": "GRPC Gateway",
-					"path": "oc1.docker:19000",
-					"is_monitored": true
-				},
-				"api_version": "0.0.1",
-				"host": "oc1.docker:19000"
 			}
 		]
 	},
@@ -161,7 +122,7 @@
 						"description": "Open Cloud Mesh"
 					},
 					"name": "OCM API",
-					"path": "https://oc2.docker/",
+					"path": "https://oc2.docker/ocm",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
@@ -174,24 +135,11 @@
 						"description": "Webdav"
 					},
 					"name": "Webdav API",
-					"path": "https://oc2.docker/webdav/",
+					"path": "https://oc2.docker/public.php/webdav/",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
 				"host": "https://oc2.docker/"
-			},
-			{
-				"endpoint": {
-					"type": {
-						"name": "Gateway",
-						"description": "GRPC Gateway"
-					},
-					"name": "GRPC Gateway",
-					"path": "oc2.docker:19000",
-					"is_monitored": true
-				},
-				"api_version": "0.0.1",
-				"host": "oc2.docker:19000"
 			}
 		]
 	},
@@ -308,7 +256,7 @@
 						"description": "Open Cloud Mesh"
 					},
 					"name": "OCM API",
-					"path": "https://stub1.docker/",
+					"path": "https://stub1.docker/ocm",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
@@ -326,19 +274,6 @@
 				},
 				"api_version": "0.0.1",
 				"host": "https://stub1.docker/"
-			},
-			{
-				"endpoint": {
-					"type": {
-						"name": "Gateway",
-						"description": "GRPC Gateway"
-					},
-					"name": "GRPC Gateway",
-					"path": "stub1.docker:19000",
-					"is_monitored": true
-				},
-				"api_version": "0.0.1",
-				"host": "stub1.docker:19000"
 			}
 		]
 	},
@@ -357,7 +292,7 @@
 						"description": "Open Cloud Mesh"
 					},
 					"name": "OCM API",
-					"path": "https://stub2.docker/",
+					"path": "https://stub2.docker/ocm",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
@@ -375,19 +310,6 @@
 				},
 				"api_version": "0.0.1",
 				"host": "https://stub2.docker/"
-			},
-			{
-				"endpoint": {
-					"type": {
-						"name": "Gateway",
-						"description": "GRPC Gateway"
-					},
-					"name": "GRPC Gateway",
-					"path": "stub2.docker:19000",
-					"is_monitored": true
-				},
-				"api_version": "0.0.1",
-				"host": "stub2.docker:19000"
 			}
 		]
 	}
