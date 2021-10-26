@@ -8,30 +8,39 @@ const { GUI_TYPE_STUB,
 
 import { RevaClient } from "./reva-client";
 
+const FLOW_PUBLIC_LOG_IN_FIRST = 'Public link flow, log in first';
+const FLOW_PUBLIC_LOG_IN_AFTER = 'Public link flow, log in after';
+const FLOW_SHARE_WITH = 'Share-with flow';
+const FLOW_INVITE = 'Invite flow';
+
+const IMPL_NEXTCLOUD = 'Nextcloud';
+const IMPL_OWNCLOUD = 'ownCloud';
+// const IMPL_SEAFILE = 'Seafile';
+const IMPL_REVA = 'Reva';
+const IMPL_STUB = 'Stub';
+
 const JEST_TIMEOUT = 60000;
 const HEADLESS = !!process.env.HEADLESS;
 console.log({ HEADLESS });
 
-const flows = [
-  // 'Public link flow, log in first',
-  // 'Public link flow, log in after',
-  'Share-with flow'
-  // 'Invite flow'
-];
-const froms = [
-  // 'From Stub',
-  // 'From ownCloud',
-  // 'From Nextcloud',
-  // 'From Seafile',
-  'From Reva',
-];
-const tos = [
-  // 'To Stub',
-  // 'To ownCloud',
-  // 'To Nextcloud',
-  // 'To Seafile',
-  'To Reva',
-];
+const flows = {
+  // FLOW_PUBLIC_LOG_IN_FIRST: {
+  //   from: [IMPL_NEXTCLOUD, /* IMPL_OWNCLOUD, */ IMPL_STUB],
+  //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_STUB]
+  // },
+  // FLOW_PUBLIC_LOG_IN_AFTER: {
+  //   from: [IMPL_NEXTCLOUD, /* IMPL_OWNCLOUD, */ IMPL_STUB],
+  //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_STUB]
+  // },
+  // FLOW_SHARE_WITH: {
+  //   from: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_REVA, IMPL_STUB],
+  //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_REVA, IMPL_STUB]
+  // },
+  FLOW_INVITE: {
+    from: [IMPL_REVA, /* IMPL_STUB */],
+    to: [IMPL_REVA, IMPL_STUB]
+  },
+};
 
 class User {
   host: string
@@ -329,11 +338,11 @@ class User {
 }
 
 
-flows.forEach((flow) => {
+Object.keys(flows).forEach((flow) => {
   describe(flow, () => {
-    froms.forEach((from) => {
-      const tester = () => {
-        tos.forEach((to) => {
+    flows[flow].froms.forEach((from) => {
+      describe(from, () => {
+        flows[flow].tos.forEach((to) => {
           if (to === 'To Seafile') {
             // Coming soon
             it.skip(to, () => {});
@@ -409,16 +418,7 @@ flows.forEach((flow) => {
             }, JEST_TIMEOUT);
           }
         });
-      }
-      if ((flow !== 'Share-with flow') && (from === 'From ownCloud')) {
-        // Known not to work, uses OCS instead of OCM:
-        describe.skip(from, tester);
-      } else if (from === 'From Seafile') {
-        // Coming soon:
-        describe.skip(from, tester);
-      } else {
-        describe(from, tester);
-      }
+      });
     });
   });
 });
