@@ -346,7 +346,7 @@ Object.keys(flows).forEach((flow: string) => {
           let fromUser: User;
           let toUser: User;
           beforeEach(async () => {
-            console.log('setting up', from, to);
+            console.log('setting up', from, to, Object.keys(params));
             fromUser = new User(params[`From ${from}`]);
             toUser = new User(params[`To ${to}`]);
             // console.log('init from', flow, from, to);
@@ -371,7 +371,7 @@ Object.keys(flows).forEach((flow: string) => {
               console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
               await fromUser.login(false);
               console.log('fromUser.shareWith');
-              await fromUser.shareWith(params[to].username, params[to].host, params[to].domain, params[from].domain);
+              await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].host, params[`To ${to}`].domain, params[`From ${from}`].domain);
               console.log('toUser.login');
               await toUser.login(false);
               console.log('toUser.acceptShare');
@@ -386,10 +386,10 @@ Object.keys(flows).forEach((flow: string) => {
               const inviteToken = await fromUser.generateInvite();
               console.log('toUser.login', toUser.host, toUser.username, toUser.password);
               await toUser.login(false);
-              console.log('toUser.forwardInvite', params[from].domain, inviteToken);
-              await toUser.forwardInvite(params[from].domain, inviteToken);
-              console.log('fromUser.shareWith', inviteToken, params[to].host, params[to].domain, params[from].domain);
-              await fromUser.shareWith(params[to].username, params[to].host, params[to].domain, params[from].domain);
+              console.log('toUser.forwardInvite', params[`From ${from}`].domain, inviteToken);
+              await toUser.forwardInvite(params[`From ${from}`].domain, inviteToken);
+              console.log('fromUser.shareWith', inviteToken, params[`To ${to}`].host, params[`To ${to}`].domain, params[`From ${from}`].domain);
+              await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].host, params[`To ${to}`].domain, params[`From ${from}`].domain);
               console.log('toUser.acceptShare');
               await toUser.acceptShare();
               console.log('toUser.deleteAcceptedShare');
