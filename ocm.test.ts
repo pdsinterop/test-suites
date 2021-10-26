@@ -24,19 +24,19 @@ const HEADLESS = !!process.env.HEADLESS;
 console.log({ HEADLESS });
 
 const flows = {
-  // FLOW_PUBLIC_LOG_IN_FIRST: {
+  // [ FLOW_PUBLIC_LOG_IN_FIRST ]: {
   //   from: [IMPL_NEXTCLOUD, /* IMPL_OWNCLOUD, */ IMPL_STUB],
   //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_STUB]
   // },
-  // FLOW_PUBLIC_LOG_IN_AFTER: {
+  // [ FLOW_PUBLIC_LOG_IN_AFTER ]: {
   //   from: [IMPL_NEXTCLOUD, /* IMPL_OWNCLOUD, */ IMPL_STUB],
   //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_STUB]
   // },
-  // FLOW_SHARE_WITH: {
+  // [ FLOW_SHARE_WITH ]: {
   //   from: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_REVA, IMPL_STUB],
   //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_REVA, IMPL_STUB]
   // },
-  FLOW_INVITE: {
+  [ FLOW_INVITE ]: {
     from: [IMPL_REVA, /* IMPL_STUB */],
     to: [IMPL_REVA, IMPL_STUB]
   },
@@ -340,9 +340,9 @@ class User {
 
 Object.keys(flows).forEach((flow) => {
   describe(flow, () => {
-    flows[flow].froms.forEach((from) => {
+    flows[flow].from.forEach((from) => {
       describe(from, () => {
-        flows[flow].tos.forEach((to) => {
+        flows[flow].to.forEach((to) => {
           if (to === 'To Seafile') {
             // Coming soon
             it.skip(to, () => {});
