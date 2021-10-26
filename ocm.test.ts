@@ -19,11 +19,11 @@ const flows = [
   // 'Invite flow'
 ];
 const froms = [
-  'From Stub',
+  // 'From Stub',
   // 'From ownCloud',
   // 'From Nextcloud',
   // 'From Seafile',
-  // 'From Reva',
+  'From Reva',
 ];
 const tos = [
   // 'To Stub',
