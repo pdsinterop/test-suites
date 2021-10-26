@@ -338,85 +338,81 @@ class User {
 }
 
 
-Object.keys(flows).forEach((flow) => {
+Object.keys(flows).forEach((flow: string) => {
   describe(flow, () => {
-    flows[flow].from.forEach((from) => {
-      describe(from, () => {
-        flows[flow].to.forEach((to) => {
-          if (to === 'To Seafile') {
-            // Coming soon
-            it.skip(to, () => {});
-          } else {
-            let fromUser: User;
-            let toUser: User;
-            beforeEach(async () => {
-              fromUser = new User(params[from]);
-              toUser = new User(params[to]);
-              // console.log('init from', flow, from, to);
-              await fromUser.init();
-              // console.log('init to', flow, from, to);
-              await toUser.init();
-            }, JEST_TIMEOUT);
-            afterEach(async () => {
-              // console.log('exit from', flow, from, to);
-              await fromUser.exit();
-              // console.log('exit to', flow, from, to);
-              await toUser.exit();
-            }, JEST_TIMEOUT);
-            // afterAll(async (done) => {
-            //   if (!process.stdout.write('')) {
-            //     process.stdout.once('drain', () => { done(); });
-            //   }
-            // }, JEST_TIMEOUT);
+    flows[flow].from.forEach((from: string) => {
+      describe(`From ${from}`, () => {
+        flows[flow].to.forEach((to: string) => {
+          let fromUser: User;
+          let toUser: User;
+          beforeEach(async () => {
+            console.log('setting up', from, to);
+            fromUser = new User(params[`From ${from}`]);
+            toUser = new User(params[`To ${to}`]);
+            // console.log('init from', flow, from, to);
+            await fromUser.init();
+            // console.log('init to', flow, from, to);
+            await toUser.init();
+          }, JEST_TIMEOUT);
+          afterEach(async () => {
+            // console.log('exit from', flow, from, to);
+            await fromUser.exit();
+            // console.log('exit to', flow, from, to);
+            await toUser.exit();
+          }, JEST_TIMEOUT);
+          // afterAll(async (done) => {
+          //   if (!process.stdout.write('')) {
+          //     process.stdout.once('drain', () => { done(); });
+          //   }
+          // }, JEST_TIMEOUT);
 
-            it(to, async () => {
-              if (flow === 'Share-with flow') {
-                console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
-                await fromUser.login(false);
-                console.log('fromUser.shareWith');
-                await fromUser.shareWith(params[to].username, params[to].host, params[to].domain, params[from].domain);
-                console.log('toUser.login');
+          it(`To ${to}`, async () => {
+            if (flow === 'Share-with flow') {
+              console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
+              await fromUser.login(false);
+              console.log('fromUser.shareWith');
+              await fromUser.shareWith(params[to].username, params[to].host, params[to].domain, params[from].domain);
+              console.log('toUser.login');
+              await toUser.login(false);
+              console.log('toUser.acceptShare');
+              await toUser.acceptShare();
+              console.log('toUser.deleteAcceptedShare');
+              await toUser.deleteAcceptedShare();
+              console.log('done');
+            } else if (flow === 'Invite flow') {
+              console.log('fromUser.login');
+              await fromUser.login(false);
+              console.log('fromUser.generateInvite');
+              const inviteToken = await fromUser.generateInvite();
+              console.log('toUser.login', toUser.host, toUser.username, toUser.password);
+              await toUser.login(false);
+              console.log('toUser.forwardInvite', params[from].domain, inviteToken);
+              await toUser.forwardInvite(params[from].domain, inviteToken);
+              console.log('fromUser.shareWith', inviteToken, params[to].host, params[to].domain, params[from].domain);
+              await fromUser.shareWith(params[to].username, params[to].host, params[to].domain, params[from].domain);
+              console.log('toUser.acceptShare');
+              await toUser.acceptShare();
+              console.log('toUser.deleteAcceptedShare');
+              await toUser.deleteAcceptedShare();
+              console.log('done');
+            } else {
+              await fromUser.login(false);
+              const url = await fromUser.createPublicLink();
+
+              // publicLink = 'https://nc1.pdsinterop.net/s/fq4fWk4xyfqcopZ';
+              const remoteGuiType = fromUser.guiType;
+
+              if (flow === 'Public link flow, log in first') {
                 await toUser.login(false);
-                console.log('toUser.acceptShare');
-                await toUser.acceptShare();
-                console.log('toUser.deleteAcceptedShare');
-                await toUser.deleteAcceptedShare();
-                console.log('done');
-              } else if (flow === 'Invite flow') {
-                console.log('fromUser.login');
-                await fromUser.login(false);
-                console.log('fromUser.generateInvite');
-                const inviteToken = await fromUser.generateInvite();
-                console.log('toUser.login', toUser.host, toUser.username, toUser.password);
-                await toUser.login(false);
-                console.log('toUser.forwardInvite', params[from].domain, inviteToken);
-                await toUser.forwardInvite(params[from].domain, inviteToken);
-                console.log('fromUser.shareWith', inviteToken, params[to].host, params[to].domain, params[from].domain);
-                await fromUser.shareWith(params[to].username, params[to].host, params[to].domain, params[from].domain);
-                console.log('toUser.acceptShare');
-                await toUser.acceptShare();
-                console.log('toUser.deleteAcceptedShare');
-                await toUser.deleteAcceptedShare();
-                console.log('done');
+                await toUser.acceptPublicLink(url, remoteGuiType);
               } else {
-                await fromUser.login(false);
-                const url = await fromUser.createPublicLink();
-
-                // publicLink = 'https://nc1.pdsinterop.net/s/fq4fWk4xyfqcopZ';
-                const remoteGuiType = fromUser.guiType;
-
-                if (flow === 'Public link flow, log in first') {
-                  await toUser.login(false);
-                  await toUser.acceptPublicLink(url, remoteGuiType);
-                } else {
-                  await toUser.acceptPublicLink(url, remoteGuiType);
-                  await toUser.login(true);
-                }
-                await toUser.acceptShare();
-                await toUser.deleteAcceptedShare();
+                await toUser.acceptPublicLink(url, remoteGuiType);
+                await toUser.login(true);
               }
-            }, JEST_TIMEOUT);
-          }
+              await toUser.acceptShare();
+              await toUser.deleteAcceptedShare();
+            }
+          }, JEST_TIMEOUT);
         });
       });
     });
