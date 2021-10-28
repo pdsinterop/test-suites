@@ -42,7 +42,7 @@ module.exports = {
       password: 'radioactivity'
     },
     'From ownCloud': {
-      host: 'occ1.docker',
+      host: 'oc1.docker',
       guiType: GUI_TYPE_OWNCLOUD,
       username: 'alice',
       password: 'alice123'
