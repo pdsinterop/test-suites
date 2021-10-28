@@ -36,6 +36,9 @@ import { ShareState } from '@cs3org/node-cs3apis/cs3/sharing/ocm/v1beta1/resourc
 import { AcceptInviteRequest, FindAcceptedUsersRequest, ForwardInviteRequest, GenerateInviteTokenRequest, GetAcceptedUserRequest } from '@cs3org/node-cs3apis/cs3/ocm/invite/v1beta1/invite_api_pb';
 import { InviteToken } from '@cs3org/node-cs3apis/cs3/ocm/invite/v1beta1/resources_pb';
 import { GetInfoByDomainRequest } from '@cs3org/node-cs3apis/cs3/ocm/provider/v1beta1/provider_api_pb';
+import { Client } from './client';
+import { GUI_TYPE_REVA } from '../guiTypes';
+
 
 const GRPC_PORT = 19000;
 
@@ -53,17 +56,23 @@ function promisifyMethods(instance: any, methodNames: string[]) {
   return result;
 }
 
-export class RevaClient {
+export class RevaClient extends Client {
   grpcClient: any
   metadata: Metadata
-  host: string
   authenticated: boolean
-  constructor(host: string) {
-    this.host = host;
+  constructor({ host, username, password }) {
+    super({ host, username, password });
+    this.guiType = GUI_TYPE_REVA;
+    
     this.authenticated = false;
     this.metadata = new Metadata();
   }
-
+  async createPublicLink(): Promise<string> {
+    throw new Error('Reva public links do not have a save-to-your-instance GUI');
+  }
+  async acceptPublicLink() {
+    throw new Error('Reva public links do not have a save-to-your-instance GUI');
+  }
   async ensureConnected() {
     if (this.grpcClient) {
       return
@@ -155,15 +164,18 @@ export class RevaClient {
       'cancelTransfer'
     ]);
   }
-  async login(username: string, password: string) {
+  async init() {
+    await this.ensureConnected();
+  }
+  async login() {
     // console.log('in login function');
     await this.ensureConnected();
     // console.log('ensureConnected done');
 
     const req = new AuthenticateRequest();
     req.setType('basic');
-    req.setClientId(username);
-    req.setClientSecret(password);
+    req.setClientId(this.username);
+    req.setClientSecret(this.password);
     const res = await this.grpcClient.authenticate(req);
     // console.log('authenticate done');
   
@@ -181,7 +193,7 @@ export class RevaClient {
     // console.log(this.grpcClient.prototype);
   }
 
-  async generateInviteToken(): Promise<string> {
+  async generateInvite(): Promise<string> {
     const req = new GenerateInviteTokenRequest();
     const res = await this.grpcClient.generateInviteToken(req, this.metadata);
     const inviteToken = res.getInviteToken();
@@ -195,7 +207,7 @@ export class RevaClient {
   }
   
   
-  async forwardInviteToken(senderIdpName: string, tokenStr: string): Promise<void> {
+  async forwardInvite(senderIdpName: string, tokenStr: string): Promise<void> {
     const req = new ForwardInviteRequest();
     const token = new InviteToken();
     token.setToken(tokenStr);
@@ -206,7 +218,6 @@ export class RevaClient {
     const res = await this.grpcClient.forwardInvite(req, this.metadata);
     console.log(res.toObject());
   }
-
   async acceptInviteToken(senderHost: string, senderUsername: string, tokenStr: string): Promise<void> {
     const req = new AcceptInviteRequest();
     const token = new InviteToken();
@@ -236,7 +247,8 @@ export class RevaClient {
   //   return res.get...
   // }
 
-  async createOCMShare(shareWithUser: string, shareWithHost: string, filename: string, shareFromHost: string): Promise<void> {
+  async shareWith(shareWithUser: string, shareWithDomain: string, shareFromDomain: string): Promise<void> {
+    const filename = 'some/file/to/share.txt';
     await this.ensureConnected();
     // https://github.com/cs3org/cs3apis/blob/b33d2760f96a4305e269fda72c91b6f6c5374962/cs3/sharing/ocm/v1beta1/ocm_api.proto#L86-L99
 
@@ -265,14 +277,14 @@ export class RevaClient {
 
         console.log('req.opaque.mapMap', req.toObject()?.opaque?.mapMap);
       const resourceId = new ResourceId();
-        resourceId.setStorageId(shareFromHost);
+        resourceId.setStorageId(shareFromDomain);
         resourceId.setOpaqueId(filename);
     req.setResourceId(resourceId);
       const shareGrant = new ShareGrant();
         const grantee = new Grantee();
           grantee.setType(GranteeType.GRANTEE_TYPE_USER);
             const userId = new UserId();
-              userId.setIdp(shareWithHost);
+              userId.setIdp(shareWithDomain);
               userId.setOpaqueId(shareWithUser);
           grantee.setUserId(userId);
       shareGrant.setGrantee(grantee);
@@ -292,7 +304,7 @@ export class RevaClient {
       //       endpoint.setPath("http://localhost:17001/ocm");
       //     service.setEndpoint(endpoint);
       //   providerInfo.setServicesList([ service ]);
-      const providerInfo = await this.getInfoByDomain(shareWithHost);
+      const providerInfo = await this.getInfoByDomain(shareWithDomain);
       console.log('recipient mesh provider', providerInfo.toObject());
     req.setRecipientMeshProvider(providerInfo);
 
@@ -364,7 +376,13 @@ export class RevaClient {
       console.log("Accepting share", this.host, id);
       return this.updateReceivedOCMShare(id, ShareState.SHARE_STATE_ACCEPTED);
     });
-    return Promise.all(promises);
+    await Promise.all(promises);
+  }
+  async deleteAcceptedShare() {
+    // FIXME: todo
+  }
+  async exit() {
+    // nothing to do
   }
 }
 

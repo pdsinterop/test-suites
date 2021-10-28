@@ -8,10 +8,6 @@ const {
 } = require('./guiTypes'); 
 
 module.exports = {
-  GUI_TYPE_STUB,
-  GUI_TYPE_OWNCLOUD,
-  GUI_TYPE_NEXTCLOUD,
-  GUI_TYPE_SEAFILE,
   params: {
     'From Stub': {
       host: 'stub1.pdsinterop.net',

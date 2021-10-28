@@ -10,4 +10,5 @@ module.exports = {
   GUI_TYPE_OWNCLOUD,
   GUI_TYPE_NEXTCLOUD,
   GUI_TYPE_SEAFILE,
+  GUI_TYPE_REVA,
 };
