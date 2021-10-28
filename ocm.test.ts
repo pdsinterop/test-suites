@@ -92,12 +92,16 @@ class User {
       await this.type('#password', this.password);
       await this.go('.login-button');
       await this.page.waitForNavigation();
-      await new Promise(resolve => setTimeout(resolve, 5000));
-      const FTU_CLOSE_BUTTON = '#close-wizard';
-      const elt = await this.page.$(FTU_CLOSE_BUTTON);
-      if (elt) {
-        await this.page.click(FTU_CLOSE_BUTTON);
-      }
+      setInterval(async () => {
+        const FTU_CLOSE_BUTTON = '#close-wizard';
+        const elt = await this.page.$(FTU_CLOSE_BUTTON);
+        if (elt) {
+          console.log(`Closing FTU on ${this.host}`)
+          await this.page.click(FTU_CLOSE_BUTTON);
+        } else {
+          console.log('No FTU on ${this.host}')
+        }
+      }, 5000);
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
       if (!fromCurrentPage) {
         const loginUrl = `https://${this.host}/login`;
@@ -107,12 +111,16 @@ class User {
       await this.type('#password', this.password);
       await this.page.click("#submit-form");
       await this.page.waitForSelector('image.app-icon');
-      await new Promise(resolve => setTimeout(resolve, 5000));
-      const FTU_CLOSE_BUTTON = 'button.action-item.action-item--single.header-close.icon-close.undefined';
-      const elt = await this.page.$(FTU_CLOSE_BUTTON);
-      if (elt) {
-        await this.page.click(FTU_CLOSE_BUTTON);
-      }
+      setInterval(async () => {
+        const FTU_CLOSE_BUTTON = 'button.action-item.action-item--single.header-close.icon-close.undefined';
+        const elt = await this.page.$(FTU_CLOSE_BUTTON);
+        if (elt) {
+          console.log(`Closing FTU on ${this.host}`)
+          await this.page.click(FTU_CLOSE_BUTTON);
+        } else {
+          console.log('No FTU on ${this.host}')
+        }
+      }, 5000);
     } else if (this.guiType === GUI_TYPE_SEAFILE) {
       throw new Error('FIXME: https://github.com/michielbdejong/ocm-test-suite/issues/4');
     } else if (this.guiType === GUI_TYPE_REVA) {
