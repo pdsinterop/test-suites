@@ -94,8 +94,13 @@ class User {
       // nothing to do
     } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
       await commonSteps();
-      await this.go('input.login');
+      await this.go('.login-button');
       await this.page.waitForNavigation();
+      const FTU_CLOSE_BUTTON = '#close-wizard';
+      const elt = await this.page.$(FTU_CLOSE_BUTTON);
+      if (elt) {
+        await this.page.click(FTU_CLOSE_BUTTON);
+      }
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
       await commonSteps();
       await this.page.click("#submit-form");

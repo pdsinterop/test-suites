@@ -10,41 +10,11 @@ docker ps
 
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
-git checkout add-reva
+git checkout dev
 
-
-
-./build.sh
-docker network create testnet
-docker run -d --network=testnet --rm --name=nc1.docker nextcloud
-docker run -d --network=testnet --rm --name=nc2.docker nextcloud
-docker run -d --network=testnet --rm --name=stub1.docker -e HOST=stub1 stub
-docker run -d --network=testnet --rm --name=stub2.docker -e HOST=stub2 stub
-docker run -d --network=testnet --rm --name=revad1.docker -e HOST=revad1 revad
-docker run -d --network=testnet --rm --name=revad2.docker -e HOST=revad2 revad
-docker run -p 6080:80 -p 5900:5900 -v /dev/shm:/dev/shm --network=testnet --name=tester -d --cap-add=SYS_ADMIN tester
-
-TESTER_IP_ADDR=`docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tester`
-echo $TESTER_IP_ADDR
-# set up port forwarding from host to testnet for vnc:
-sysctl net.ipv4.ip_forward=1
-iptables -t nat -A PREROUTING -p tcp --dport 5900 -j DNAT --to-destination $TESTER_IP_ADDR:5900
+/bin/bash ./build.sh
+/bin/bash ./run.sh
 ```
-
-While still on the host system, run maintenance:install and set trusted domains in the Nextcloud servers:
-```sh
-docker exec nc1.docker chmod go+rw /tls
-docker exec --user=www-data -e HOST=nc1 nc1.docker sh /init.sh
-```
-And then:
-```sh
-export PHP_MEMORY_LIMIT="512M"
-php console.php maintenance:install --admin-user alice --admin-pass alice123
-php console.php status
-vim config/config.php +24 # add nc1.docker as a trusted domain
-exit
-```
-And same for `nc2.docker`.
 
 Then from your laptop connect using VNC (e.g. open `vnc://dockerhost` in Safari), password 1234, you should see an Ubuntu desktop.
 You can test that you made it into the testnet by opening Start->Internet->Firefox Web Browser and browsing to https://nc1.docker, once you
@@ -58,22 +28,6 @@ You can uncomment these in `./params-docker.js`.
 What does not work yet is OCM between Nextcloud/ownCloud  and Reva. We are currently discussing how to move forward
 from this situation. Please join https://gitter.im/cs3org/OCM and ping @michielbdejong if you want more up-to-date info and guidance.
 
-Here are some known issues we're working on:
-
-1. Only some of the flows are currently being tested, the rest are [commented out](https://github.com/cs3org/ocm-test-suite/blob/ca8d043/ocm.test.js#L15-L33).
-2. Reva has been added but is not passing the tests yet, due to a few open issues:
-  * https://github.com/cs3org/reva/issues/1752
-  * https://github.com/cs3org/reva/issues/1753
-  * https://github.com/cs3org/reva/issues/1962
-  * https://github.com/cs3org/reva/issues/1981
-3. Due to https://github.com/cs3org/ocm-test-suite/issues/34:
-   * add `'allow_local_remote_servers' => true` to /var/www/html/config/config.php on nc1.docker.
-   * add `'verify' => false` to /var/www/html/lib/private/Http/Client/ClientService.php line 75 on nc1.docker.
-   * comment out line 79 of /var/www/html/lib/private/Http/Client/Client.php
-   * even then it doesn't seem to work consistently yet:
-     * https://github.com/cs3org/ocm-test-suite/issues/38
-     * https://github.com/cs3org/ocm-test-suite/issues/39
-
 Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
 ```sh
 /bin/bash /ubuntu-init-script.sh
@@ -82,7 +36,6 @@ cd ~/ocm-test-suite
 git checkout dev
 npm run debug
 ```
-
 
 It tests three flows:
 
