@@ -41,18 +41,18 @@ module.exports = {
       username: 'marie',
       password: 'radioactivity'
     },
-    // 'From ownCloud': {
-    //   host: 'ocm-test-suite_oc1.docker_1',
-    //   guiType: GUI_TYPE_OWNCLOUD,
-    //   username: 'admin',
-    //   password: 'admin'
-    // },
-    // 'To ownCloud': {
-    //   host: 'ocm-test-suite_oc2.docker_1',
-    //   guiType: GUI_TYPE_OWNCLOUD,
-    //   username: 'admin',
-    //   password: 'admin'
-    // },
+    'From ownCloud': {
+      host: 'occ1.docker',
+      guiType: GUI_TYPE_OWNCLOUD,
+      username: 'alice',
+      password: 'alice123'
+    },
+    'To ownCloud': {
+      host: 'oc2.docker',
+      guiType: GUI_TYPE_OWNCLOUD,
+      username: 'alice',
+      password: 'alice123'
+    },
     'From Nextcloud': {
       host: 'nc1.docker',
       domain: 'nc1.docker',
