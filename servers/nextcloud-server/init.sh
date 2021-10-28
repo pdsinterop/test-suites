@@ -7,4 +7,6 @@ sed -i '61 i\  RewriteRule ^\\.well-known/openid-configuration /apps/solid/openi
 sed -i "25 i\    1 => 'server'," /var/www/html/config/config.php
 sed -i "26 i\    2 => 'nextcloud.local'," /var/www/html/config/config.php
 sed -i "27 i\    3 => 'thirdparty'," /var/www/html/config/config.php
+ln -s /tls/server.cert /tls/$HOST.docker.crt
+ln -s /tls/server.key /tls/$HOST.docker.key
 echo configured

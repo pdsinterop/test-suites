@@ -33,11 +33,12 @@ cd ..
 # docker build -t revadbase -f ./Dockerfile.revad .
 # cd ..
 # rm -rf reva
-cd revad
-cp -r ../tls .
+cd servers/revad
+cp -r ../../tls .
 docker build -t revad .
 
-cd ../servers/nextcloud-server
+cd ../nextcloud-server
+cp -r ../../tls .
 docker build -t nextcloud .
 # cd ../owncloud-server
 # docker-compose pull
