@@ -16,10 +16,6 @@ git clone https://github.com/michielbdejong/ocm-stub
 cd ocm-stub
 git checkout adapt-to-revad
 cd ..
-git clone https://github.com/michielbdejong/reva
-cd reva
-git checkout pass-ocm-test-suite
-cd ..
 
 ./build.sh
 docker network create testnet
@@ -40,7 +36,8 @@ iptables -t nat -A PREROUTING -p tcp --dport 5900 -j DNAT --to-destination $TEST
 
 While still on the host system, run maintenance:install and set trusted domains in the Nextcloud servers:
 ```sh
-docker exec -it --user=www-data nc1.docker /bin/bash
+docker exec nc1.docker chmod go+rw /tls
+docker exec --user=www-data -e HOST=nc1 nc1.docker sh /init.sh
 ```
 And then:
 ```sh

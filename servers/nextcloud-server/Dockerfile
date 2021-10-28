@@ -8,6 +8,7 @@ RUN a2enmod ssl
 #   -subj "/C=RO/ST=Bucharest/L=Bucharest/O=IT/CN=www.example.ro"
 
 # Trust all the certificates:
+ADD tls /tls
 RUN cp /tls/*.crt /usr/local/share/ca-certificates/
 RUN update-ca-certificates
 
