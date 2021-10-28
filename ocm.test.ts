@@ -92,6 +92,7 @@ class User {
       await this.type('#password', this.password);
       await this.go('.login-button');
       await this.page.waitForNavigation();
+      await new Promise(resolve => setTimeout(resolve, 5000));
       const FTU_CLOSE_BUTTON = '#close-wizard';
       const elt = await this.page.$(FTU_CLOSE_BUTTON);
       if (elt) {
@@ -106,6 +107,7 @@ class User {
       await this.type('#password', this.password);
       await this.page.click("#submit-form");
       await this.page.waitForSelector('image.app-icon');
+      await new Promise(resolve => setTimeout(resolve, 5000));
       const FTU_CLOSE_BUTTON = 'button.action-item.action-item--single.header-close.icon-close.undefined';
       const elt = await this.page.$(FTU_CLOSE_BUTTON);
       if (elt) {
