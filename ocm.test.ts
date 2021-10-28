@@ -81,19 +81,15 @@ class User {
     this.page = await this.browser.newPage();
   }
   async login(fromCurrentPage) {
-    const commonSteps = async ()=> {
+    if (this.guiType === GUI_TYPE_STUB) {
+      // nothing to do
+    } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
       if (!fromCurrentPage) {
-        const loginUrl = `https://${this.host}/login`;
+        const loginUrl = `https://${this.host}/index.php/login`;
         await this.page.goto(loginUrl);
       }
       await this.type('#user', this.username);
       await this.type('#password', this.password);
-    };
-
-    if (this.guiType === GUI_TYPE_STUB) {
-      // nothing to do
-    } else if (this.guiType === GUI_TYPE_OWNCLOUD) {
-      await commonSteps();
       await this.go('.login-button');
       await this.page.waitForNavigation();
       const FTU_CLOSE_BUTTON = '#close-wizard';
@@ -102,7 +98,12 @@ class User {
         await this.page.click(FTU_CLOSE_BUTTON);
       }
     } else if (this.guiType === GUI_TYPE_NEXTCLOUD) {
-      await commonSteps();
+      if (!fromCurrentPage) {
+        const loginUrl = `https://${this.host}/login`;
+        await this.page.goto(loginUrl);
+      }
+      await this.type('#user', this.username);
+      await this.type('#password', this.password);
       await this.page.click("#submit-form");
       await this.page.waitForSelector('image.app-icon');
       const FTU_CLOSE_BUTTON = 'button.action-item.action-item--single.header-close.icon-close.undefined';
