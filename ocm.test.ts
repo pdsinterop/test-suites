@@ -93,7 +93,7 @@ class User {
       await this.go('.login-button');
       await this.page.waitForNavigation();
       setInterval(async () => {
-        const FTU_CLOSE_BUTTON = '#close-wizard';
+        const FTU_CLOSE_BUTTON = '#closeWizard';
         const elt = await this.page.$(FTU_CLOSE_BUTTON);
         if (elt) {
           console.log(`Closing FTU on ${this.host}`)
