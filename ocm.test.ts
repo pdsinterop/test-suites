@@ -39,7 +39,7 @@ const flows = {
   // },
   [ FLOW_SHARE_WITH ]: {
     from: [/* IMPL_NEXTCLOUD, */ IMPL_OWNCLOUD /*, IMPL_REVA, IMPL_STUB */],
-    to: [/* IMPL_NEXTCLOUD, */ IMPL_OWNCLOUD /*, IMPL_REVA, IMPL_STUB */]
+    to: [/* IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_REVA, */ IMPL_STUB ]
   },
   // [ FLOW_INVITE ]: {
   //   from: [IMPL_REVA, /* IMPL_STUB */],
