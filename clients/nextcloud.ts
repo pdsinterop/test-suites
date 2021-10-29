@@ -7,14 +7,10 @@ export class NextcloudClient extends OwncloudClient {
   notificationDoneSelector: string  = 'div.icon-notifications-dark';
   contextMenuSelector: string = 'a.action-menu';
   unshareSelector: string = 'li.action-delete-container';
-
+  loginButton:string = '#submit-form';
   constructor({ host, username, password }) {
     super({ host, username, password });
     this.guiType = GUI_TYPE_NEXTCLOUD;
-  }
-  async clickLogin() {
-    await this.page.click("#submit-form");
-    await this.page.waitForSelector('image.app-icon');
   }
 
   async createPublicLink() {

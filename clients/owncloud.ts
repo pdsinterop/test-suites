@@ -8,23 +8,21 @@ export class OwncloudClient extends StubClient {
   notificationDoneSelector: string = 'a.nav-icon-sharingin';
   contextMenuSelector: string = 'span.icon-more';
   unshareSelector: string = 'a.action-delete';
+  loginButton: string = '.login-button';
 
   constructor({ host, username, password }) {
     super({ host, username, password })
     this.guiType = GUI_TYPE_OWNCLOUD;
   }
-  async clickLogin() {
-    await this.go('.login-button');
-    await this.page.waitForNavigation();
-  }
-  async login(fromCurrentPage) {
+  async login(fromCurrentPage: boolean) {
     if (!fromCurrentPage) {
       const loginUrl = `https://${this.host}/index.php/login`;
       await this.page.goto(loginUrl);
     }
     await this.type('#user', this.username);
     await this.type('#password', this.password);
-    await this.clickLogin();
+    await this.go(this.loginButton);
+    await this.page.waitForNavigation();
   }
   async go(selector) {
     console.log('awaiting', selector);
