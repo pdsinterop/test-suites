@@ -3,6 +3,7 @@ import { GUI_TYPE_OWNCLOUD } from "../guiTypes";
 import { StubClient } from './stub';
 
 export class OwncloudClient extends StubClient {
+  windowSize: string = '800,500';
   FTU_CLOSE_BUTTON: string =  '#closeWizard';
   loginPath: string = '/index.php/login';
   notificationDoneSelector: string = 'a.nav-icon-sharingin';
