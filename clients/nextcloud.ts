@@ -17,15 +17,6 @@ export class NextcloudClient extends OwncloudClient {
     await this.page.click("#submit-form");
     await this.page.waitForSelector('image.app-icon');
   }
-  async login(fromCurrentPage) {
-    if (!fromCurrentPage) {
-      const loginUrl = `https://${this.host}${this.loginPath}`;
-      await this.page.goto(loginUrl);
-    }
-    await this.type('#user', this.username);
-    await this.type('#password', this.password);
-    await this.clickLogin();
-  }
 
   async createPublicLink() {
     const filesUrl = `https://${this.host}/apps/files/?dir=/&openfile=15`; // select nextcloud.png file

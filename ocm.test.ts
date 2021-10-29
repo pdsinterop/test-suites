@@ -63,12 +63,12 @@ Object.keys(flows).forEach((flow: string) => {
           let toUser: Client;
           beforeEach(async () => {
             console.log('setting up', from, to, Object.keys(params));
-            fromUser = new CLIENT_TYPES[params[`From ${from}`].guiType](params[`From ${from}`]);
             toUser = new CLIENT_TYPES[params[`To ${to}`].guiType](params[`To ${to}`]);
-            // console.log('init from', flow, from, to);
-            await fromUser.init(HEADLESS);
             // console.log('init to', flow, from, to);
             await toUser.init(HEADLESS);
+            fromUser = new CLIENT_TYPES[params[`From ${from}`].guiType](params[`From ${from}`]);
+            // console.log('init from', flow, from, to);
+            await fromUser.init(HEADLESS);
           }, JEST_TIMEOUT);
           afterEach(async () => {
             // console.log('exit from', flow, from, to);
