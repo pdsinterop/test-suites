@@ -18,7 +18,7 @@ export class NextcloudClient extends OwncloudClient {
   }
 
   async createPublicLink() {
-    const filesUrl = `https://${this.host}/apps/files/?dir=/&openfile=15`; // select nextcloud.png file
+    const filesUrl = `https://${this.host}/index.php/apps/files/?dir=/&openfile=15`; // select nextcloud.png file
     await this.page.goto(filesUrl);
 
     await this.page.waitForSelector('image.app-icon');
