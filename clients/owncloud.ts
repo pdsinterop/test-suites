@@ -3,33 +3,19 @@ import { GUI_TYPE_OWNCLOUD } from "../guiTypes";
 import { StubClient } from './stub';
 
 export class OwncloudClient extends StubClient {
+  FTU_CLOSE_BUTTON: string =  '#closeWizard';
+  loginPath: string = '/index.php/login';
+  notificationDoneSelector: string = 'a.nav-icon-sharingin';
+  contextMenuSelector: string = 'span.icon-more';
+  unshareSelector: string = 'a.action-delete';
+
   constructor({ host, username, password }) {
     super({ host, username, password })
     this.guiType = GUI_TYPE_OWNCLOUD;
   }
-  async login(fromCurrentPage) {
-    if (!fromCurrentPage) {
-      const loginUrl = `https://${this.host}/index.php/login`;
-      await this.page.goto(loginUrl);
-    }
-    await this.type('#user', this.username);
-    await this.type('#password', this.password);
+  async clickLogin() {
     await this.go('.login-button');
     await this.page.waitForNavigation();
-    await this.checkFTU();
-    setTimeout(async () => {
-      await this.checkFTU();
-    }, 5000);
-  }
-  async checkFTU() {
-    const FTU_CLOSE_BUTTON = '#closeWizard';
-    const elt = await this.page.$(FTU_CLOSE_BUTTON);
-    if (elt) {
-      console.log(`Closing FTU on ${this.host}`)
-      await this.page.click(FTU_CLOSE_BUTTON);
-    } else {
-      console.log('No FTU on ${this.host}')
-    }
   }
 
   async go(selector) {
@@ -103,7 +89,7 @@ export class OwncloudClient extends StubClient {
     await this.acceptNotifications(
       'div.notifications-button',
       'button.notification-action-button.primary',
-      'a.nav-icon-sharingin'
+      this.notificationDoneSelector
     );
   }
 
@@ -125,8 +111,8 @@ export class OwncloudClient extends StubClient {
   async deleteAcceptedShare() {
     await this.deleteShares(
       `https://${this.host}/apps/files/?dir=/&view=sharingin`,
-      'span.icon-more',
-      'a.action-delete',
+      this.contextMenuSelector,
+      this.unshareSelector,
       'div.icon-shared'
     );
   }
