@@ -26,6 +26,7 @@ export class OwncloudClient extends StubClient {
     await this.checkFTU();
   }
   async checkFTU() {
+    await new Promise(resolve => setTimeout(resolve, 1000));
     const exists = await this.page.$(this.FTU_CLOSE_BUTTON);
     // console.log({ exists });
     if (exists ) {
