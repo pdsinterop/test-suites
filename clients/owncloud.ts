@@ -27,12 +27,13 @@ export class OwncloudClient extends StubClient {
     await this.clickLogin();
   }
   async go(selector) {
+    console.log('waiting', selector);
     await this.page.waitForSelector(selector);
-    // console.log('clicking', selector, await this.page.$(selector));
+    console.log('clicking', selector, await this.page.$(selector));
     try {
       await this.page.click(selector);
     } catch (e) {
-      // console.error('Could not click!', selector);
+      console.error('Could not click!', selector);
     }
   }
   async type(selector, text) {
