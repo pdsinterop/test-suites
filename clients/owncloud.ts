@@ -5,7 +5,6 @@ import { StubClient } from './stub';
 export class OwncloudClient extends StubClient {
   windowSize: string = '800,500';
   FTU_CLOSE_BUTTON: string =  '#closeWizard';
-  loginPath: string = '/index.php/login';
   notificationDoneSelector: string = 'a.nav-icon-sharingin';
   contextMenuSelector: string = 'span.icon-more';
   unshareSelector: string = 'a.action-delete';
@@ -20,7 +19,7 @@ export class OwncloudClient extends StubClient {
   }
   async login(fromCurrentPage) {
     if (!fromCurrentPage) {
-      const loginUrl = `https://${this.host}${this.loginPath}`;
+      const loginUrl = `https://${this.host}/index.php/login`;
       await this.page.goto(loginUrl);
     }
     await this.type('#user', this.username);

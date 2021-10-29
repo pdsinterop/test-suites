@@ -4,7 +4,6 @@ import { OwncloudClient } from './owncloud';
 
 export class NextcloudClient extends OwncloudClient {
   FTU_CLOSE_BUTTON: string =  'button.action-item.action-item--single.header-close.icon-close.undefined';
-  loginPath: string = '/login';
   notificationDoneSelector: string  = 'div.icon-notifications-dark';
   contextMenuSelector: string = 'a.action-menu';
   unshareSelector: string = 'li.action-delete-container';
