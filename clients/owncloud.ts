@@ -16,16 +16,20 @@ export class OwncloudClient extends StubClient {
     await this.type('#password', this.password);
     await this.go('.login-button');
     await this.page.waitForNavigation();
-    setInterval(async () => {
-      const FTU_CLOSE_BUTTON = '#closeWizard';
-      const elt = await this.page.$(FTU_CLOSE_BUTTON);
-      if (elt) {
-        console.log(`Closing FTU on ${this.host}`)
-        await this.page.click(FTU_CLOSE_BUTTON);
-      } else {
-        console.log('No FTU on ${this.host}')
-      }
+    await this.checkFTU();
+    setTimeout(async () => {
+      await this.checkFTU();
     }, 5000);
+  }
+  async checkFTU() {
+    const FTU_CLOSE_BUTTON = '#closeWizard';
+    const elt = await this.page.$(FTU_CLOSE_BUTTON);
+    if (elt) {
+      console.log(`Closing FTU on ${this.host}`)
+      await this.page.click(FTU_CLOSE_BUTTON);
+    } else {
+      console.log('No FTU on ${this.host}')
+    }
   }
 
   async go(selector) {
