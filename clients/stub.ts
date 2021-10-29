@@ -18,7 +18,11 @@ export class StubClient extends Client {
     this.browser = true; // claim the semaphore, will be overwritten:
     this.browser = await puppeteer.launch({
       headless,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'], // FIXME: should be possible to avoid this, even when running in Docker
+      args: [
+        '--window-size=300,300',
+        '--no-sandbox',
+        '--disable-setuid-sandbox' // FIXME: should be possible to avoid this, even when running in Docker
+      ],
       ignoreHTTPSErrors: true
     });
     this.context = this.browser.defaultBrowserContext();
