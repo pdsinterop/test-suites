@@ -23,8 +23,16 @@ export class OwncloudClient extends StubClient {
     await this.type('#password', this.password);
     await this.go(this.loginButton);
     await this.page.waitForNavigation();
+    await this.checkFTU();
   }
-  async go(selector) {
+  async checkFTU() {
+    const exists = await this.page.$(this.FTU_CLOSE_BUTTON);
+    // console.log({ exists });
+    if (exists ) {
+      await this.page.click(this.FTU_CLOSE_BUTTON);
+    }
+  }
+  async go(selector: string) {
     console.log('awaiting', selector);
     await this.page.waitForSelector(selector);
     console.log('clicking', selector, await this.page.$(selector));
