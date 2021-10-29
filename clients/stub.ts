@@ -6,6 +6,7 @@ export class StubClient extends Client {
   browser: any
   context: any
   page: any
+  windowSize: string = '300,300';
   constructor({ host, username, password }) {
     super({ host, username, password })
     this.guiType = GUI_TYPE_STUB;
@@ -19,7 +20,7 @@ export class StubClient extends Client {
     this.browser = await puppeteer.launch({
       headless,
       args: [
-        '--window-size=300,300',
+        `--window-size=${this.windowSize}`,
         '--no-sandbox',
         '--disable-setuid-sandbox' // FIXME: should be possible to avoid this, even when running in Docker
       ],
