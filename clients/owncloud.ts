@@ -27,7 +27,7 @@ export class OwncloudClient extends StubClient {
     await this.clickLogin();
   }
   async go(selector) {
-    console.log('waiting', selector);
+    console.log('awaiting', selector);
     await this.page.waitForSelector(selector);
     console.log('clicking', selector, await this.page.$(selector));
     try {
@@ -51,7 +51,7 @@ export class OwncloudClient extends StubClient {
     throw new Error('invite flow only supported to Reva');
   }
   async shareWith(shareWithUser, shareWithHost) {
-    await this.go('span.icon-share');
+    await this.go('span.icon.icon-share');
     await this.go('li.subtab-localshare'); // sic
     await this.type('input.shareWithField', `${shareWithUser}@${shareWithHost}`);
     const exists = await this.page.$(`li[data-share-with=\'${shareWithUser}@${shareWithHost}\']`);
