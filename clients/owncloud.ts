@@ -17,7 +17,15 @@ export class OwncloudClient extends StubClient {
     await this.go('.login-button');
     await this.page.waitForNavigation();
   }
-
+  async login(fromCurrentPage) {
+    if (!fromCurrentPage) {
+      const loginUrl = `https://${this.host}${this.loginPath}`;
+      await this.page.goto(loginUrl);
+    }
+    await this.type('#user', this.username);
+    await this.type('#password', this.password);
+    await this.clickLogin();
+  }
   async go(selector) {
     await this.page.waitForSelector(selector);
     // console.log('clicking', selector, await this.page.$(selector));
