@@ -1,60 +1,64 @@
 
-const GUI_TYPE_STUB = 'GUI Stub';
-const GUI_TYPE_OWNCLOUD = 'GUI ownCloud';
-const GUI_TYPE_NEXTCLOUD = 'GUI Nextloud';
-const GUI_TYPE_SEAFILE = 'GUI Seafile';
-const GUI_TYPE_REVA = 'GUI Reva (i.e., reva-cli)';
-
-module.exports = {
+const {
   GUI_TYPE_STUB,
   GUI_TYPE_OWNCLOUD,
-  GUI_TYPE_NEXTCLOUD,
-  GUI_TYPE_SEAFILE,
+ GUI_TYPE_NEXTCLOUD,
+ GUI_TYPE_SEAFILE,
+ GUI_TYPE_REVA
+} = require('./guiTypes');
+
+module.exports = {
   params: {
     'From Stub': {
       host: 'stub1.docker',
+      domain: 'stub1.docker',
       guiType: GUI_TYPE_STUB,
       username: 'admin',
       password: 'admin'
     },
     'To Stub': {
       host: 'stub2.docker',
+      domain: 'stub2.docker',
       guiType: GUI_TYPE_STUB,
       username: 'admin',
       password: 'admin'
     },
     'From Reva': {
-      host: 'http://revad1.docker',
+      host: 'revad1.docker', // https: port 443, grpc: port 19000
+      domain: 'revad1.docker',
       guiType: GUI_TYPE_REVA,
-      username: 'admin',
-      password: 'admin'
+      username: 'einstein',
+      password: 'relativity'
     },
     'To Reva': {
-      host: 'http://revad2.docker',
+      host: 'revad2.docker', // https: port 443, grpc: port 19000
+      domain: 'revad2.docker',
       guiType: GUI_TYPE_REVA,
-      username: 'admin',
-      password: 'admin'
+      username: 'marie',
+      password: 'radioactivity'
     },
-    // 'From ownCloud': {
-    //   host: 'ocm-test-suite_oc1.docker_1',
-    //   guiType: GUI_TYPE_OWNCLOUD,
-    //   username: 'admin',
-    //   password: 'admin'
-    // },
-    // 'To ownCloud': {
-    //   host: 'ocm-test-suite_oc2.docker_1',
-    //   guiType: GUI_TYPE_OWNCLOUD,
-    //   username: 'admin',
-    //   password: 'admin'
-    // },
+    'From ownCloud': {
+      host: 'oc1.docker',
+      guiType: GUI_TYPE_OWNCLOUD,
+      username: 'alice',
+      password: 'alice123'
+    },
+    'To ownCloud': {
+      host: 'oc2.docker',
+      guiType: GUI_TYPE_OWNCLOUD,
+      username: 'alice',
+      password: 'alice123'
+    },
     'From Nextcloud': {
       host: 'nc1.docker',
+      domain: 'nc1.docker',
       guiType: GUI_TYPE_NEXTCLOUD,
       username: 'alice',
       password: 'alice123'
     },
     'To Nextcloud': {
       host: 'nc2.docker',
+      domain: 'nc2.docker',
       guiType: GUI_TYPE_NEXTCLOUD,
       username: 'alice',
       password: 'alice123'

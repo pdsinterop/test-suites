@@ -1,13 +1,13 @@
 
-const GUI_TYPE_STUB = 'GUI Stub';
-const GUI_TYPE_OWNCLOUD = 'GUI ownCloud';
-const GUI_TYPE_NEXTCLOUD = 'GUI Nextloud';
-const GUI_TYPE_SEAFILE = 'GUI Seafile';
-module.exports = {
+const {
   GUI_TYPE_STUB,
   GUI_TYPE_OWNCLOUD,
-  GUI_TYPE_NEXTCLOUD,
-  GUI_TYPE_SEAFILE,
+ GUI_TYPE_NEXTCLOUD,
+ GUI_TYPE_SEAFILE,
+ GUI_TYPE_REVA
+} = require('./guiTypes'); 
+
+module.exports = {
   params: {
     'From Stub': {
       host: 'stub1.pdsinterop.net',
@@ -44,6 +44,20 @@ module.exports = {
       guiType: GUI_TYPE_NEXTCLOUD,
       username: 'alice',
       password: 'alice123'
-    }
+    },
+    'From Reva': {
+      host: '127.0.0.1:19000',
+      domain: 'cernbox.cern.ch',
+      guiType: GUI_TYPE_REVA,
+      username: 'einstein',
+      password: 'relativity'
+    },
+    'To Reva': {
+      host: '127.0.0.1:17000',
+      domain: 'cesnet.cz',
+      guiType: GUI_TYPE_REVA,
+      username: 'marie',
+      password: 'radioactivity'
+    },
   }
 };
