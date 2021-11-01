@@ -28,4 +28,4 @@ jobs:
       - name: Run testsuite
         run: |
           ./build.sh
-          ./run.sh
+          ./ci.sh
