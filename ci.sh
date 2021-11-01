@@ -1,37 +1,13 @@
 #!/bin/bash
-mkdir -p tls
-function createCert {
-  openssl req -new -x509 -days 365 -nodes \
-    -out ./tls/$1.crt \
-    -keyout ./tls/$1.key \
-    -subj "/C=RO/ST=Bucharest/L=Bucharest/O=IT/CN=$1" \
-    -addext "subjectAltName = DNS:localhost" \
-    -addext "subjectAltName = DNS:$1.docker"
-}
-
-createCert nc1
-createCert nc2
-createCert oc1
-createCert oc2
-createCert stub1
-createCert stub2
-createCert revad1
-createCert revad2
-
-docker build -t tester .
-
-git clone https://github.com/michielbdejong/ocm-stub
-cd ocm-stub
-git checkout adapt-to-revad
-cp -r ../tls .
-docker build -t stub .
-cd ../servers/revad
-cp -r ../../tls .
-docker build -t revad .
-
-cd ../nextcloud-server
-cp -r ../../tls .
-docker build -t nextcloud .
-
-# cd ../owncloud-server
-# docker-compose pull
+docker rm `docker ps -aq`
+docker network remove testnet
+docker network create testnet
+docker run -d --network=testnet --rm --name=oc1.docker oc1
+docker run -d --network=testnet --rm --name=oc2.docker oc2
+docker run -d --network=testnet --rm --name=nc1.docker nc1
+docker run -d --network=testnet --rm --name=nc2.docker nc2
+docker run -d --network=testnet --rm --name=stub1.docker -e HOST=stub1 stub
+docker run -d --network=testnet --rm --name=stub2.docker -e HOST=stub2 stub
+docker run -d --network=testnet --rm --name=revad1.docker -e HOST=revad1 revad
+docker run -d --network=testnet --rm --name=revad2.docker -e HOST=revad2 revad
+docker run --network=testnet --name=tester -d --cap-add=SYS_ADMIN ci
