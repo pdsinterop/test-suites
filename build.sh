@@ -52,4 +52,5 @@ cd ../oc2
 docker build -t oc2 .
 
 cd ../ci
+cp -r ../../tls .
 docker build -t ci .
