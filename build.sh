@@ -5,7 +5,6 @@ function createCert {
     -out ./tls/$1.crt \
     -keyout ./tls/$1.key \
     -subj "/C=RO/ST=Bucharest/L=Bucharest/O=IT/CN=$1" \
-    -addext "subjectAltName = DNS:localhost" \
     -addext "subjectAltName = DNS:$1.docker"
 }
 
