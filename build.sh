@@ -51,3 +51,6 @@ docker build -t oc1 .
 
 cd ../oc2
 docker build -t oc2 .
+
+cd ../ci
+docker build -t ci .
