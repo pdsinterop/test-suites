@@ -51,6 +51,6 @@ docker build -t oc1 .
 cd ../oc2
 docker build -t oc2 .
 
-cd ../ci
-cp -r ../../tls .
-docker build -t ci .
+#  cd ../ci
+#  cp -r ../../tls .
+#  docker build -t ci .
