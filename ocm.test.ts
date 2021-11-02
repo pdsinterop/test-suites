@@ -38,13 +38,13 @@ const flows = {
   //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_STUB]
   // },
   [ FLOW_SHARE_WITH ]: {
-    from: [/* IMPL_OWNCLOUD, */ IMPL_NEXTCLOUD, /* IMPL_REVA, IMPL_STUB */],
-    to: [/* IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_REVA, */ IMPL_STUB ]
+    from: [/* IMPL_OWNCLOUD, IMPL_NEXTCLOUD, */ IMPL_REVA, IMPL_STUB],
+    to: [/* IMPL_NEXTCLOUD, IMPL_OWNCLOUD, */ IMPL_REVA, IMPL_STUB ]
   },
-  // [ FLOW_INVITE ]: {
-  //   from: [IMPL_REVA, /* IMPL_STUB */],
-  //   to: [IMPL_REVA, IMPL_STUB]
-  // },
+  [ FLOW_INVITE ]: {
+    from: [IMPL_REVA, /* IMPL_STUB */],
+    to: [IMPL_REVA, IMPL_STUB]
+  },
 };
 
 const CLIENT_TYPES = {
@@ -64,17 +64,19 @@ Object.keys(flows).forEach((flow: string) => {
           beforeEach(async () => {
             console.log('setting up', from, to, Object.keys(params));
             toUser = new CLIENT_TYPES[params[`To ${to}`].guiType](params[`To ${to}`]);
-            // console.log('init to', flow, from, to);
+            console.log('init to', flow, from, to);
             await toUser.init(HEADLESS);
             fromUser = new CLIENT_TYPES[params[`From ${from}`].guiType](params[`From ${from}`]);
-            // console.log('init from', flow, from, to);
+            console.log('init from', flow, from, to);
             await fromUser.init(HEADLESS);
+	    console.log('inited');
           }, JEST_TIMEOUT);
           afterEach(async () => {
-            // console.log('exit from', flow, from, to);
+            console.log('exit from', flow, from, to);
             await fromUser.exit();
-            // console.log('exit to', flow, from, to);
+            console.log('exit to', flow, from, to);
             await toUser.exit();
+	    console.log('exited');
           }, JEST_TIMEOUT);
           // afterAll(async (done) => {
           //   if (!process.stdout.write('')) {
