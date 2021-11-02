@@ -10,5 +10,5 @@ docker run -d --network=testnet --rm --name=stub1.docker -e HOST=stub1 stub
 docker run -d --network=testnet --rm --name=stub2.docker -e HOST=stub2 stub
 docker run -d --network=testnet --rm --name=revad1.docker -e HOST=revad1 revad
 docker run -d --network=testnet --rm --name=revad2.docker -e HOST=revad2 revad
-docker run --network=testnet --name=tester --cap-add=SYS_ADMIN tester
+docker run -d --network=testnet --name=tester --cap-add=SYS_ADMIN tester
 docker exec tester /bin/bash /ubuntu-ci-script.sh
