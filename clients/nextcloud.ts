@@ -33,7 +33,6 @@ export class NextcloudClient extends OwncloudClient {
   async shareWith(shareWithUser, shareWithHost) {
     const filesUrl = `https://${this.host}/index.php/apps/files`;
     await this.page.goto(filesUrl);
-    await this.checkFTU();
     // FIXME deal with first-time-use splash screen for Nextcloud Hub
     await this.page.waitForSelector('image.app-icon');
     await this.go('a.action-share');

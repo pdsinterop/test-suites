@@ -8,6 +8,7 @@ RUN mv nextcloud html
 WORKDIR /var/www/html
 
 RUN php console.php maintenance:install --admin-user alice --admin-pass alice123
+RUN php console.php app:disable firstrunwizard
 RUN sed -i "8 i\      1 => 'nc1.docker'," /var/www/html/config/config.php
 RUN sed -i "9 i\      2 => 'nc2.docker'," /var/www/html/config/config.php
 USER root
