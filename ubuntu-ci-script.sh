@@ -11,6 +11,7 @@ nvm install 14
 
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
+git checkout dev
 npm install
 HEADLESS=1 npm run debug
 # ./node_modules/.bin/jest ocm.test.jest
