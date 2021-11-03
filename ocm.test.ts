@@ -22,6 +22,7 @@ const IMPL_NEXTCLOUD = 'Nextcloud';
 const IMPL_OWNCLOUD = 'ownCloud';
 // const IMPL_SEAFILE = 'Seafile';
 const IMPL_REVA = 'Reva';
+const IMPL_REVANC = 'Revanc';
 const IMPL_STUB = 'Stub';
 
 const JEST_TIMEOUT = 60000;
@@ -29,21 +30,9 @@ const HEADLESS = !!process.env.HEADLESS;
 console.log({ HEADLESS });
 
 const flows = {
-  // [ FLOW_PUBLIC_LOG_IN_FIRST ]: {
-  //   from: [IMPL_NEXTCLOUD, /* IMPL_OWNCLOUD, */ IMPL_STUB],
-  //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_STUB]
-  // },
-  // [ FLOW_PUBLIC_LOG_IN_AFTER ]: {
-  //   from: [IMPL_NEXTCLOUD, /* IMPL_OWNCLOUD, */ IMPL_STUB],
-  //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_STUB]
-  // },
   [ FLOW_SHARE_WITH ]: {
-    from: [ /* IMPL_OWNCLOUD, IMPL_NEXTCLOUD, */ IMPL_REVA, IMPL_STUB],
-    to: [/* IMPL_NEXTCLOUD, IMPL_OWNCLOUD, */ IMPL_REVA, IMPL_STUB ]
-  },
-  [ FLOW_INVITE ]: {
-    from: [IMPL_REVA, /* IMPL_STUB */],
-    to: [IMPL_REVA, IMPL_STUB]
+    from: [ IMPL_REVANC ],
+    to: [ IMPL_REVANC ]
   },
 };
 

@@ -37,6 +37,20 @@ module.exports = {
       username: 'marie',
       password: 'radioactivity'
     },
+    'From Revanc': {
+      host: 'revanc1.docker', // https: port 443, grpc: port 19000
+      domain: 'revanc1.docker',
+      guiType: GUI_TYPE_REVA,
+      username: 'einstein',
+      password: 'relativity'
+    },
+    'To Revanc': {
+      host: 'revanc2.docker', // https: port 443, grpc: port 19000
+      domain: 'revanc2.docker',
+      guiType: GUI_TYPE_REVA,
+      username: 'marie',
+      password: 'radioactivity'
+    },
     'From ownCloud': {
       host: 'oc1.docker',
       guiType: GUI_TYPE_OWNCLOUD,
