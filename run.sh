@@ -10,6 +10,8 @@ docker run -d --network=testnet --rm --name=stub1.docker -e HOST=stub1 stub
 docker run -d --network=testnet --rm --name=stub2.docker -e HOST=stub2 stub
 docker run -d --network=testnet --rm --name=revad1.docker -e HOST=revad1 revad
 docker run -d --network=testnet --rm --name=revad2.docker -e HOST=revad2 revad
+docker run -d --network=testnet --rm --name=revanc1.docker -e HOST=revanc1 revad
+docker run -d --network=testnet --rm --name=revanc2.docker -e HOST=revanc2 revad
 docker run -p 6080:80 -p 5900:5900 -v /dev/shm:/dev/shm --network=testnet --name=tester -d --cap-add=SYS_ADMIN tester
 
 TESTER_IP_ADDR=`docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tester`

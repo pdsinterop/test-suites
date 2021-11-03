@@ -16,6 +16,8 @@ createCert stub1
 createCert stub2
 createCert revad1
 createCert revad2
+createCert revanc1
+createCert revanc2
 
 docker build -t tester .
 
