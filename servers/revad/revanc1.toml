@@ -58,7 +58,7 @@ driver = "memory"
 driver = "nextcloud"
 
 [grpc.services.ocmcore.drivers.nextcloud]
-end_point = "https://einstein:relativity@nextcloud1.docker/index.php/apps/sciencemesh/"
+end_point = "https://einstein:relativity@nc1.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
 [grpc.services.ocminvitemanager]
@@ -68,7 +68,7 @@ driver = "json"
 driver = "nextcloud"
 
 [grpc.services.ocmshareprovider.drivers.nextcloud]
-end_point = "https://einstein:relativity@nextcloud1.docker/index.php/apps/sciencemesh/"
+end_point = "https://einstein:relativity@nc1.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
 [grpc.services.ocmproviderauthorizer]
@@ -101,7 +101,7 @@ driver = "static"
 driver = "nextcloud"
 
 [grpc.services.storageprovider.drivers.nextcloud]
-end_point = "https://einstein:relativity@nextcloud1.docker/index.php/apps/sciencemesh/"
+end_point = "https://einstein:relativity@nc1.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
 [grpc.services.authprovider]
