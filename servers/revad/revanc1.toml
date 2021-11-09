@@ -1,6 +1,6 @@
 [shared]
 gatewaysvc = "revanc1.docker:19000"
-# gatewaycertfile = "/etc/revanc/tls/revanc1.crt"
+# gatewaycertfile = "/etc/revad/tls/revanc1.crt"
 
 # [registry]
 # driver = "static"
@@ -15,8 +15,8 @@ gatewaysvc = "revanc1.docker:19000"
 
 [grpc]
 address = "0.0.0.0:19000"
-# certfile = "/etc/revanc/tls/revanc1.crt"
-# keyfile = "/etc/revanc/tls/revanc1.key"
+# certfile = "/etc/revad/tls/revanc1.crt"
+# keyfile = "/etc/revad/tls/revanc1.key"
 
 [grpc.services.gateway]
 authregistrysvc = "revanc1.docker:19000"
@@ -120,8 +120,8 @@ users = "users.demo.json"
 enabled_services = ["ocmd"]
 enabled_middlewares = ["providerauthorizer", "cors"]
 address = "0.0.0.0:443"
-certfile = "/etc/revanc/tls/revanc1.crt"
-keyfile = "/etc/revanc/tls/revanc1.key"
+certfile = "/etc/revad/tls/revanc1.crt"
+keyfile = "/etc/revad/tls/revanc1.key"
 
 [http.services.dataprovider]
 driver = "localhome"
