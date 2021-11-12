@@ -105,10 +105,11 @@ endpoint = "https://marie:radioactivity@nc2.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
 [grpc.services.authprovider]
-auth_manager = "json"
+auth_manager = "nextcloud"
 
-[grpc.services.authprovider.auth_managers.json]
-users = "users.demo.json"
+[grpc.services.authprovider.drivers.nextcloud]
+endpoint = "https://marie:radioactivity@nc2.docker/index.php/apps/sciencemesh/"
+mock_http = false
 
 [grpc.services.userprovider]
 driver = "nextcloud"
