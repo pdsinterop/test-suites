@@ -242,6 +242,104 @@
 		]
 	},
 	{
+		"name": "revanc1",
+		"full_name": "revanc1",
+		"organization": "ocm-test-suite",
+		"domain": "revanc1.docker",
+		"homepage": "https://revanc1.docker",
+		"description": "revanc1.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM",
+						"description": "Open Cloud Mesh"
+					},
+					"name": "OCM API",
+					"path": "https://revanc1.docker/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://revanc1.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav",
+						"description": "Webdav"
+					},
+					"name": "Webdav API",
+					"path": "https://revanc1.docker/webdav/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://revanc1.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Gateway",
+						"description": "GRPC Gateway"
+					},
+					"name": "GRPC Gateway",
+					"path": "revanc1.docker:19000",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "revanc1.docker:19000"
+			}
+		]
+	},
+	{
+		"name": "revanc2",
+		"full_name": "revanc2",
+		"organization": "ocm-test-suite",
+		"domain": "revanc2.docker",
+		"homepage": "https://revanc2.docker",
+		"description": "revanc2.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM",
+						"description": "Open Cloud Mesh"
+					},
+					"name": "OCM API",
+					"path": "https://revanc2.docker/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://revanc2.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav",
+						"description": "Webdav"
+					},
+					"name": "Webdav API",
+					"path": "https://revanc2.docker/webdav/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://revanc2.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Gateway",
+						"description": "GRPC Gateway"
+					},
+					"name": "GRPC Gateway",
+					"path": "revanc2.docker:19000",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "revanc2.docker:19000"
+			}
+		]
+	},
+	{
 		"name": "stub1",
 		"full_name": "stub1",
 		"organization": "ocm-test-suite",
