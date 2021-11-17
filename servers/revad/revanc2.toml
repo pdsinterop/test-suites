@@ -114,7 +114,7 @@ users = "users.demo.json"
 driver = "nextcloud"
 
 [grpc.services.userprovider.drivers.nextcloud]
-endpoint = "https://marie:radioactivity@nc1.docker/index.php/apps/sciencemesh/"
+endpoint = "https://marie:radioactivity@nc2.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
 [http]
