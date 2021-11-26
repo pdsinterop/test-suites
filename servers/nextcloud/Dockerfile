@@ -12,7 +12,9 @@ ENV PHP_MEMORY_LIMIT="512M"
 RUN php console.php maintenance:install --admin-user alice --admin-pass alice123
 RUN php console.php app:disable firstrunwizard
 RUN git clone https://github.com/pondersource/nc-sciencemesh apps/sciencemesh
-# RUN cd apps/sciencemesh && git checkout with-nextcloud-sciencemesh-branch
+# see https://github.com/moby/moby/issues/1996#issuecomment-185872769
+ARG CACHEBUST=1
+RUN cd apps/sciencemesh && git pull
 RUN cd apps/sciencemesh && make
 RUN php console.php app:enable sciencemesh
 
