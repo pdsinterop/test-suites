@@ -13,7 +13,8 @@ RUN PATH=$PATH:/usr/local/go/bin make build
 # see https://github.com/moby/moby/issues/1996#issuecomment-185872769
 ARG CACHEBUST=1
 RUN git pull
-RUN git checkout 2a6ae9096758b3d89ba
+# checkout the Fri 26 Nov commit with added /invites/find-accepted-users endpoint:
+RUN git checkout 3b3fd908cbd9
 RUN PATH=$PATH:/usr/local/go/bin go mod vendor
 RUN PATH=$PATH:/usr/local/go/bin make deps
 RUN PATH=$PATH:/usr/local/go/bin make build
