@@ -14,7 +14,7 @@ RUN PATH=$PATH:/usr/local/go/bin make build
 ARG CACHEBUST=1
 RUN git pull
 # checkout the Fri 26 Nov commit with added /invites/find-accepted-users endpoint:
-RUN git checkout 3b3fd908cbd9
+RUN git checkout 44e78938
 RUN PATH=$PATH:/usr/local/go/bin go mod vendor
 RUN PATH=$PATH:/usr/local/go/bin make deps
 RUN PATH=$PATH:/usr/local/go/bin make build
