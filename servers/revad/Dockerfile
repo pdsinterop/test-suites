@@ -13,8 +13,10 @@ RUN PATH=$PATH:/usr/local/go/bin make build
 # see https://github.com/moby/moby/issues/1996#issuecomment-185872769
 ARG CACHEBUST=1
 RUN git pull
-# checkout the Fri 26 Nov commit with added /invites/find-accepted-users endpoint:
-RUN git checkout 44e78938
+# checkout the Fri 26 Nov commit including fixes for
+# https://github.com/pondersource/sciencemesh-nextcloud/issues/52
+# and https://github.com/pondersource/sciencemesh-nextcloud/issues/53
+RUN git checkout 3dee8c9c
 RUN PATH=$PATH:/usr/local/go/bin go mod vendor
 RUN PATH=$PATH:/usr/local/go/bin make deps
 RUN PATH=$PATH:/usr/local/go/bin make build

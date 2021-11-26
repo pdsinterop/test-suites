@@ -107,7 +107,7 @@ mock_http = false
 [grpc.services.authprovider]
 auth_manager = "nextcloud"
 
-[grpc.services.authprovider.drivers.nextcloud]
+[grpc.services.authprovider.auth_managers.nextcloud]
 endpoint = "https://einstein:relativity@nc1.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
