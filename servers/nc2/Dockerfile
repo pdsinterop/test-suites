@@ -1,7 +1,7 @@
 FROM nextcloud
 ENV HOST=nc2
+ENV DBHOST=maria2.docker
+ENV USER=marie
+ENV PASS=radioactivity
 RUN ln -s /tls/$HOST.crt /tls/server.cert
 RUN ln -s /tls/$HOST.key /tls/server.key
-USER www-data
-RUN OC_PASS=radioactivity php ./console.php user:add --password-from-env marie
-USER root
