@@ -7,9 +7,9 @@ docker network create testnet
 #docker run -d --network=testnet --name=oc2.docker oc2
 
 docker run -d --network=testnet -e MARIADB_ROOT_PASSWORD=1234 --name=maria1.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run -d --network=testnet --name=nc1.docker nc1
+docker run -d --network=testnet --name=nc1.docker -v /root/nc-sciencemesh:/var/www/html/apps/sciencemesh nc1
 docker run -d --network=testnet -e MARIADB_ROOT_PASSWORD=1234 --name=maria2.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run -d --network=testnet --name=nc2.docker nc2
+docker run -d --network=testnet --name=nc2.docker -v /root/nc-sciencemesh:/var/www/html/apps/sciencemesh nc2
 sleep 10
 docker exec -it -u www-data nc1.docker sh /init.sh
 # docker exec -it maria1.docker mariadb -u root -p1234 nextcloud -e "insert into oc_sciencemesh (apikey,sitename,siteurl,siteid,country,iopurl,numusers,numfiles,numstorage) values ('key','revanc1','https://nc1.docker','revanc1','NL','https://revanc1.docker',1,5,1);"
