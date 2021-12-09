@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM mariadb
 RUN apt update
 RUN DEBIAN_FRONTEND="noninteractive" apt install -yq \
   apache2 \
