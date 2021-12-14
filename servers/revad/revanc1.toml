@@ -58,7 +58,7 @@ driver = "memory"
 driver = "nextcloud"
 
 [grpc.services.ocmcore.drivers.nextcloud]
-endpoint = "https://einstein:relativity@nc1.docker/index.php/apps/sciencemesh/"
+endpoint = "https://revad:shared-secret-1@nc1.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
 [grpc.services.ocminvitemanager]
@@ -68,7 +68,7 @@ driver = "json"
 driver = "nextcloud"
 
 [grpc.services.ocmshareprovider.drivers.nextcloud]
-endpoint = "https://einstein:relativity@nc1.docker/index.php/apps/sciencemesh/"
+endpoint = "https://revad:shared-secret-1@nc1.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
 [grpc.services.ocmproviderauthorizer]
@@ -101,21 +101,21 @@ driver = "static"
 driver = "nextcloud"
 
 [grpc.services.storageprovider.drivers.nextcloud]
-endpoint = "https://einstein:relativity@nc1.docker/index.php/apps/sciencemesh/"
+endpoint = "https://revad:shared-secret-1@nc1.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
 [grpc.services.authprovider]
 auth_manager = "nextcloud"
 
 [grpc.services.authprovider.auth_managers.nextcloud]
-endpoint = "https://einstein:relativity@nc1.docker/index.php/apps/sciencemesh/"
+endpoint = "https://revad:shared-secret-1@nc1.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
 [grpc.services.userprovider]
 driver = "nextcloud"
 
 [grpc.services.userprovider.drivers.nextcloud]
-endpoint = "https://einstein:relativity@nc1.docker/index.php/apps/sciencemesh/"
+endpoint = "https://revad:shared-secret-1@nc1.docker/index.php/apps/sciencemesh/"
 mock_http = false
 
 [http]
