@@ -13,6 +13,8 @@ docker run -d --network=testnet -v /root/reva:/reva --name=revanc2.docker -e HOS
 sleep 10
 docker exec -it -u www-data nc1.docker sh /init.sh
 docker exec -it maria1.docker mariadb -u root -p1234 nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'iopUrl', 'https://revanc1.docker/');"
+docker exec -it maria1.docker mariadb -u root -p1234 nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-1');"
+docker exec -it maria2.docker mariadb -u root -p1234 nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-2');"
 
 docker exec -it -e DBHOST=maria2.docker -e USER=marie -e PASS=radioactivity -u www-data nc2.docker sh /init.sh
 docker exec -it maria2.docker mariadb -u root -p1234 nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'iopUrl', 'https://revanc2.docker/');"

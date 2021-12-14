@@ -58,7 +58,8 @@ driver = "memory"
 driver = "nextcloud"
 
 [grpc.services.ocmcore.drivers.nextcloud]
-endpoint = "https://revad:shared-secret-2@nc2.docker/index.php/apps/sciencemesh/"
+endpoint = "https://nc2.docker/index.php/apps/sciencemesh/"
+shared_secret = "shared-secret-2"
 mock_http = false
 
 [grpc.services.ocminvitemanager]
@@ -68,7 +69,8 @@ driver = "json"
 driver = "nextcloud"
 
 [grpc.services.ocmshareprovider.drivers.nextcloud]
-endpoint = "https://revad:shared-secret-2@nc2.docker/index.php/apps/sciencemesh/"
+endpoint = "https://nc2.docker/index.php/apps/sciencemesh/"
+shared_secret = "shared-secret-2"
 mock_http = false
 
 [grpc.services.ocmproviderauthorizer]
@@ -101,21 +103,24 @@ driver = "static"
 driver = "nextcloud"
 
 [grpc.services.storageprovider.drivers.nextcloud]
-endpoint = "https://revad:shared-secret-2@nc2.docker/index.php/apps/sciencemesh/"
+endpoint = "https://nc2.docker/index.php/apps/sciencemesh/"
+shared_secret = "shared-secret-2"
 mock_http = false
 
 [grpc.services.authprovider]
 auth_manager = "nextcloud"
 
 [grpc.services.authprovider.auth_managers.nextcloud]
-endpoint = "https://revad:shared-secret-2@nc2.docker/index.php/apps/sciencemesh/"
+endpoint = "https://nc2.docker/index.php/apps/sciencemesh/"
+shared_secret = "shared-secret-2"
 mock_http = false
 
 [grpc.services.userprovider]
 driver = "nextcloud"
 
 [grpc.services.userprovider.drivers.nextcloud]
-endpoint = "https://revad:shared-secret-2@nc2.docker/index.php/apps/sciencemesh/"
+endpoint = "https://nc2.docker/index.php/apps/sciencemesh/"
+shared_secret = "shared-secret-2"
 mock_http = false
 
 [http]
