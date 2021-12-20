@@ -14,10 +14,10 @@ sleep 10
 docker exec -it -e DBHOST=maria1.docker -e USER=einstein -e PASS=relativity  -u www-data nc1.docker sh /init.sh
 docker exec -it maria1.docker mariadb -u root -p1234 nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'iopUrl', 'https://revanc1.docker/');"
 docker exec -it maria1.docker mariadb -u root -p1234 nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-1');"
-docker exec -it maria2.docker mariadb -u root -p1234 nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-2');"
 
 docker exec -it -e DBHOST=maria2.docker -e USER=marie -e PASS=radioactivity -u www-data nc2.docker sh /init.sh
 docker exec -it maria2.docker mariadb -u root -p1234 nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'iopUrl', 'https://revanc2.docker/');"
+docker exec -it maria2.docker mariadb -u root -p1234 nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-2');"
 
 docker run -d --name=firefox -p 5800:5800 -v /Users/michiel/datas:/config:rw --network=testnet --shm-size 2g jlesage/firefox
 echo Now browse to http://localhost:5800 to see a Firefox instance that sits inside the Docker testnet.
