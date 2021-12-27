@@ -78,6 +78,7 @@ driver = "json"
 
 [grpc.services.ocmproviderauthorizer.drivers.json]
 providers = "providers.demo.json"
+verify_request_hostname = true
 
 [grpc.services.publicshareprovider]
 driver = "memory"
