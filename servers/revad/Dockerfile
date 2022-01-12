@@ -5,9 +5,8 @@ FROM ubuntu
 RUN apt update && apt install -y openssl build-essential wget git vim
 RUN wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
 RUN tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
-RUN git clone https://github.com/cs3org/reva
+RUN git clone --depth=1 --branch=edge https://github.com/cs3org/reva
 WORKDIR reva
-RUN git checkout nextcloud-alpha
 RUN PATH=$PATH:/usr/local/go/bin make deps
 RUN PATH=$PATH:/usr/local/go/bin make build
 # see https://github.com/moby/moby/issues/1996#issuecomment-185872769
