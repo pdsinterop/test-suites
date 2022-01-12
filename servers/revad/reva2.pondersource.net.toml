@@ -1,6 +1,6 @@
 [shared]
 gatewaysvc = "reva2.pondersource.net:19000"
-# gatewaycertfile = "/etc/revad/tls/server.cert"
+# gatewaycertfile = "/etc/revad/tls/server.crt"
 
 # [registry]
 # driver = "static"
@@ -15,7 +15,7 @@ gatewaysvc = "reva2.pondersource.net:19000"
 
 [grpc]
 address = "0.0.0.0:19000"
-# certfile = "/etc/revad/tls/server.cert"
+# certfile = "/etc/revad/tls/server.crt"
 # keyfile = "/etc/revad/tls/server.key"
 
 [grpc.services.gateway]
@@ -128,7 +128,7 @@ mock_http = false
 enabled_services = ["ocmd"]
 enabled_middlewares = ["providerauthorizer", "cors"]
 address = "0.0.0.0:443"
-certfile = "/etc/revad/tls/server.cert"
+certfile = "/etc/revad/tls/server.crt"
 keyfile = "/etc/revad/tls/server.key"
 
 [http.services.dataprovider]
