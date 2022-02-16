@@ -10,8 +10,9 @@ docker ps
 
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
-git checkout dev
+git checkout revanc
 
+/bin/bash ./createCerts.sh
 /bin/bash ./build.sh
 /bin/bash ./run.sh
 ```

@@ -1,8 +1,8 @@
 #!/bin/bash
 docker build -t tester .
-cd ocm-stub
-docker build -t stub .
-cd ..
+# cd ocm-stub
+# docker build -t stub .
+# cd ..
 cd servers/revad
 docker build -t revad .
 cd ../apache-php
