@@ -8,13 +8,13 @@ apt-get update
 apt-get install -yq docker.io
 docker ps
 
+git clone https://github.com/sciencemesh/nc-sciencemesh
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
 git checkout revanc
 
-/bin/bash ./createCerts.sh
-/bin/bash ./build.sh
-/bin/bash ./run.sh
+/bin/bash ./rebuild.sh
+/bin/bash ./debug.sh
 ```
 
 Then from your laptop connect using VNC (e.g. open `vnc://dockerhost` in Safari), password 1234, you should see an Ubuntu desktop.
