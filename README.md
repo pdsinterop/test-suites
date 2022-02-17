@@ -4,17 +4,9 @@ This test suite tests various implementations of [Open Cloud Mesh (OCM)](https:/
 ## Overview
 The following script runs the testnet on an empty Ubuntu server:
 ```sh
-apt-get update
-apt-get install -yq docker.io
-docker ps
-
-git clone https://github.com/sciencemesh/nc-sciencemesh
-git clone https://github.com/cs3org/ocm-test-suite
-cd ocm-test-suite
-git checkout revanc
-
-/bin/bash ./rebuild.sh
-/bin/bash ./debug.sh
+./doctl-up.sh
+scp setup.sh root@dockerhost:
+ssh root@dockerhost /bin/bash ./setup.sh
 ```
 
 Then from your laptop connect using VNC (e.g. open `vnc://dockerhost` in Safari), password 1234, you should see an Ubuntu desktop.
