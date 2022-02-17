@@ -31,7 +31,8 @@ cd ..
 # image for revad1, revad2, revanc1, revanc2:
 cd servers/revad
 cp -r ../../tls .
-docker build -t revad -build-arg CACHEBUST=`date +%s` .
+# docker build -t revad --build-arg CACHEBUST=`date +%s` .
+docker build -t revad .
 
 # base image for nextcloud image and owncloud image:
 cd ../apache-php
@@ -40,7 +41,8 @@ docker build -t apache-php .
 
 # base image for nc1 image and nc2 image:
 cd ../nextcloud
-docker build -t nextcloud -build-arg CACHEBUST=`date +%s` .
+# docker build -t nextcloud --build-arg CACHEBUST=`date +%s` .
+docker build -t nextcloud .
 
 # image for nc1:
 cd ../nc1
