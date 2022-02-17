@@ -2,7 +2,7 @@
 This test suite tests various implementations of [Open Cloud Mesh (OCM)](https://github.com/cs3org/OCM-API) against each other.
 
 ## Overview
-The following script runs the testnet on an empty Ubuntu server:
+The following script runs the testnet on an empty Ubuntu droplet on Digital Ocean:
 ```sh
 ./doctl-up.sh
 scp setup.sh root@dockerhost:
