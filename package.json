@@ -4,7 +4,7 @@
   "description": "Test Suite that test interaction between servers that are federated through Open Cloud Mesh (OCM)",
   "main": "index.js",
   "scripts": {
-    "test": "HEADLESS=1 jest *.test.js --runInBand",
+    "test": "HEADLESS=1 jest *.test.ts --runInBand",
     "debug": "jest *.test.ts --runInBand"
   },
   "author": "",
