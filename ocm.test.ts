@@ -31,8 +31,8 @@ console.log({ HEADLESS });
 
 const flows = {
   [ FLOW_SHARE_WITH ]: {
-    from: [ IMPL_REVANC ],
-    to: [ IMPL_REVANC ]
+    from: [ IMPL_NEXTCLOUD ],
+    to: [ IMPL_NEXTCLOUD ]
   },
 };
 

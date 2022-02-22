@@ -37,20 +37,20 @@ module.exports = {
       username: 'marie',
       password: 'radioactivity'
     },
-    'From Revanc': {
-      host: 'nc1.docker', // https: port 443, grpc: port 19000
-      domain: 'nc1.docker',
-      guiType: GUI_TYPE_NEXTCLOUD,
-      username: 'einstein',
-      password: 'relativity'
-    },
-    'To Revanc': {
-      host: 'nc2.docker', // https: port 443, grpc: port 19000
-      domain: 'nc2.docker',
-      guiType: GUI_TYPE_NEXTCLOUD,
-      username: 'marie',
-      password: 'radioactivity'
-    },
+    // 'From Revanc': {
+    //   host: 'nc1.docker', // https: port 443, grpc: port 19000
+    //   domain: 'nc1.docker',
+    //   guiType: GUI_TYPE_NEXTCLOUD,
+    //   username: 'einstein',
+    //   password: 'relativity'
+    // },
+    // 'To Revanc': {
+    //   host: 'nc2.docker', // https: port 443, grpc: port 19000
+    //   domain: 'nc2.docker',
+    //   guiType: GUI_TYPE_NEXTCLOUD,
+    //   username: 'marie',
+    //   password: 'radioactivity'
+    // },
     'From ownCloud': {
       host: 'oc1.docker',
       guiType: GUI_TYPE_OWNCLOUD,
