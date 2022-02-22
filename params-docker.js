@@ -38,16 +38,16 @@ module.exports = {
       password: 'radioactivity'
     },
     'From Revanc': {
-      host: 'revanc1.docker', // https: port 443, grpc: port 19000
-      domain: 'revanc1.docker',
-      guiType: GUI_TYPE_REVA,
+      host: 'nc1.docker', // https: port 443, grpc: port 19000
+      domain: 'nc1.docker',
+      guiType: GUI_TYPE_NEXTCLOUD,
       username: 'einstein',
       password: 'relativity'
     },
     'To Revanc': {
-      host: 'revanc2.docker', // https: port 443, grpc: port 19000
-      domain: 'revanc2.docker',
-      guiType: GUI_TYPE_REVA,
+      host: 'nc2.docker', // https: port 443, grpc: port 19000
+      domain: 'nc2.docker',
+      guiType: GUI_TYPE_NEXTCLOUD,
       username: 'marie',
       password: 'radioactivity'
     },
