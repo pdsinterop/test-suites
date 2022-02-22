@@ -1,12 +1,23 @@
 #!/bin/bash
 mkdir -p tls
 function createCert {
-  openssl req -new -x509 -days 365 -nodes \
-    -out ./tls/$1.crt \
+  echo Generating key and CSR for $1.docker
+  openssl req -new -days 365 -nodes \
+    -out ./tls/$1.csr \
     -keyout ./tls/$1.key \
     -subj "/C=RO/ST=Bucharest/L=Bucharest/O=IT/CN=$1" \
     -addext "subjectAltName = DNS:$1.docker"
+  echo Signing CSR for $1.docker, creating cert.
+  openssl x509 -req -in ./tls/$1.csr -CA ./tls/ocm-ca.crt -CAkey ./tls/ocm-ca.key -CAcreateserial -out ./tls/$1.crt
 }
+
+echo Generating CA key
+openssl genrsa -out ./tls/ocm-ca.key 2058
+echo Generate CA self-signed certificate
+openssl req -new -x509 -days 365 \
+    -key ./tls/ocm-ca.key \
+    -out ./tls/ocm-ca.crt \
+    -subj "/C=RO/ST=Bucharest/L=Bucharest/O=IT/CN=$1"
 
 createCert nc1
 createCert nc2
