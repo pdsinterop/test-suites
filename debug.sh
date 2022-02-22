@@ -20,7 +20,7 @@ docker exec -it maria2.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1
 docker exec -it maria2.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-2');"
 
 docker run -d --name=firefox -p 5800:5800 -v /tmp/shm:/config:rw --network=testnet --shm-size 2g jlesage/firefox
-echo Now browse to http://dockerhost:5800 to see a Firefox instance that sits inside the Docker testnet.
+echo Now browse to http://ocmhost:5800 to see a Firefox instance that sits inside the Docker testnet.
 echo docker exec -it revanc1.docker /bin/bash
 echo docker exec -it revanc2.docker /bin/bash
 echo echo \"127.0.0.1 \$HOST.docker\" \>\> /etc/hosts

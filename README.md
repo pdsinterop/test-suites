@@ -5,11 +5,11 @@ This test suite tests various implementations of [Open Cloud Mesh (OCM)](https:/
 The following script runs the testnet on an empty Ubuntu droplet on Digital Ocean:
 ```sh
 ./doctl-up.sh
-scp setup.sh root@dockerhost:
-ssh root@dockerhost /bin/bash ./setup.sh
+scp setup.sh root@ocmhost:
+ssh root@ocmhost /bin/bash ./setup.sh
 ```
 
-Then from your laptop connect using VNC (e.g. open `vnc://dockerhost` in Safari), password 1234, you should see an Ubuntu desktop.
+Then from your laptop connect using VNC (e.g. open `vnc://ocmhost` in Safari), password 1234, you should see an Ubuntu desktop.
 You can test that you made it into the testnet by opening Start->Internet->Firefox Web Browser and browsing to https://nc1.docker, once you
 click 'accept the risk and continue', you should be able to log in to Nextcloud with 'alice'/'alice123'.
 

@@ -1,1 +1,1 @@
-doctl compute droplet delete dockerhost
+doctl compute droplet delete ocmhost
