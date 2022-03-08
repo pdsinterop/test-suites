@@ -42,9 +42,7 @@ export class NextcloudClient extends OwncloudClient {
 
     console.log('Awaiting multiselect');
     await this.type('div.multiselect__tags input.multiselect__input', `${shareWithUser}@${shareWithHost}`);
-    console.log('Pressing ArrowDown (1)');
-    await this.page.keyboard.press('ArrowDown');
-    console.log('Pressing ArrowDown (2)');
+    console.log('Pressing ArrowDown');
     await this.page.keyboard.press('ArrowDown');
     console.log('Pressing Enter');
     await this.page.keyboard.press('Enter');
@@ -59,5 +57,13 @@ export class NextcloudClient extends OwncloudClient {
     await this.go('button#save-external-share');
     await this.page.type('#remote_address', `${this.username}@${this.host}`);
     await this.page.click('#save-button-confirm');
+  }
+
+  async acceptShare() {
+    const filesUrl = `https://${this.host}/index.php/apps/files`;
+    await this.page.goto(filesUrl);
+    console.log('Clicking to accept share');
+    await this.page.click("#oc-dialog-buttonrow #primary");
+    console.log('Clicked to accept share');
   }
 }
