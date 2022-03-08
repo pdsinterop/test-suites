@@ -29,9 +29,9 @@ Please join https://gitter.im/cs3org/OCM and ping @michielbdejong if you want mo
 Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
 ```sh
 /bin/bash /ubuntu-init-script.sh
-source ~/.bashrc
+# source ~/.bashrc
 cd ~/ocm-test-suite
-git checkout revanc
+git checkout stub-to-stub-testing
 npm run debug
 ```
 

@@ -18,6 +18,7 @@ sudo apt install -y nodejs npm
 
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
+git checkout stub-to-stub-testing
 npm install
 
 # ./node_modules/.bin/jest ocm.test.jest
