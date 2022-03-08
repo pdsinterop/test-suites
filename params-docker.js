@@ -67,15 +67,15 @@ module.exports = {
       host: 'nc1.docker',
       domain: 'nc1.docker',
       guiType: GUI_TYPE_NEXTCLOUD,
-      username: 'alice',
-      password: 'alice123'
+      username: 'einstein',
+      password: 'relativity'
     },
     'To Nextcloud': {
       host: 'nc2.docker',
       domain: 'nc2.docker',
       guiType: GUI_TYPE_NEXTCLOUD,
-      username: 'alice',
-      password: 'alice123'
+      username: 'maria',
+      password: 'radioactivity'
     },
   },
 };
