@@ -2,11 +2,9 @@
 This test suite tests various implementations of [Open Cloud Mesh (OCM)](https://github.com/cs3org/OCM-API) against each other.
 
 ## Overview
-The following script runs the testnet on an empty Ubuntu droplet on Digital Ocean:
+The following script sets up the testnet on an empty Ubuntu droplet on Digital Ocean (this takes about 15 minutes):
 ```sh
 ./doctl-up.sh
-scp setup.sh root@ocmhost:
-ssh root@ocmhost /bin/bash ./setup.sh
 ```
 
 Then from your laptop connect using VNC (e.g. open `vnc://ocmhost` in Safari), password 1234, you should see an Ubuntu desktop.
@@ -15,12 +13,19 @@ click 'accept the risk and continue', you should be able to log in to Nextcloud 
 
 ### Known Issues
 NB: We recently switched from vps-hosted to in-Docker, and the test suite is still a bit young.
-We have successfully used it so far to test OCM between ownCloud and Nextcloud,
-and between a stub server and Reva.
-You can uncomment these in `./params-docker.js`.
-What does not work yet is OCM between Nextcloud/ownCloud  and Reva. We are currently discussing how to move forward
-from this situation. Please join https://gitter.im/cs3org/OCM and ping @michielbdejong if you want more up-to-date info and guidance.
 
+To do: check whether the test suite passes for the following combinations:
+
+* [ ] stub - stub
+* [ ] reva - reva
+* [ ] nc - nc
+* [ ] oc - oc
+* [ ] revanc - revanc
+* [ ] cross-tests
+
+Please join https://gitter.im/cs3org/OCM and ping @michielbdejong if you want more up-to-date info and guidance.
+
+### Running the tests
 Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
 ```sh
 /bin/bash /ubuntu-init-script.sh
