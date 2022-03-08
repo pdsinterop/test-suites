@@ -40,8 +40,16 @@ export class NextcloudClient extends OwncloudClient {
     // FIXME: Find a nicer way to do this:
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
+    console.log('Awaiting multiselect');
     await this.type('div.multiselect__tags input.multiselect__input', `${shareWithUser}@${shareWithHost}`);
-    await this.go('span.option__desc--lineone');
+    console.log('Pressing ArrowDown (1)');
+    await this.page.keyboard.press('ArrowDown');
+    console.log('Pressing ArrowDown (2)');
+    await this.page.keyboard.press('ArrowDown');
+    console.log('Pressing Enter');
+    await this.page.keyboard.press('Enter');
+    // await this.go('span.option__desc--lineone');
+
   }
   async acceptPublicLink(url, remoteGuiType) {
     await this.page.goto(url);
