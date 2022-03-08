@@ -63,7 +63,7 @@ export class NextcloudClient extends OwncloudClient {
     const filesUrl = `https://${this.host}/index.php/apps/files`;
     await this.page.goto(filesUrl);
     console.log('Clicking to accept share');
-    await this.page.click("#oc-dialog-buttonrow #primary");
+    await this.go("#oc-dialog-buttonrow #primary");
     console.log('Clicked to accept share');
   }
 }
