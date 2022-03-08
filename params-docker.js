@@ -74,7 +74,7 @@ module.exports = {
       host: 'nc2.docker',
       domain: 'nc2.docker',
       guiType: GUI_TYPE_NEXTCLOUD,
-      username: 'maria',
+      username: 'marie',
       password: 'radioactivity'
     },
   },
