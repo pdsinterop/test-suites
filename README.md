@@ -16,7 +16,7 @@ NB: We recently switched from vps-hosted to in-Docker, and the test suite is sti
 
 To do: check whether the test suite passes for the following combinations:
 
-* [ ] stub - stub
+* [x] stub - stub
 * [ ] reva - reva
 * [ ] nc - nc
 * [ ] oc - oc
