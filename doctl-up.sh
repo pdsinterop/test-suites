@@ -18,7 +18,7 @@ echo "and type (sudo password for user 'tester' is '1234'):"
 echo "/bin/bash /ubuntu-init-script.sh"
 echo "source ~/.bashrc"
 echo "cd ~/ocm-test-suite"
-echo "git checkout dev"
+echo "git checkout revanc"
 echo "npm run debug"
 echo
 

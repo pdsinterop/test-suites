@@ -31,9 +31,10 @@ Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type
 /bin/bash /ubuntu-init-script.sh
 source ~/.bashrc
 cd ~/ocm-test-suite
-git checkout dev
+git checkout revanc
 npm run debug
 ```
+If the nvm install fails, try `sudo apt install -y nodejs npm`
 
 It tests three flows:
 
