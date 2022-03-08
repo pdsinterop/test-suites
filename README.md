@@ -18,7 +18,7 @@ To do: check whether the test suite passes for the following combinations:
 
 * [x] stub - stub
 * [ ] reva - reva
-* [ ] nc - nc
+* [?] nc - nc
 * [ ] oc - oc
 * [ ] revanc - revanc
 * [ ] cross-tests

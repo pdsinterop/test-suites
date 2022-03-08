@@ -12,3 +12,4 @@ ADD ./ubuntu-ci-script.sh /ubuntu-ci-script.sh
 ADD tls /tls
 RUN cp /tls/*.crt /usr/local/share/ca-certificates/
 RUN update-ca-certificates
+RUN apt install -y nodejs npm
