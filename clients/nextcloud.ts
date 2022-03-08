@@ -49,7 +49,9 @@ export class NextcloudClient extends OwncloudClient {
     console.log('Pressing Enter');
     await this.page.keyboard.press('Enter');
     // await this.go('span.option__desc--lineone');
-
+    await this.page.waitForFunction(
+      `document.querySelector("body").innerText.includes("${shareWithUser}@${shareWithHost} (remote)")`
+    );
   }
   async acceptPublicLink(url, remoteGuiType) {
     await this.page.goto(url);
