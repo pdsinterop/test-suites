@@ -31,7 +31,8 @@ Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type
 /bin/bash /ubuntu-init-script.sh
 # source ~/.bashrc
 cd ~/ocm-test-suite
-git checkout stub-to-stub-testing
+git checkout dev
+npm install
 npm run debug
 ```
 
