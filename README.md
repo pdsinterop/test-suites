@@ -34,7 +34,6 @@ cd ~/ocm-test-suite
 git checkout revanc
 npm run debug
 ```
-If the nvm install fails, try `sudo apt install -y nodejs npm`
 
 It tests three flows:
 
