@@ -41,8 +41,17 @@ export class NextcloudClient extends OwncloudClient {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     console.log('Awaiting multiselect');
+    await this.page.waitForSelector('div.multiselect');
+    await this.page.waitForFunction(
+      `document.querySelector("div.multiselect").innerHTML.indexOf("Name, email, or Federated Cloud ID") != -1`
+    );
+    console.log('multiselect found, placeholder confirmed')
     await this.type('div.multiselect', `${shareWithUser}@${shareWithHost}`);
-    console.log('Pressing ArrowDown');
+    console.log('done typing')
+    await this.page.waitForFunction(
+      `document.querySelector("div.multiselect").innerHTML.indexOf("${shareWithUser}@${shareWithHost}") != -1`
+    );
+    console.log('typed text has appeared, pressing ArrowDown');
     await this.page.keyboard.press('ArrowDown');
     console.log('Pressing Enter');
     await this.page.keyboard.press('Enter');
