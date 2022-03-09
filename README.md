@@ -17,9 +17,9 @@ NB: We recently switched from vps-hosted to in-Docker, and the test suite is sti
 To do: check whether the test suite passes for the following combinations:
 
 * [x] stub - stub
-* [ ] reva - reva
+* [?] reva - reva
 * [x] nc - nc
-* [?] oc - oc
+* [x] oc - oc
 * [ ] revanc - revanc
 * [ ] cross-tests
 
@@ -29,10 +29,7 @@ Please join https://gitter.im/cs3org/OCM and ping @michielbdejong if you want mo
 Now to run the tests, open a terminal (Start->System Tools->LXTerminal) and type (sudo password for user 'tester' is '1234'):
 ```sh
 /bin/bash /ubuntu-init-script.sh
-# source ~/.bashrc
 cd ~/ocm-test-suite
-git checkout dev
-npm install
 npm run debug
 ```
 
