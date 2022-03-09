@@ -35,3 +35,5 @@ docker exec -it -e DBHOST=maria2.docker -e USER=marie -e PASS=radioactivity -u w
 # echo echo \"127.0.0.1 \$HOST.docker\" \>\> /etc/hosts
 # echo export PATH=\$PATH:/usr/local/go/bin
 # echo cd /reva \; make build-revad \; cd /etc/revad \; /reva/cmd/revad/revad -c /etc/revad/\$HOST.toml
+
+docker run -p 6080:80 -p 5900:5900 -v /dev/shm:/dev/shm --network=testnet --name=tester -d --cap-add=SYS_ADMIN tester
