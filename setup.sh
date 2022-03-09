@@ -9,6 +9,7 @@ git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
 git checkout dev
 
+/bin/bash ./gencerts.sh
 /bin/bash ./rebuild.sh
 /bin/bash ./debug.sh
 
