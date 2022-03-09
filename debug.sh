@@ -5,6 +5,8 @@ docker network remove testnet
 docker network create testnet
 
 # reva:
+docker run -d --network=testnet -v /root/reva:/reva --name=revad1.docker -e HOST=revad1 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
+docker run -d --network=testnet -v /root/reva:/reva --name=revad2.docker -e HOST=revad2 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
 # docker run -d --network=testnet -v /root/reva:/reva --name=revanc1.docker -e HOST=revanc1 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
 # docker run -d --network=testnet -v /root/reva:/reva --name=revanc2.docker -e HOST=revanc2 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
 
@@ -29,8 +31,8 @@ docker network create testnet
 
 
 # oc:
-docker run -d --network=testnet --name=oc1.docker oc1
-docker run -d --network=testnet --name=oc2.docker oc2
+# docker run -d --network=testnet --name=oc1.docker oc1
+# docker run -d --network=testnet --name=oc2.docker oc2
 
 # docker run -d --name=firefox -p 5800:5800 -v /tmp/shm:/config:rw --network=testnet --shm-size 2g jlesage/firefox
 # echo Now browse to http://ocmhost:5800 to see a Firefox instance that sits inside the Docker testnet.
