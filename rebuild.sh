@@ -4,7 +4,6 @@ set -e
 docker build -t tester .
 
 # image for stub1 and stub2:
-git clone https://github.com/michielbdejong/ocm-stub
 cd ocm-stub
 cp -r ../tls .
 docker build -t stub .

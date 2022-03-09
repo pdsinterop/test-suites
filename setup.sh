@@ -8,6 +8,7 @@ git clone https://github.com/sciencemesh/nc-sciencemesh
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
 git checkout dev
+git clone https://github.com/michielbdejong/ocm-stub
 
 /bin/bash ./gencerts.sh
 /bin/bash ./rebuild.sh
