@@ -41,7 +41,7 @@ export class NextcloudClient extends OwncloudClient {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     console.log('Awaiting multiselect');
-    await this.type('div.multiselect__tags input.multiselect__input', `${shareWithUser}@${shareWithHost}`);
+    await this.type('div.multiselect', `${shareWithUser}@${shareWithHost}`);
     console.log('Pressing ArrowDown');
     await this.page.keyboard.press('ArrowDown');
     console.log('Pressing Enter');
