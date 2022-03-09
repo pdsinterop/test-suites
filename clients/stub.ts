@@ -19,6 +19,7 @@ export class StubClient extends Client {
     this.browser = true; // claim the semaphore, will be overwritten:
     this.browser = await puppeteer.launch({
       headless,
+      defaultViewport: null,
       args: [
         `--window-size=${this.windowSize}`,
         '--no-sandbox',
