@@ -17,10 +17,10 @@ NB: We recently switched from vps-hosted to in-Docker, and the test suite is sti
 To do: check whether the test suite passes for the following combinations:
 
 * [x] stub - stub
-* [?] reva - reva
+* [x] reva - reva
 * [x] nc - nc
 * [x] oc - oc
-* [ ] revanc - revanc
+* [?] revanc - revanc
 * [ ] cross-tests
 
 Please join https://gitter.im/cs3org/OCM and ping @michielbdejong if you want more up-to-date info and guidance.
