@@ -5,10 +5,10 @@ docker network remove testnet
 docker network create testnet
 
 # reva:
-docker run -d --network=testnet -v /root/reva:/reva --name=revad1.docker -e HOST=revad1 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
-docker run -d --network=testnet -v /root/reva:/reva --name=revad2.docker -e HOST=revad2 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
-# docker run -d --network=testnet -v /root/reva:/reva --name=revanc1.docker -e HOST=revanc1 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
-# docker run -d --network=testnet -v /root/reva:/reva --name=revanc2.docker -e HOST=revanc2 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
+docker run -d --network=testnet --name=revad1.docker -e HOST=revad1 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
+docker run -d --network=testnet --name=revad2.docker -e HOST=revad2 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
+# docker run -d --network=testnet --name=revanc1.docker -e HOST=revanc1 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
+# docker run -d --network=testnet --name=revanc2.docker -e HOST=revanc2 revad /bin/bash -c "trap : TERM INT; sleep infinity & wait"
 
 # stub:
 # docker run -d --network=testnet --name=stub1.docker stub
