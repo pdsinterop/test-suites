@@ -16,9 +16,8 @@ echo "Now to run the tests, connect to 'vnc://ocmhost' using a VNC client,"
 echo "open a terminal (Start->System Tools->LXTerminal)"
 echo "and type (sudo password for user 'tester' is '1234'):"
 echo "/bin/bash /ubuntu-init-script.sh"
-echo "source ~/.bashrc"
 echo "cd ~/ocm-test-suite"
-echo "git checkout revanc"
+echo "git checkout dev"
 echo "npm run debug"
 echo
 
