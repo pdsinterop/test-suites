@@ -36,33 +36,33 @@ export class StubClient extends Client {
   }
 
   async createPublicLink(): Promise<string> {
-    return `https://${this.host}/publicLink`;
+    return `https://${this.guiDomain}/publicLink`;
   }
   async generateInvite(): Promise<string> {
     throw new Error('invite flow only supported from Reva');
   }
   async forwardInvite(senderIdpName: string, tokenStr: string) {
     const invite = encodeURIComponent(`${tokenStr}@${senderIdpName}`);
-    await this.page.goto(`https://${this.host}/forwardInvite?${invite}`);
+    await this.page.goto(`https://${this.guiDomain}/forwardInvite?${invite}`);
   }
   async shareWith(shareWithUser, shareWithHost, shareWithDomain, shareFromDomain) {
     const consumer = encodeURIComponent(`${shareWithUser}@${shareWithHost}`);
-    await this.page.goto(`https://${this.host}/shareWith?${consumer}`);
+    await this.page.goto(`https://${this.guiDomain}/shareWith?${consumer}`);
   }
   async acceptPublicLink(url, remoteGuiType) {
     await this.page.goto(url);
-    const consumer = encodeURIComponent(`${this.username}@${this.host}`);
+    const consumer = encodeURIComponent(`${this.username}@${this.guiDomain}`);
     const newUrl = new URL(`?saveTo=${consumer}`, url).toString();
     // console.log('accepting public link', newUrl);
     await this.page.goto(newUrl);
   }
 
   async acceptShare() {
-    await this.page.goto(`https://${this.host}/acceptShare`);
+    await this.page.goto(`https://${this.guiDomain}/acceptShare`);
   }
 
   async deleteAcceptedShare() {
-    await this.page.goto(`https://${this.host}/deleteAcceptedShare`);
+    await this.page.goto(`https://${this.guiDomain}/deleteAcceptedShare`);
   }
 
   async exit () {

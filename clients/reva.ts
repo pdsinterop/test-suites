@@ -77,7 +77,7 @@ export class RevaClient extends Client {
     if (this.grpcClient) {
       return
     }
-    this.grpcClient = promisifyMethods(new GatewayAPIClient(`${this.host}:${GRPC_PORT}`, credentials.createInsecure()), [
+    this.grpcClient = promisifyMethods(new GatewayAPIClient(`${this.guiDomain}:${GRPC_PORT}`, credentials.createInsecure()), [
       'authenticate',
       'whoAmI',
       'generateAppPassword',
@@ -182,7 +182,7 @@ export class RevaClient extends Client {
     // See AuthenticateResponse https://github.com/cs3org/cs3apis/blob/a86e5cb6ac360/cs3/gateway/v1beta1/gateway_api.proto#L415
     const user = res.getUser();
     // * User https://github.com/cs3org/cs3apis/blob/a86e5cb6ac360/cs3/identity/user/v1beta1/resources.proto#L53
-    // console.log({ host: this.host, username, password });
+    // console.log({ host: this.guiDomain, username, password });
     const displayName = user.getDisplayName();
     // console.log('DisplayName from AuthenticateResponse:', displayName);
   
@@ -373,7 +373,7 @@ export class RevaClient extends Client {
     const ids = await this.listReceivedOCMShares();
     console.log({ ids });
     const promises = ids.map((id: any) => {
-      console.log("Accepting share", this.host, id);
+      console.log("Accepting share", this.guiDomain, id);
       return this.updateReceivedOCMShare(id, ShareState.SHARE_STATE_ACCEPTED);
     });
     await Promise.all(promises);

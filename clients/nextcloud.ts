@@ -14,7 +14,7 @@ export class NextcloudClient extends OwncloudClient {
   }
 
   async createPublicLink() {
-    const filesUrl = `https://${this.host}/index.php/apps/files/?dir=/&openfile=15`; // select nextcloud.png file
+    const filesUrl = `https://${this.guiDomain}/index.php/apps/files/?dir=/&openfile=15`; // select nextcloud.png file
     await this.page.goto(filesUrl);
 
     await this.page.waitForSelector('image.app-icon');
@@ -31,7 +31,7 @@ export class NextcloudClient extends OwncloudClient {
     return this.page.evaluate("document.querySelector('a.sharing-entry__copy').getAttribute('href')");
   }
   async shareWith(shareWithUser, shareWithHost) {
-    const filesUrl = `https://${this.host}/index.php/apps/files`;
+    const filesUrl = `https://${this.guiDomain}/index.php/apps/files`;
     await this.page.goto(filesUrl);
     // FIXME deal with first-time-use splash screen for Nextcloud Hub
     await this.page.waitForSelector('image.app-icon');
@@ -64,12 +64,12 @@ export class NextcloudClient extends OwncloudClient {
     await this.page.goto(url);
     await this.go('button.menutoggle');
     await this.go('button#save-external-share');
-    await this.page.type('#remote_address', `${this.username}@${this.host}`);
+    await this.page.type('#remote_address', `${this.username}@${this.guiDomain}`);
     await this.page.click('#save-button-confirm');
   }
 
   async acceptShare() {
-    const filesUrl = `https://${this.host}/index.php/apps/files`;
+    const filesUrl = `https://${this.guiDomain}/index.php/apps/files`;
     await this.page.goto(filesUrl);
     console.log('Clicking to accept share');
     await this.go(".oc-dialog-buttonrow .primary");

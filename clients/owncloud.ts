@@ -16,7 +16,7 @@ export class OwncloudClient extends StubClient {
   }
   async login(fromCurrentPage: boolean) {
     if (!fromCurrentPage) {
-      const loginUrl = `https://${this.host}/index.php/login`;
+      const loginUrl = `https://${this.guiDomain}/index.php/login`;
       await this.page.goto(loginUrl);
     }
     await this.type('#user', this.username);
@@ -62,7 +62,7 @@ export class OwncloudClient extends StubClient {
   async acceptPublicLink(url, remoteGuiType) {
     await this.page.goto(url);
     await this.go('button#save-button');
-    await this.page.type('#remote_address', this.host);
+    await this.page.type('#remote_address', this.guiDomain);
     await this.page.click('#save-button-confirm');
   }
 
@@ -89,7 +89,7 @@ export class OwncloudClient extends StubClient {
 
   async acceptShare() {
     // In ownCloud GUI, there are two ways to accept a share, from the shared-with-you page: ...
-    // const sharedWithYouUrl = `https://${this.host}/apps/files/?dir=/&view=sharingin`;
+    // const sharedWithYouUrl = `https://${this.guiDomain}/apps/files/?dir=/&view=sharingin`;
     // await this.page.goto(sharedWithYouUrl);
     // await this.go('a.action-accept');
     // ... or from the notifications:
@@ -117,7 +117,7 @@ export class OwncloudClient extends StubClient {
 
   async deleteAcceptedShare() {
     await this.deleteShares(
-      `https://${this.host}/apps/files/?dir=/&view=sharingin`,
+      `https://${this.guiDomain}/apps/files/?dir=/&view=sharingin`,
       this.contextMenuSelector,
       this.unshareSelector,
       'div.icon-shared'
