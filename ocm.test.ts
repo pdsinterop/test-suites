@@ -7,11 +7,13 @@ import { GUI_TYPE_STUB,
   GUI_TYPE_NEXTCLOUD,
   GUI_TYPE_SEAFILE,
   GUI_TYPE_REVA,
+  GUI_TYPE_REVANC,
 } from './guiTypes';
 const { params } = (process.env.LIVE ? require("./params-live") : require("./params-docker"));
 
 import { RevaClient } from "./clients/reva";
 import { StubClient } from "./clients/stub";
+import { RevancClient } from "./clients/revanc";
 
 const FLOW_PUBLIC_LOG_IN_FIRST = 'Public link flow, log in first';
 const FLOW_PUBLIC_LOG_IN_AFTER = 'Public link flow, log in after';
@@ -41,6 +43,7 @@ const CLIENT_TYPES = {
   [GUI_TYPE_NEXTCLOUD]: NextcloudClient,
   [GUI_TYPE_REVA]: RevaClient,
   [GUI_TYPE_STUB]: StubClient,
+  [GUI_TYPE_REVANC]: RevancClient,
 };
 
 Object.keys(flows).forEach((flow: string) => {

@@ -4,7 +4,8 @@ const {
   GUI_TYPE_OWNCLOUD,
  GUI_TYPE_NEXTCLOUD,
  GUI_TYPE_SEAFILE,
- GUI_TYPE_REVA
+ GUI_TYPE_REVA,
+ GUI_TYPE_REVANC
 } = require('./guiTypes');
 
 module.exports = {
@@ -40,14 +41,14 @@ module.exports = {
     'From Revanc': { // should somehow specify that it should send through revanc1.docker instead of its built-in OCM implementation
       host: 'nc1.docker', // https: port 443, grpc: port 19000
       domain: 'nc1.docker',
-      guiType: GUI_TYPE_NEXTCLOUD,
+      guiType: GUI_TYPE_REVANC,
       username: 'einstein',
       password: 'relativity'
     },
     'To Revanc': { // should somehow specify that it should receive through revanc2.docker instead of its built-in OCM implementation
       host: 'nc2.docker', // https: port 443, grpc: port 19000
       domain: 'nc2.docker',
-      guiType: GUI_TYPE_NEXTCLOUD,
+      guiType: GUI_TYPE_REVANC,
       username: 'marie',
       password: 'radioactivity'
     },
