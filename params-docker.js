@@ -39,14 +39,14 @@ module.exports = {
       password: 'radioactivity'
     },
     'From Revanc': { // should somehow specify that it should send through revanc1.docker instead of its built-in OCM implementation
-      ocmDomain: 'nc1.docker', // https: port 443, grpc: port 19000
+      ocmDomain: 'revanc1.docker', // https: port 443, grpc: port 19000
       guiDomain: 'nc1.docker',
       guiType: GUI_TYPE_REVANC,
       username: 'einstein',
       password: 'relativity'
     },
     'To Revanc': { // should somehow specify that it should receive through revanc2.docker instead of its built-in OCM implementation
-      ocmDomain: 'nc2.docker', // https: port 443, grpc: port 19000
+      ocmDomain: 'revanc2.docker', // https: port 443, grpc: port 19000
       guiDomain: 'nc2.docker',
       guiType: GUI_TYPE_REVANC,
       username: 'marie',
