@@ -54,10 +54,11 @@ Object.keys(flows).forEach((flow: string) => {
           let fromUser: Client;
           let toUser: Client;
           beforeEach(async () => {
-            console.log('setting up', from, to, Object.keys(params));
+            console.log('setting up toUser', to, params[`To ${to}`]);
             toUser = new CLIENT_TYPES[params[`To ${to}`].guiType](params[`To ${to}`]);
             console.log('init to', flow, from, to);
             await toUser.init(HEADLESS);
+            console.log('setting up fromUser', from, params[`From ${from}`]);
             fromUser = new CLIENT_TYPES[params[`From ${from}`].guiType](params[`From ${from}`]);
             console.log('init from', flow, from, to);
             await fromUser.init(HEADLESS);
