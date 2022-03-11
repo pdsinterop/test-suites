@@ -55,6 +55,8 @@ Object.keys(flows).forEach((flow: string) => {
           let toUser: Client;
           beforeEach(async () => {
             console.log('setting up toUser', to, params[`To ${to}`]);
+            const { guiDomain, username, password } = params[`To ${to}`];
+            console.log({ guiDomain, username, password });
             toUser = new CLIENT_TYPES[params[`To ${to}`].guiType](params[`To ${to}`]);
             console.log('init to', flow, from, to);
             await toUser.init(HEADLESS);
