@@ -78,10 +78,10 @@ Object.keys(flows).forEach((flow: string) => {
 
           it(`To ${to}`, async () => {
             if (flow === 'Share-with flow') {
-              console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
+              console.log('fromUser.login', fromUser.guiDomain, fromUser.username, fromUser.password);
               await fromUser.login(false);
               console.log('fromUser.shareWith');
-              await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].host, params[`To ${to}`].guiDomain, params[`From ${from}`].guiDomain);
+              await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].ocmDomain, params[`To ${to}`].guiDomain, params[`From ${from}`].guiDomain);
               console.log('toUser.login');
               await toUser.login(false);
               console.log('toUser.acceptShare');
@@ -94,12 +94,12 @@ Object.keys(flows).forEach((flow: string) => {
               await fromUser.login(false);
               console.log('fromUser.generateInvite');
               const inviteToken = await fromUser.generateInvite();
-              console.log('toUser.login', toUser.host, toUser.username, toUser.password);
+              console.log('toUser.login', toUser.guiDomain, toUser.username, toUser.password);
               await toUser.login(false);
               console.log('toUser.forwardInvite', params[`From ${from}`].guiDomain, inviteToken);
               await toUser.forwardInvite(params[`From ${from}`].guiDomain, inviteToken);
-              console.log('fromUser.shareWith', inviteToken, params[`To ${to}`].host, params[`To ${to}`].guiDomain, params[`From ${from}`].guiDomain);
-              await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].host, params[`To ${to}`].guiDomain, params[`From ${from}`].guiDomain);
+              console.log('fromUser.shareWith', inviteToken, params[`To ${to}`].ocmDomain, params[`To ${to}`].guiDomain, params[`From ${from}`].guiDomain);
+              await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].ocmDomain, params[`To ${to}`].guiDomain, params[`From ${from}`].guiDomain);
               console.log('toUser.acceptShare');
               await toUser.acceptShare();
               console.log('toUser.deleteAcceptedShare');
