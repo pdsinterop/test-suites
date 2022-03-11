@@ -7,8 +7,8 @@ export class StubClient extends Client {
   context: any
   page: any
   windowSize: string = '300,300';
-  constructor({ host, username, password }) {
-    super({ host, username, password })
+  constructor(params) {
+    super(params)
     this.guiType = GUI_TYPE_STUB;
   }
   async init(headless: boolean) {

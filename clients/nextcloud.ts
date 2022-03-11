@@ -8,8 +8,8 @@ export class NextcloudClient extends OwncloudClient {
   contextMenuSelector: string = 'a.action-menu';
   unshareSelector: string = 'li.action-delete-container';
   loginButton:string = '#submit-form';
-  constructor({ host, username, password }) {
-    super({ host, username, password });
+  constructor(params) {
+    super(params);
     this.guiType = GUI_TYPE_NEXTCLOUD;
   }
 

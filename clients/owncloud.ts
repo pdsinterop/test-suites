@@ -10,8 +10,8 @@ export class OwncloudClient extends StubClient {
   unshareSelector: string = 'a.action-delete';
   loginButton: string = '.login-button';
 
-  constructor({ host, username, password }) {
-    super({ host, username, password })
+  constructor(params) {
+    super(params)
     this.guiType = GUI_TYPE_OWNCLOUD;
   }
   async login(fromCurrentPage: boolean) {
