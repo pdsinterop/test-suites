@@ -6,7 +6,7 @@
 
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
-git checkout github-actions-testing
+git checkout main
 npm install
 
 # ./node_modules/.bin/jest ocm.test.jest
