@@ -31,4 +31,5 @@ jobs:
           /bin/bash ./gencerts.sh
           /bin/bash ./rebuild.sh
           /bin/bash ./debug.sh
-          docker run -d --network=testnet --name=tester.docker ci
+          echo "Running stub-stub tests for share-with flow!"
+          docker run -it --network=testnet --name=tester.docker ci
