@@ -5,10 +5,14 @@ FROM ubuntu
 RUN apt update && apt install -y openssl build-essential wget git vim
 RUN wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
 RUN tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
-RUN git clone https://github.com/michielbdejong/reva
-WORKDIR reva
-# RUN git checkout 6b097c6385bf53d19
-RUN git checkout pass-ocm-test-suite
+RUN git clone --depth=1 --branch=edge https://github.com/cs3org/reva
+WORKDIR /reva
+RUN PATH=$PATH:/usr/local/go/bin make deps
+RUN PATH=$PATH:/usr/local/go/bin make build
+# see https://github.com/moby/moby/issues/1996#issuecomment-185872769
+ARG CACHEBUST=1
+RUN git pull
+RUN PATH=$PATH:/usr/local/go/bin go mod vendor
 RUN PATH=$PATH:/usr/local/go/bin make deps
 RUN PATH=$PATH:/usr/local/go/bin make build
 # RUN PATH=$PATH:/usr/local/go/bin make test

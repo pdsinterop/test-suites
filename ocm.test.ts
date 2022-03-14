@@ -7,11 +7,13 @@ import { GUI_TYPE_STUB,
   GUI_TYPE_NEXTCLOUD,
   GUI_TYPE_SEAFILE,
   GUI_TYPE_REVA,
+  GUI_TYPE_REVANC,
 } from './guiTypes';
 const { params } = (process.env.LIVE ? require("./params-live") : require("./params-docker"));
 
 import { RevaClient } from "./clients/reva";
 import { StubClient } from "./clients/stub";
+import { RevancClient } from "./clients/revanc";
 
 const FLOW_PUBLIC_LOG_IN_FIRST = 'Public link flow, log in first';
 const FLOW_PUBLIC_LOG_IN_AFTER = 'Public link flow, log in after';
@@ -22,6 +24,7 @@ const IMPL_NEXTCLOUD = 'Nextcloud';
 const IMPL_OWNCLOUD = 'ownCloud';
 // const IMPL_SEAFILE = 'Seafile';
 const IMPL_REVA = 'Reva';
+const IMPL_REVANC = 'Revanc';
 const IMPL_STUB = 'Stub';
 
 const JEST_TIMEOUT = 60000;
@@ -29,21 +32,9 @@ const HEADLESS = !!process.env.HEADLESS;
 console.log({ HEADLESS });
 
 const flows = {
-  // [ FLOW_PUBLIC_LOG_IN_FIRST ]: {
-  //   from: [IMPL_NEXTCLOUD, /* IMPL_OWNCLOUD, */ IMPL_STUB],
-  //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_STUB]
-  // },
-  // [ FLOW_PUBLIC_LOG_IN_AFTER ]: {
-  //   from: [IMPL_NEXTCLOUD, /* IMPL_OWNCLOUD, */ IMPL_STUB],
-  //   to: [IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_STUB]
-  // },
   [ FLOW_SHARE_WITH ]: {
-    from: [/* IMPL_OWNCLOUD, IMPL_NEXTCLOUD, */ IMPL_REVA, IMPL_STUB],
-    to: [/* IMPL_NEXTCLOUD, IMPL_OWNCLOUD, */ IMPL_REVA, IMPL_STUB ]
-  },
-  [ FLOW_INVITE ]: {
-    from: [IMPL_REVA, /* IMPL_STUB */],
-    to: [IMPL_REVA, IMPL_STUB]
+    from: [ IMPL_STUB, IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_REVA ],
+    to: [ IMPL_STUB ]
   },
 };
 
@@ -52,6 +43,7 @@ const CLIENT_TYPES = {
   [GUI_TYPE_NEXTCLOUD]: NextcloudClient,
   [GUI_TYPE_REVA]: RevaClient,
   [GUI_TYPE_STUB]: StubClient,
+  [GUI_TYPE_REVANC]: RevancClient,
 };
 
 Object.keys(flows).forEach((flow: string) => {
@@ -62,10 +54,11 @@ Object.keys(flows).forEach((flow: string) => {
           let fromUser: Client;
           let toUser: Client;
           beforeEach(async () => {
-            console.log('setting up', from, to, Object.keys(params));
+            console.log('setting up toUser', to, params[`To ${to}`]);
             toUser = new CLIENT_TYPES[params[`To ${to}`].guiType](params[`To ${to}`]);
             console.log('init to', flow, from, to);
             await toUser.init(HEADLESS);
+            console.log('setting up fromUser', from, params[`From ${from}`]);
             fromUser = new CLIENT_TYPES[params[`From ${from}`].guiType](params[`From ${from}`]);
             console.log('init from', flow, from, to);
             await fromUser.init(HEADLESS);
@@ -86,10 +79,10 @@ Object.keys(flows).forEach((flow: string) => {
 
           it(`To ${to}`, async () => {
             if (flow === 'Share-with flow') {
-              console.log('fromUser.login', fromUser.host, fromUser.username, fromUser.password);
+              console.log('fromUser.login', fromUser.guiDomain, fromUser.username, fromUser.password);
               await fromUser.login(false);
               console.log('fromUser.shareWith');
-              await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].host, params[`To ${to}`].domain, params[`From ${from}`].domain);
+              await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].ocmDomain, params[`To ${to}`].guiDomain, params[`From ${from}`].guiDomain);
               console.log('toUser.login');
               await toUser.login(false);
               console.log('toUser.acceptShare');
@@ -102,12 +95,12 @@ Object.keys(flows).forEach((flow: string) => {
               await fromUser.login(false);
               console.log('fromUser.generateInvite');
               const inviteToken = await fromUser.generateInvite();
-              console.log('toUser.login', toUser.host, toUser.username, toUser.password);
+              console.log('toUser.login', toUser.guiDomain, toUser.username, toUser.password);
               await toUser.login(false);
-              console.log('toUser.forwardInvite', params[`From ${from}`].domain, inviteToken);
-              await toUser.forwardInvite(params[`From ${from}`].domain, inviteToken);
-              console.log('fromUser.shareWith', inviteToken, params[`To ${to}`].host, params[`To ${to}`].domain, params[`From ${from}`].domain);
-              await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].host, params[`To ${to}`].domain, params[`From ${from}`].domain);
+              console.log('toUser.forwardInvite', params[`From ${from}`].guiDomain, inviteToken);
+              await toUser.forwardInvite(params[`From ${from}`].guiDomain, inviteToken);
+              console.log('fromUser.shareWith', inviteToken, params[`To ${to}`].ocmDomain, params[`To ${to}`].guiDomain, params[`From ${from}`].guiDomain);
+              await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].ocmDomain, params[`To ${to}`].guiDomain, params[`From ${from}`].guiDomain);
               console.log('toUser.acceptShare');
               await toUser.acceptShare();
               console.log('toUser.deleteAcceptedShare');

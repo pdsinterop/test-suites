@@ -1,10 +1,10 @@
 export abstract class Client {
   guiType: string;
-  host: string
+  guiDomain: string
   username: string
   password: string
-  constructor({ host, username, password }) {
-    this.host = host;
+  constructor({ guiDomain, username, password }) {
+    this.guiDomain = guiDomain;
     this.username = username;
     this.password = password;
   }

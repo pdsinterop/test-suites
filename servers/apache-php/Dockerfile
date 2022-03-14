@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM mariadb
 RUN apt update
 RUN DEBIAN_FRONTEND="noninteractive" apt install -yq \
   apache2 \
@@ -13,6 +13,7 @@ RUN DEBIAN_FRONTEND="noninteractive" apt install -yq \
   php-intl \
   php-json \
   php-mbstring \
+  php-mysql \
   php-opcache \
   php-sqlite3 \
   php-xml \

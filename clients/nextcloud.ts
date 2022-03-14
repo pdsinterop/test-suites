@@ -8,13 +8,13 @@ export class NextcloudClient extends OwncloudClient {
   contextMenuSelector: string = 'a.action-menu';
   unshareSelector: string = 'li.action-delete-container';
   loginButton:string = '#submit-form';
-  constructor({ host, username, password }) {
-    super({ host, username, password });
+  constructor(params) {
+    super(params);
     this.guiType = GUI_TYPE_NEXTCLOUD;
   }
 
   async createPublicLink() {
-    const filesUrl = `https://${this.host}/index.php/apps/files/?dir=/&openfile=15`; // select nextcloud.png file
+    const filesUrl = `https://${this.guiDomain}/index.php/apps/files/?dir=/&openfile=15`; // select nextcloud.png file
     await this.page.goto(filesUrl);
 
     await this.page.waitForSelector('image.app-icon');
@@ -31,9 +31,8 @@ export class NextcloudClient extends OwncloudClient {
     return this.page.evaluate("document.querySelector('a.sharing-entry__copy').getAttribute('href')");
   }
   async shareWith(shareWithUser, shareWithHost) {
-    const filesUrl = `https://${this.host}/index.php/apps/files`;
+    const filesUrl = `https://${this.guiDomain}/index.php/apps/files`;
     await this.page.goto(filesUrl);
-    await this.checkFTU();
     // FIXME deal with first-time-use splash screen for Nextcloud Hub
     await this.page.waitForSelector('image.app-icon');
     await this.go('a.action-share');
@@ -41,14 +40,39 @@ export class NextcloudClient extends OwncloudClient {
     // FIXME: Find a nicer way to do this:
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    await this.type('div.multiselect__tags input.multiselect__input', `${shareWithUser}@${shareWithHost}`);
-    await this.go('span.option__desc--lineone');
+    console.log('Awaiting multiselect');
+    await this.page.waitForSelector('div.multiselect');
+    await this.page.waitForFunction(
+      `document.querySelector("div.multiselect").innerHTML.indexOf("Name, email, or Federated Cloud ID") != -1`
+    );
+    console.log('multiselect found, placeholder confirmed')
+    await this.type('div.multiselect', `${shareWithUser}@${shareWithHost}`);
+    console.log('done typing')
+    await this.page.waitForFunction(
+      `document.querySelector("div.multiselect").innerHTML.indexOf("${shareWithUser}@${shareWithHost}") != -1`
+    );
+    console.log('typed text has appeared, pressing ArrowDown');
+    await this.page.keyboard.press('ArrowDown');
+    console.log('Pressing Enter');
+    await this.page.keyboard.press('Enter');
+    // await this.go('span.option__desc--lineone');
+    await this.page.waitForFunction(
+      `document.querySelector("body").innerText.includes("${shareWithUser}@${shareWithHost} (remote)")`
+    );
   }
   async acceptPublicLink(url, remoteGuiType) {
     await this.page.goto(url);
     await this.go('button.menutoggle');
     await this.go('button#save-external-share');
-    await this.page.type('#remote_address', `${this.username}@${this.host}`);
+    await this.page.type('#remote_address', `${this.username}@${this.guiDomain}`);
     await this.page.click('#save-button-confirm');
+  }
+
+  async acceptShare() {
+    const filesUrl = `https://${this.guiDomain}/index.php/apps/files`;
+    await this.page.goto(filesUrl);
+    console.log('Clicking to accept share');
+    await this.go(".oc-dialog-buttonrow .primary");
+    console.log('Clicked to accept share');
   }
 }

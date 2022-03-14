@@ -27,5 +27,9 @@ jobs:
 
       - name: Run testsuite
         run: |
-          /bin/bash ./build.sh
-          /bin/bash ./ci.sh
+          git clone https://github.com/michielbdejong/ocm-stub
+          /bin/bash ./gencerts.sh
+          /bin/bash ./rebuild.sh
+          /bin/bash ./debug.sh
+          echo "Starting tester container"
+          docker run --network=testnet --name=tester.docker ci
