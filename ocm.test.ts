@@ -33,8 +33,8 @@ console.log({ HEADLESS });
 
 const flows = {
   [ FLOW_SHARE_WITH ]: {
-    from: [ IMPL_REVANC ],
-    to: [ IMPL_REVANC ]
+    from: [ IMPL_STUB ],
+    to: [ IMPL_STUB ]
   },
 };
 
