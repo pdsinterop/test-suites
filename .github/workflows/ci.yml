@@ -27,6 +27,7 @@ jobs:
 
       - name: Run testsuite
         run: |
+          git clone https://github.com/michielbdejong/ocm-stub
           /bin/bash ./gencerts.sh
           /bin/bash ./rebuild.sh
           /bin/bash ./debug.sh
