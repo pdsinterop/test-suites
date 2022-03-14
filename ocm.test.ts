@@ -33,7 +33,7 @@ console.log({ HEADLESS });
 
 const flows = {
   [ FLOW_SHARE_WITH ]: {
-    from: [ IMPL_STUB ],
+    from: [ IMPL_STUB, IMPL_NEXTCLOUD, IMPL_OWNCLOUD, IMPL_REVA ],
     to: [ IMPL_STUB ]
   },
 };
