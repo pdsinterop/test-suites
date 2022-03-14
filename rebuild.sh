@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-docker build -t tester .
+# docker build -t tester .
 
 # image for stub1 and stub2:
 cd ocm-stub
@@ -10,10 +10,10 @@ docker build -t stub .
 cd ..
 
 
-# cd servers/ci
-# cp -r ../../tls .
-# docker build -t ci .
-# cd ..
+cd servers/ci
+cp -r ../../tls .
+docker build -t ci .
+cd ..
 
 # # image for revad1, revad2, revanc1, revanc2:
 # cd servers/revad
