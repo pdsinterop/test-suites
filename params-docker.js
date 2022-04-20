@@ -54,12 +54,14 @@ module.exports = {
     },
     'From ownCloud': {
       ocmDomain: 'oc1.docker',
+      guiDomain: 'oc1.docker',
       guiType: GUI_TYPE_OWNCLOUD,
       username: 'alice',
       password: 'alice123'
     },
     'To ownCloud': {
       ocmDomain: 'oc2.docker',
+      guiDomain: 'oc2.docker',
       guiType: GUI_TYPE_OWNCLOUD,
       username: 'alice',
       password: 'alice123'
