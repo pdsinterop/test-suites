@@ -387,11 +387,11 @@ export class RevaClient extends Client {
 }
 
 
-// docker stop revad1.docker ; docker rm revad1.docker ; docker run -d --network=testnet --name=revad1.docker -e HOST=revad1 revad; docker logs -f revad1.docker
-// docker stop revad2.docker ; docker rm revad2.docker ; docker run -d --network=testnet --name=revad2.docker -e HOST=revad2 revad; docker logs -f revad2.docker
+// docker kill revad1.docker ; docker rm revad1.docker ; docker run -d --network=testnet --name=revad1.docker -e HOST=revad1 revad; docker logs -f revad1.docker
+// docker kill revad2.docker ; docker rm revad2.docker ; docker run -d --network=testnet --name=revad2.docker -e HOST=revad2 revad; docker logs -f revad2.docker
 
-// docker stop stub1.docker ; docker rm stub1.docker ; docker run -d --network=testnet --name=stub1.docker stub; docker logs -f stub1.docker
-// docker stop stub2.docker ; docker rm stub2.docker ; docker run -d --network=testnet --name=stub2.docker stub; docker logs -f stub2.docker
+// docker kill stub1.docker ; docker rm stub1.docker ; docker run -d --network=testnet --name=stub1.docker stub; docker logs -f stub1.docker
+// docker kill stub2.docker ; docker rm stub2.docker ; docker run -d --network=testnet --name=stub2.docker stub; docker logs -f stub2.docker
 
 
 // const permFuncs = [
