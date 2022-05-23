@@ -31,12 +31,15 @@ const JEST_TIMEOUT = 60000;
 const HEADLESS = !!process.env.HEADLESS;
 console.log({ HEADLESS });
 
-const flows = [
-  [ FLOW_SHARE_WITH, IMPL_STUB, IMPL_STUB ],
-  [ FLOW_SHARE_WITH, IMPL_NEXTCLOUD, IMPL_STUB ],
-  [ FLOW_SHARE_WITH, IMPL_OWNCLOUD, IMPL_STUB ],
-  [ FLOW_SHARE_WITH, IMPL_REVA, IMPL_STUB ]
-];
+const flows = (process.env.FLOW ?
+  [
+    [ process.env.FLOW, process.env.FROM_SERVER, process.env.TO_SERVER ],
+  ] : [
+    [ FLOW_SHARE_WITH, IMPL_STUB, IMPL_STUB ],
+    [ FLOW_SHARE_WITH, IMPL_NEXTCLOUD, IMPL_STUB ],
+    [ FLOW_SHARE_WITH, IMPL_OWNCLOUD, IMPL_STUB ],
+    [ FLOW_SHARE_WITH, IMPL_REVA, IMPL_STUB ]
+  ]);
 
 const CLIENT_TYPES = {
   [GUI_TYPE_OWNCLOUD]: OwncloudClient,
