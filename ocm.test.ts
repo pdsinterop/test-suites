@@ -51,7 +51,7 @@ const CLIENT_TYPES = {
 
 for (let i = 0; i < flows.length; i++) {
   const [ flow, from, to ] = flows[i];
-  describe(`${flow} from ${from} to ${to}`, async () => {
+  describe(`${flow} from ${from} to ${to}`, () => {
     let fromUser: Client;
     let toUser: Client;
     afterEach(async () => {
