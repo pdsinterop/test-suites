@@ -16,4 +16,6 @@ RUN git clone https://github.com/cs3org/ocm-test-suite
 WORKDIR /ocm-test-suite
 RUN git checkout main
 RUN npm ci
+ARG CACHE_BUST
+RUN git pull
 CMD HEADLESS=1 npm run debug
