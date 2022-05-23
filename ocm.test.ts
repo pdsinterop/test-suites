@@ -108,10 +108,10 @@ for (let i = 0; i < flows.length; i++) {
       }
       await toUser.acceptShare();
       await toUser.deleteAcceptedShare();
-      console.log('exit from', flow, from, to);
-      await fromUser.exit();
-      console.log('exit to', flow, from, to);
-      await toUser.exit();  
     }
+    console.log('exit from', flow, from, to);
+    await fromUser.exit();
+    console.log('exit to', flow, from, to);
+    await toUser.exit();
   }, JEST_TIMEOUT);
 }
