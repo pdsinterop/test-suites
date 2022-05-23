@@ -32,7 +32,7 @@ jobs:
           /bin/bash ./rebuild.sh
 
           /bin/bash ./scripts/run-test.sh "Share-with flow" "Stub" "Stub"
-          /bin/bash ./scripts/run-test.sh "Share-with flow" "Stub" "ownCloud"
+          # /bin/bash ./scripts/run-test.sh "Share-with flow" "Stub" "ownCloud"
           /bin/bash ./scripts/run-test.sh "Share-with flow" "Stub" "Nextcloud"
           /bin/bash ./scripts/run-test.sh "Share-with flow" "Stub" "Reva"
           /bin/bash ./scripts/run-test.sh "Share-with flow" "Stub" "Revanc"
