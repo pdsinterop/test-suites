@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-docker kill `docker ps -q`
-docker rm `docker ps -aq`
-docker network remove testnet
+running=$(docker ps -q) | [ -z "$running" ] && echo "no running containers!" || docker kill $running
+existing=$(docker ps -qa) | [ -z "$existing" ] && echo "no existing containers!" || docker rm $existing
+docker network remove testnet || true
 docker network create testnet
