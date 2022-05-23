@@ -30,6 +30,15 @@ jobs:
           git clone https://github.com/michielbdejong/ocm-stub
           /bin/bash ./gencerts.sh
           /bin/bash ./rebuild.sh
-          /bin/bash ./debug.sh
-          echo "Starting tester container"
-          docker run --network=testnet --name=tester.docker ci
+
+          echo "Testing share-with stub -> stub"
+          /bin/bash ./scripts/clean.sh
+          /bin/bash ./scripts/start-from-stub.sh
+          /bin/bash ./scripts/start-to-stub.sh
+          docker run --network=testnet --name=tester.docker -e FLOW="Share-with flow'" -e FROM_SERVER="Stub" TO_SERVER="Stub" ci
+
+          echo "Testing share-with oc -> stub"
+          /bin/bash ./scripts/clean.sh
+          /bin/bash ./scripts/start-from-oc.sh
+          /bin/bash ./scripts/start-to-stub.sh
+          docker run --network=testnet --name=tester.docker -e FLOW="Share-with flow'" -e FROM_SERVER="ownCloud" TO_SERVER="Stub" ci
