@@ -1,4 +1,5 @@
-FROM mariadb
+# Use Ubuntu 20.04 so PHP 7.4 is still available
+FROM ubuntu:20.04
 RUN apt update
 RUN DEBIAN_FRONTEND="noninteractive" apt install -yq \
   apache2 \
@@ -7,7 +8,7 @@ RUN DEBIAN_FRONTEND="noninteractive" apt install -yq \
   git \
   libxml2 \
   libxml2-dev \
-  php \
+  php7.4 \
   php-curl \
   php-gd \
   php-intl \
