@@ -35,6 +35,14 @@ docker exec -it maria2.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1
 docker run -d --network=testnet --name=oc1.docker oc1
 docker run -d --network=testnet --name=oc2.docker oc2
 
+# There are really three ways to add a tester to the testnet:
+# 1. The way https://github.com/cs3org/ocm-test-suite/blob/main/.github/workflows/ci.yml and
+#    https://github.com/cs3org/ocm-test-suite/blob/main/scripts/run-test.sh do it:
+
+# docker run --network=testnet --name=tester.docker -e FLOW="$1" -e FROM_SERVER="$2" -e TO_SERVER="$3" ci
+
+# 2. Using a Firefox-in-a-box:
+
 # docker run -d --name=firefox -p 5800:5800 -v /tmp/shm:/config:rw --network=testnet --shm-size 2g jlesage/firefox
 # echo Now browse to http://ocmhost:5800 to see a Firefox instance that sits inside the Docker testnet.
 # echo docker exec -it revanc1.docker /bin/bash
@@ -42,5 +50,7 @@ docker run -d --network=testnet --name=oc2.docker oc2
 # echo echo \"127.0.0.1 \$HOST.docker\" \>\> /etc/hosts
 # echo export PATH=\$PATH:/usr/local/go/bin
 # echo cd /reva \; make build-revad \; cd /etc/revad \; /reva/cmd/revad/revad -c /etc/revad/\$HOST.toml
+
+# 3. Using vnc:
 
 # docker run -p 6080:80 -p 5900:5900 -v /dev/shm:/dev/shm --network=testnet --name=tester -d --cap-add=SYS_ADMIN tester
