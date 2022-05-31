@@ -158,7 +158,7 @@
 						"description": "Open Cloud Mesh"
 					},
 					"name": "OCM API",
-					"path": "https://revad1.docker/",
+					"path": "https://revad1.docker/ocm/",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
@@ -207,7 +207,7 @@
 						"description": "Open Cloud Mesh"
 					},
 					"name": "OCM API",
-					"path": "https://revad2.docker/",
+					"path": "https://revad2.docker/ocm/",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
@@ -256,7 +256,7 @@
 						"description": "Open Cloud Mesh"
 					},
 					"name": "OCM API",
-					"path": "https://revanc1.docker/",
+					"path": "https://revanc1.docker/ocm/",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
@@ -305,7 +305,7 @@
 						"description": "Open Cloud Mesh"
 					},
 					"name": "OCM API",
-					"path": "https://revanc2.docker/",
+					"path": "https://revanc2.docker/ocm/",
 					"is_monitored": true
 				},
 				"api_version": "0.0.1",
