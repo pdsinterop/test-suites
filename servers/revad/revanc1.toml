@@ -141,7 +141,7 @@ driver = "localhome"
 user_layout = "{{.Username}}"
 
 [http.services.ocmd]
-prefix = ""
+prefix = "ocm"
 
 [http.services.ocmd.config]
 host = "revanc1.docker"

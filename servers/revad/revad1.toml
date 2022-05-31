@@ -140,7 +140,7 @@ driver = "localhome"
 user_layout = "{{.Username}}"
 
 [http.services.ocmd]
-prefix = ""
+prefix = "ocm"
 
 [http.services.ocmd.config]
 host = "revad1.docker"
