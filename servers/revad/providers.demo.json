@@ -340,6 +340,104 @@
 		]
 	},
 	{
+		"name": "revaoc1",
+		"full_name": "revaoc1",
+		"organization": "ocm-test-suite",
+		"domain": "revaoc1.docker",
+		"homepage": "https://revaoc1.docker",
+		"description": "revaoc1.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM",
+						"description": "Open Cloud Mesh"
+					},
+					"name": "OCM API",
+					"path": "https://revaoc1.docker/ocm/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://revaoc1.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav",
+						"description": "Webdav"
+					},
+					"name": "Webdav API",
+					"path": "https://revaoc1.docker/webdav/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://revaoc1.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Gateway",
+						"description": "GRPC Gateway"
+					},
+					"name": "GRPC Gateway",
+					"path": "revaoc1.docker:19000",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "revaoc1.docker:19000"
+			}
+		]
+	},
+	{
+		"name": "revaoc2",
+		"full_name": "revaoc2",
+		"organization": "ocm-test-suite",
+		"domain": "revaoc2.docker",
+		"homepage": "https://revaoc2.docker",
+		"description": "revaoc2.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM",
+						"description": "Open Cloud Mesh"
+					},
+					"name": "OCM API",
+					"path": "https://revaoc2.docker/ocm/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://revaoc2.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav",
+						"description": "Webdav"
+					},
+					"name": "Webdav API",
+					"path": "https://revaoc2.docker/webdav/",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "https://revaoc2.docker/"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Gateway",
+						"description": "GRPC Gateway"
+					},
+					"name": "GRPC Gateway",
+					"path": "revaoc2.docker:19000",
+					"is_monitored": true
+				},
+				"api_version": "0.0.1",
+				"host": "revaoc2.docker:19000"
+			}
+		]
+	},
+	{
 		"name": "stub1",
 		"full_name": "stub1",
 		"organization": "ocm-test-suite",
