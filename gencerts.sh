@@ -37,3 +37,5 @@ createCert revad1
 createCert revad2
 createCert revanc1
 createCert revanc2
+createCert revaoc1
+createCert revaoc2
