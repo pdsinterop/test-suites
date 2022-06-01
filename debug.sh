@@ -43,7 +43,7 @@ docker run -d --network=testnet --name=oc2.docker oc2
 
 # 2. Using a Firefox-in-a-box:
 
-# docker run -d --name=firefox -p 5800:5800 -v /tmp/shm:/config:rw --network=testnet --shm-size 2g jlesage/firefox
+# ./scripts/start-firefox-in-a-box.sh
 # echo Now browse to http://ocmhost:5800 to see a Firefox instance that sits inside the Docker testnet.
 # echo docker exec -it revanc1.docker /bin/bash
 # echo docker exec -it revanc2.docker /bin/bash
