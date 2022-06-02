@@ -8,3 +8,9 @@ sleep 15
 docker exec -it -e DBHOST=maria2.docker -e USER=marie -e PASS=radioactivity -u www-data oc2.docker sh /init.sh
 docker exec -it maria2.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek owncloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'iopUrl', 'https://revaoc2.docker/');"
 docker exec -it maria2.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek owncloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-2');"
+
+echo docker exec -it revaoc2.docker /bin/bash
+echo echo \"127.0.0.1 \$HOST.docker\" \>\> /etc/hosts
+echo export PATH=\$PATH:/usr/local/go/bin
+echo cd /reva \; make build-revad \; cd /etc/revad \; /reva/cmd/revad/revad -c /etc/revad/\$HOST.toml
+
