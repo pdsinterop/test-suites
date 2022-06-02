@@ -8,4 +8,4 @@ echo $TESTER_IP_ADDR
 sysctl net.ipv4.ip_forward=1
 iptables -t nat -A PREROUTING -p tcp --dport 5900 -j DNAT --to-destination $TESTER_IP_ADDR:5900
 echo Now connect to vnc://ocmhost with password 1234 and use Firefox and Terminal in there
-echo You may want to run `/ubuntu-init-script.sh` there in the terminal, once logged in as the Desktop OS user.
+echo You may want to run 'sh /ubuntu-init-script.sh' there in the terminal, once logged in as the Desktop OS user.
