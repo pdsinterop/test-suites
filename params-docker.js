@@ -56,15 +56,15 @@ module.exports = {
       ocmDomain: 'oc1.docker',
       guiDomain: 'oc1.docker',
       guiType: GUI_TYPE_OWNCLOUD,
-      username: 'alice',
-      password: 'alice123'
+      username: 'einstein',
+      password: 'relativity'
     },
     'To ownCloud': {
       ocmDomain: 'oc2.docker',
       guiDomain: 'oc2.docker',
       guiType: GUI_TYPE_OWNCLOUD,
-      username: 'alice',
-      password: 'alice123'
+      username: 'marie',
+      password: 'radioactivity'
     },
     'From Nextcloud': {
       ocmDomain: 'nc1.docker',
