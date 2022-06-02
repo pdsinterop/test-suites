@@ -7,7 +7,7 @@ export class NextcloudClient extends OwncloudClient {
   notificationDoneSelector: string  = 'div.icon-notifications-dark';
   contextMenuSelector: string = 'a.action-menu';
   unshareSelector: string = 'li.action-delete-container';
-  loginButton:string = '#submit-form';
+  loginButton:string = 'input.submit-wrapper__input.primary';
   constructor(params) {
     super(params);
     this.guiType = GUI_TYPE_NEXTCLOUD;
