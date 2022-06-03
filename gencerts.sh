@@ -39,3 +39,4 @@ createCert revanc1
 createCert revanc2
 createCert revaoc1
 createCert revaoc2
+createCert meshdir
