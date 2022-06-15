@@ -43,7 +43,7 @@ jobs:
           # /bin/bash ./scripts/run-test.sh "Share-with flow" "ownCloud" "Revanc"
           # /bin/bash ./scripts/run-test.sh "Share-with flow" "Nextcloud" "Stub"
           # /bin/bash ./scripts/run-test.sh "Share-with flow" "Nextcloud" "ownCloud"
-          # /bin/bash ./scripts/run-test.sh "Share-with flow" "Nextcloud" "Nextcloud"
+          /bin/bash ./scripts/run-test.sh "Share-with flow" "Nextcloud" "Nextcloud"
           # /bin/bash ./scripts/run-test.sh "Share-with flow" "Nextcloud" "Reva"
           # /bin/bash ./scripts/run-test.sh "Share-with flow" "Nextcloud" "Revanc"
           # /bin/bash ./scripts/run-test.sh "Share-with flow" "Reva" "Stub"
