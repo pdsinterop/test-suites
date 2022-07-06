@@ -7,7 +7,7 @@ RUN mv owncloud html
 WORKDIR /var/www/html
 ENV PHP_MEMORY_LIMIT="512M"
 ADD init.sh /init.sh
-RUN git clone --depth=1 https://github.com/pondersource/OC-Sciencemesh apps/sciencemesh
+RUN git clone --depth=1 https://github.com/pondersource/oc-sciencemesh apps/sciencemesh
 RUN cd apps/sciencemesh && git pull
 RUN cd apps/sciencemesh && make
 USER root
