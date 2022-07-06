@@ -7,7 +7,7 @@ USER root
 RUN apt update && apt install -y composer curl dirmngr apt-transport-https lsb-release ca-certificates
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt install nodejs
-RUN npm install yarn
+RUN npm install -g yarn
 USER www-data
 WORKDIR /var/www
 RUN mv core html
