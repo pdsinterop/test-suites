@@ -5,6 +5,7 @@ apt-get install -yq docker.io
 docker ps
 
 git clone https://github.com/sciencemesh/nc-sciencemesh
+git clone https://github.com/sciencemesh/oc-sciencemesh
 git clone https://github.com/cs3org/reva
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
