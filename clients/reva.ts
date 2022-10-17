@@ -378,6 +378,17 @@ export class RevaClient extends Client {
     });
     await Promise.all(promises);
   }
+
+  async accessShare() {
+    const ids = await this.listReceivedOCMShares();
+    console.log({ ids });
+    const promises = ids.map((id: any) => {
+      console.log("Accessing share", this.guiDomain, id);
+      return this.updateReceivedOCMShare(id, ShareState.SHARE_STATE_ACCEPTED);
+    });
+    await Promise.all(promises);
+  }
+
   async deleteAcceptedShare() {
     // FIXME: todo
   }

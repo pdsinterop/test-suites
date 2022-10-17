@@ -96,6 +96,8 @@ for (let i = 0; i < flows.length; i++) {
         await fromUser.shareWith(params[`To ${to}`].username, params[`To ${to}`].ocmDomain, params[`To ${to}`].guiDomain, params[`From ${from}`].guiDomain);
         console.log('toUser.acceptShare');
         await toUser.acceptShare();
+        console.log('toUser.accessShare');
+        await toUser.accessShare();
         console.log('toUser.deleteAcceptedShare');
         await toUser.deleteAcceptedShare();
         console.log('done');

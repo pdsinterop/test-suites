@@ -9,7 +9,7 @@
 # ./scripts/start-to-Nextcloud.sh
 
 # And then there are really three ways to add a tester to the testnet
-# that lets you poke at the "from" and the "to" system::
+# that lets you poke at the "from" and the "to" system:
 # 1. The way https://github.com/cs3org/ocm-test-suite/blob/main/.github/workflows/ci.yml and
 #    https://github.com/cs3org/ocm-test-suite/blob/main/scripts/run-test.sh do it:
 # ./scripts/start-tester-unattended.sh

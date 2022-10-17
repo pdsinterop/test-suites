@@ -16,6 +16,7 @@ export abstract class Client {
   abstract shareWith(shareWithUser: string, shareWithHost: string, shareWithDomain: string, shareFromDomain: string): Promise<void>
   abstract acceptPublicLink(url: string, remoteGuiType: string): Promise<void>
   abstract acceptShare() : Promise<void>
+  abstract accessShare() : Promise<void>
   abstract deleteAcceptedShare() : Promise<void>
   abstract exit () : Promise<void>
 }

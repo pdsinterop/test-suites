@@ -4,7 +4,7 @@ This test suite tests various implementations of [Open Cloud Mesh (OCM)](https:/
 
 ## Running in Github Actions
 
-The current main branch of this repo runs a gitbub action to test the share-with flow from each of the following servers
+The current main branch of this repo runs a github action to test the share-with flow from each of the following servers
 to the ocm-stub server:
 * ocm-stub
 * Nextcloud

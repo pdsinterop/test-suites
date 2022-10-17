@@ -100,6 +100,10 @@ export class OwncloudClient extends StubClient {
     );
   }
 
+  async accessShare() {
+    // TODO :implement
+  }
+
   // Common GUI flow between ownCloud and Nextcloud:
   async deleteShares(sharedWithYouUrl, contextMenuSelector, unshareSelector, doneSelector) {
     await this.page.goto(sharedWithYouUrl);
