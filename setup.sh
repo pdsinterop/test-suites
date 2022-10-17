@@ -14,6 +14,7 @@ git clone https://github.com/michielbdejong/ocm-stub
 
 /bin/bash ./gencerts.sh
 /bin/bash ./rebuild.sh
+docker run -v /root/ocm-test-suite/ocm-stub:/ocm-stub stub npm install
 /bin/bash ./debug.sh
 
 # There are really three ways to add a tester to the testnet,
