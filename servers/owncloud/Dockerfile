@@ -12,7 +12,7 @@ USER www-data
 WORKDIR /var/www
 RUN mv core html
 WORKDIR /var/www/html
-RUN composer install
+RUN composer install --no-dev
 RUN make install-nodejs-deps
 ENV PHP_MEMORY_LIMIT="512M"
 ADD init.sh /init.sh
