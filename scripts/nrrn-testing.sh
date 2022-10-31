@@ -35,4 +35,10 @@ docker exec maria2.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi
 docker exec maria2.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-2');"
 docker exec maria2.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek nextcloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'meshDirectoryUrl', 'https://meshdir.docker/meshdir');"
 
-echo Now browse to http://ocmhost:5800 to see a Firefox instance that sits inside the Docker testnet.
+echo Now browse to http://ocmhost:5800 and inside there to https://nc1.docker
+echo Log in as einstein / relativity
+echo Go to the ScienceMesh app and generate a token
+echo Click it to go to the meshdir server.
+echo And when it tells you run Reva\'s CLI tool you can do it here:
+echo Log in as marie / radioactivity
+docker exec -it revanc2.docker /reva/cmd/reva/reva -insecure -host localhost:19000
