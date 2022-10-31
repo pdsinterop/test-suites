@@ -1,5 +1,5 @@
 FROM apache-php
-RUN apt install -y zip
+RUN apt install -y zip iproute2
 RUN rm -rf /var/www/html
 USER www-data
 WORKDIR /var/www
