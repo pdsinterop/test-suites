@@ -1,0 +1,48 @@
+[
+	{
+		"domain": "revanc1.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM"
+					},
+					"path": "/ocm/"
+				},
+				"host": "https://revanc1.docker"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav"
+					},
+					"path": "/remote.php/webdav/"
+				},
+				"host": "https://revanc1.docker"
+			}
+		]
+	},
+	{
+		"domain": "revanc1.docker",
+		"services": [
+			{
+				"endpoint": {
+					"type": {
+						"name": "OCM"
+					},
+					"path": "/ocm/"
+				},
+				"host": "https://revanc1.docker"
+			},
+			{
+				"endpoint": {
+					"type": {
+						"name": "Webdav"
+					},
+					"path": "/remote.php/webdav/"
+				},
+				"host": "https://revanc1.docker"
+			}
+		]
+	}
+]

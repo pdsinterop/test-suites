@@ -151,7 +151,7 @@ provider = "test-revanc1"
 driver = "json"
 
 [http.middlewares.providerauthorizer.drivers.json]
-providers = "providers.demo.json"
+providers = "providers.testnet.json"
 
 [http.services.ocs]
 prefix = "ocs"
