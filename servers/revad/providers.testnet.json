@@ -7,7 +7,7 @@
 					"type": {
 						"name": "OCM"
 					},
-					"path": "/ocm/"
+					"path": "https://revanc1.docker/ocm/"
 				},
 				"host": "https://revanc1.docker"
 			},
@@ -16,7 +16,7 @@
 					"type": {
 						"name": "Webdav"
 					},
-					"path": "/remote.php/webdav/"
+					"path": "https://nc1.docker/remote.php/webdav/"
 				},
 				"host": "https://revanc1.docker"
 			}
@@ -30,7 +30,7 @@
 					"type": {
 						"name": "OCM"
 					},
-					"path": "/ocm/"
+					"path": "https://revanc2.docker/ocm/"
 				},
 				"host": "https://revanc1.docker"
 			},
@@ -39,7 +39,7 @@
 					"type": {
 						"name": "Webdav"
 					},
-					"path": "/remote.php/webdav/"
+					"path": "https://nc2.docker/remote.php/webdav/"
 				},
 				"host": "https://revanc1.docker"
 			}
