@@ -77,7 +77,7 @@ mock_http = false
 driver = "json"
 
 [grpc.services.ocmproviderauthorizer.drivers.json]
-providers = "providers.demo.json"
+providers = "providers.testnet.json"
 verify_request_hostname = true
 
 [grpc.services.publicshareprovider]
