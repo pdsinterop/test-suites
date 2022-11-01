@@ -102,6 +102,9 @@ driver = "static"
 
 [grpc.services.storageprovider]
 driver = "nextcloud"
+expose_data_server = true
+data_server_url = "https://nc1.docker/remote.php/webdav"
+enable_home_creation = true
 
 [grpc.services.storageprovider.drivers.nextcloud]
 endpoint = "https://nc1.docker/index.php/apps/sciencemesh/"
