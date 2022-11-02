@@ -32,7 +32,7 @@ ocmshareprovidersvc = "revaoc1.docker:19000"
 ocminvitemanagersvc = "revaoc1.docker:19000"
 ocmproviderauthorizersvc = "revaoc1.docker:19000"
 commit_share_to_storage_grant = false
-datagateway = "http://localhost/data"
+datagateway = "http://localhost:19001/data"
 transfer_expires = 6 # give it a moment
 
 [grpc.services.authregistry]
@@ -102,6 +102,9 @@ driver = "static"
 
 [grpc.services.storageprovider]
 driver = "nextcloud"
+expose_data_server = true
+data_server_url = "http://localhost:19001/data"
+enable_home_creation = true
 
 [grpc.services.storageprovider.drivers.nextcloud]
 endpoint = "https://oc1.docker/index.php/apps/sciencemesh/"
