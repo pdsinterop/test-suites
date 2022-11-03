@@ -32,7 +32,7 @@ ocmshareprovidersvc = "revad1.docker:19000"
 ocminvitemanagersvc = "revad1.docker:19000"
 ocmproviderauthorizersvc = "revad1.docker:19000"
 commit_share_to_storage_grant = false
-datagateway = "http://localhost:19001/data"
+datagateway = "https://revad1.docker/data"
 transfer_expires = 6 # give it a moment
 
 [grpc.services.authregistry]
