@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+
 git clone --depth=1 --branch=dev https://github.com/sciencemesh/nc-sciencemesh
 git clone --depth=1 --branch=dev https://github.com/pondersource/oc-sciencemesh
 git clone --depth=1 --branch=ocmd-error-messages-backport https://github.com/cs3org/reva
@@ -13,7 +14,3 @@ docker run -v /workspace/ocm-test-suite/reva:/reva \
   --workdir /reva revad bash -c "git config --global --add safe.directory /reva && make build-revad"
 docker run -v /workspace/ocm-test-suite/nc-sciencemesh:/var/www/html/apps/sciencemesh --workdir /var/www/html/apps/sciencemesh nc1 make composer
 docker run -v /workspace/ocm-test-suite/oc-sciencemesh:/var/www/html/apps/sciencemesh --workdir /var/www/html/apps/sciencemesh oc1 make composer
-
-./scripts/clean.sh
-echo to see the Firefox tester, open `gp url 5800` with your browser
-./scripts/nrrn-testing.sh
