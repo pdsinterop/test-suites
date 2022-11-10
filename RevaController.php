@@ -246,7 +246,6 @@ class RevaController extends Controller {
 	private function shareInfoToCs3Share(IShare $share): array {
 		$shareeParts = explode("@", $share->getSharedWith());
 		$ownerParts = explode("@", $share->getShareOwner());
-		$creatorParts = explode("@", $share->getShareCreator());
 		$stime = 0; // $share->getShareTime()->getTimeStamp();
 
 		// produces JSON that maps to
@@ -288,8 +287,8 @@ class RevaController extends Controller {
 			],
 			"creator" => [
 				"id" => [
-					"opaque_id" => $creatorParts[0],
-					"idp" => $creatorParts[1]
+					"opaque_id" => $ownerParts[0],
+					"idp" => $ownerParts[1]
 			  ],
 			],
 			"ctime" => [
@@ -874,7 +873,7 @@ class RevaController extends Controller {
 		error_log("addSentShare");
 		$this->init($userId);
 		$params = $this->request->getParams();
-		$owner = $params["owner"]["opaque_id"] . "@" . $params["owner"]["idp"];
+		$owner = $params["owner"]["opaqueId"] . "@" . $params["owner"]["idp"];
 		$name = $params["name"]; // "fileid-/other/q/f gr"
 		$resourceOpaqueId = $params["resourceId"]["opaqueId"]; // "fileid-/other/q/f gr"
 		$revaPath = $this->getRevaPathFromOpaqueId($resourceOpaqueId); // "/other/q/f gr"
@@ -888,7 +887,7 @@ class RevaController extends Controller {
 		$nextcloudPermissions = $this->getPermissionsCode($revaPermissions);
 		$shareWith = $granteeUser."@".$granteeHost;
 		$sharedSecretBase64 = $params["grantee"]["opaque"]["map"]["sharedSecret"]["value"];
-    $sharedSecret = base64_decode($sharedSecretBase64);
+		$sharedSecret = base64_decode($sharedSecretBase64);
 
 		try {
 			$node = $this->userFolder->get($nextcloudPath);
@@ -907,7 +906,6 @@ class RevaController extends Controller {
 		$share->setSharedBy($userId);
 		$share->setSharedWith($shareWith);
 		$share->setShareOwner($owner);
-		$share->setShareCreator($owner);
 		$share->setPermissions($nextcloudPermissions);
 		error_log("calling createInternal");
 		$this->shareProvider->createInternal($share);
