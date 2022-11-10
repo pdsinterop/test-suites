@@ -3,7 +3,7 @@ set -e
 
 git clone --depth=1 --branch=dev https://github.com/sciencemesh/nc-sciencemesh
 git clone --depth=1 --branch=dev https://github.com/pondersource/oc-sciencemesh
-git clone --depth=1 --branch=ocmd-error-messages-backport https://github.com/cs3org/reva
+git clone --depth=1 --branch=efss-backend-fixes https://github.com/cs3org/reva
 git clone --depth=1 --branch=main https://github.com/michielbdejong/ocm-stub
 
 /bin/bash ./gencerts.sh
