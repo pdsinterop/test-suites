@@ -1,7 +1,11 @@
 #!/bin/bash
 set -e
+
+export REPO_ROOT=`pwd`
+[ ! -d "./scripts" ] && echo "Directory ./scripts DOES NOT exist inside $REPO_ROOT, are you running this from the repo root?" && exit 1
+
 docker run -d --network=testnet -e MARIADB_ROOT_PASSWORD=eilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek --name=maria2.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run -d --network=testnet --name=nc2.docker -v /workspace/ocm-test-suite/nc-sciencemesh:/var/www/html/apps/sciencemesh nc2
+docker run -d --network=testnet --name=nc2.docker -v $REPO_ROOT/nc-sciencemesh:/var/www/html/apps/sciencemesh nc2
 
 sleep 15
 

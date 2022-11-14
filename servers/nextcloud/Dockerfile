@@ -17,3 +17,4 @@ RUN git clone --depth=1 https://github.com/pondersource/nc-sciencemesh apps/scie
 RUN cd apps/sciencemesh && git pull
 RUN cd apps/sciencemesh && make
 USER root
+CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]

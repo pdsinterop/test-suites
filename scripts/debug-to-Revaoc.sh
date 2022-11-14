@@ -1,8 +1,12 @@
 #!/bin/bash
 set -e
-docker run -d --network=testnet --name=revaoc2.docker -v /workspace/ocm-test-suite/reva:/reva -e HOST=revaoc2 revad sleep 30000
+
+export REPO_ROOT=`pwd`
+[ ! -d "./scripts" ] && echo "Directory ./scripts DOES NOT exist inside $REPO_ROOT, are you running this from the repo root?" && exit 1
+
+docker run -d --network=testnet --name=revaoc2.docker -v $REPO_ROOT/reva:/reva -e HOST=revaoc2 revad sleep 30000
 docker run -d --network=testnet -e MARIADB_ROOT_PASSWORD=eilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek --name=maria2.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run -d --network=testnet --name=oc2.docker -v /workspace/ocm-test-suite/oc-sciencemesh:/var/www/html/apps/sciencemesh oc2
+docker run -d --network=testnet --name=oc2.docker -v $REPO_ROOT/oc-sciencemesh:/var/www/html/apps/sciencemesh oc2
 
 sleep 15
 docker exec -e DBHOST=maria2.docker -e USER=marie -e PASS=radioactivity -u www-data oc2.docker sh /init.sh

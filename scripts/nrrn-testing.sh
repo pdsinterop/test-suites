@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+export REPO_ROOT=`pwd`
+[ ! -d "./scripts" ] && echo "Directory ./scripts DOES NOT exist inside $REPO_ROOT, are you running this from the repo root?" && exit 1
+
 function waitForPort {
   x=$(docker exec -it $1 ss -tulpn | grep $2 | wc -l)
   until [ $x -ne 0 ]
@@ -12,13 +15,13 @@ function waitForPort {
   echo $1 port $2 is open
 }
 
-docker run -d --network=testnet --name=revanc1.docker -v /workspace/ocm-test-suite/reva:/reva -e HOST=revanc1 revad
+docker run -d --network=testnet --name=revanc1.docker -v $REPO_ROOT/reva:/reva -e HOST=revanc1 revad
 docker run -d --network=testnet -e MARIADB_ROOT_PASSWORD=eilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek --name=maria1.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run -d --network=testnet --name=nc1.docker -v /workspace/ocm-test-suite/nc-sciencemesh:/var/www/html/apps/sciencemesh nc1
-docker run -d --network=testnet --name=revanc2.docker -v /workspace/ocm-test-suite/reva:/reva -e HOST=revanc2 revad
+docker run -d --network=testnet --name=nc1.docker -v $REPO_ROOT/nc-sciencemesh:/var/www/html/apps/sciencemesh nc1
+docker run -d --network=testnet --name=revanc2.docker -v $REPO_ROOT/reva:/reva -e HOST=revanc2 revad
 docker run -d --network=testnet -e MARIADB_ROOT_PASSWORD=eilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek --name=maria2.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run -d --network=testnet --name=nc2.docker -v /workspace/ocm-test-suite/nc-sciencemesh:/var/www/html/apps/sciencemesh nc2
-docker run -d --network=testnet --name=meshdir.docker  -v /workspace/ocm-test-suite/ocm-stub:/ocm-stub stub
+docker run -d --network=testnet --name=nc2.docker -v $REPO_ROOT/nc-sciencemesh:/var/www/html/apps/sciencemesh nc2
+docker run -d --network=testnet --name=meshdir.docker  -v $REPO_ROOT/ocm-stub:/ocm-stub stub
 docker run -d --name=firefox -p 5800:5800 -v /tmp/shm:/config:rw --network=testnet --shm-size 2g jlesage/firefox:v1.17.1
 
 waitForPort maria1.docker 3306
