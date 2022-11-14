@@ -16,5 +16,6 @@ ADD init.sh /init.sh
 RUN git clone --depth=1 https://github.com/pondersource/nc-sciencemesh apps/sciencemesh
 RUN cd apps/sciencemesh && git pull
 RUN cd apps/sciencemesh && make
+RUN mkdir -p data ; touch data/owncloud.log
 USER root
-CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]
+CMD /usr/sbin/apache2ctl -DFOREGROUND & tail -f /var/log/apache2/error.log & tail -f data/owncloud.log
