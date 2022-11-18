@@ -2,10 +2,10 @@
 set -e
 REPO_PATH=`pwd`
 
-# git clone --depth=1 --branch=dev https://github.com/sciencemesh/nc-sciencemesh
-# git clone --depth=1 --branch=dev https://github.com/pondersource/oc-sciencemesh
-# git clone --depth=1 --branch=efss-backend-fixes https://github.com/cs3org/reva
-# git clone --depth=1 --branch=main https://github.com/michielbdejong/ocm-stub
+git clone --depth=1 --branch=dev https://github.com/sciencemesh/nc-sciencemesh
+git clone --depth=1 --branch=dev https://github.com/pondersource/oc-sciencemesh
+git clone --depth=1 --branch=efss-backend-fixes https://github.com/cs3org/reva
+git clone --depth=1 --branch=main https://github.com/michielbdejong/ocm-stub
 
 # /bin/bash ./gencerts.sh
 /bin/bash ./rebuild.sh
