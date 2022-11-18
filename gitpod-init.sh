@@ -7,7 +7,7 @@ git clone --depth=1 --branch=dev https://github.com/pondersource/oc-sciencemesh
 git clone --depth=1 --branch=efss-backend-fixes https://github.com/cs3org/reva
 git clone --depth=1 --branch=main https://github.com/michielbdejong/ocm-stub
 
-# /bin/bash ./gencerts.sh
+/bin/bash ./gencerts.sh
 /bin/bash ./rebuild.sh
 docker run -v $REPO_PATH/ocm-stub:/ocm-stub stub npm install
 docker run -v $REPO_PATH/reva:/reva \
