@@ -1,3 +1,6 @@
+[log]
+level = "debug"
+
 [shared]
 gatewaysvc = "revanc1.docker:19000"
 # gatewaycertfile = "/etc/revad/tls/revanc1.crt"
