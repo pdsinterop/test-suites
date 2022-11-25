@@ -1,0 +1,8 @@
+[	{	"domain": "revanc1.docker",	"services": [
+  { "endpoint": { "type": { "name": "OCM" }, "path": "https://revanc1.docker/ocm/" }, "host": "https://revanc1.docker" },
+	{ "endpoint": { "type": { "name": "Webdav" }, "path": "https://nc1.docker/remote.php/webdav/" }, "host": "https://nc1.docker" }
+] },
+{ "domain": "revanc2.docker", "services": [
+  { "endpoint": { "type": { "name": "OCM" }, "path": "https://revanc2.docker/ocm/" }, "host": "https://revanc2.docker" },
+	{ "endpoint": { "type": { "name": "Webdav" }, "path": "https://nc2.docker/remote.php/webdav/" }, "host": "https://nc2.docker" }
+] } ]

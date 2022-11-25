@@ -4,7 +4,7 @@ USER www-data
 RUN git clone --depth=1 --branch reva-sharees https://github.com/pondersource/core.git --recursive --shallow-submodules
 WORKDIR /var/www/core
 USER root
-RUN apt update && apt install -y composer curl dirmngr apt-transport-https lsb-release ca-certificates
+RUN apt update && apt install -y composer curl dirmngr apt-transport-https lsb-release ca-certificates iproute2
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt install nodejs
 RUN npm install -g yarn
@@ -19,4 +19,6 @@ ADD init.sh /init.sh
 RUN git clone --depth=1 https://github.com/pondersource/oc-sciencemesh apps/sciencemesh
 RUN cd apps/sciencemesh && git pull
 RUN cd apps/sciencemesh && make
+RUN mkdir -p data ; touch data/owncloud.log
 USER root
+CMD /usr/sbin/apache2ctl -DFOREGROUND & tail -f /var/log/apache2/error.log & tail -f data/owncloud.log

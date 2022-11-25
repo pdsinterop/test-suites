@@ -7,12 +7,12 @@ set -e
 cd ocm-stub
 cp -r ../tls .
 docker build -t stub .
-cd ..
-
-# image for running the tests from Github Actions:
-cd servers/ci
-cp -r ../../tls .
-docker build -t ci .
+cd ../servers/ci
+pwd
+# # image for running the tests from Github Actions:
+# cd ../ci
+# cp -r ../../tls .
+# docker build -t ci .
 
 # image for revad1, revad2, revanc1, revanc2:
 cd ../revad
