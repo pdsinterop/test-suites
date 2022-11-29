@@ -17,10 +17,10 @@ function waitForPort {
 
 docker run --restart=always -d --network=testnet --name=revaoc1.docker -v $REPO_ROOT/reva:/reva -e HOST=revaoc1 revad
 docker run --restart=always -d --network=testnet -e MARIADB_ROOT_PASSWORD=eilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek --name=maria1.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run --restart=always -d --network=testnet --name=oc1.docker -v $REPO_ROOT/nc-sciencemesh:/var/www/html/apps/sciencemesh oc1
+docker run --restart=always -d --network=testnet --name=oc1.docker -v $REPO_ROOT/oc-sciencemesh:/var/www/html/apps/sciencemesh oc1
 docker run --restart=always -d --network=testnet --name=revaoc2.docker -v $REPO_ROOT/reva:/reva -e HOST=revaoc2 revad
 docker run --restart=always -d --network=testnet -e MARIADB_ROOT_PASSWORD=eilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek --name=maria2.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run --restart=always -d --network=testnet --name=oc2.docker -v $REPO_ROOT/nc-sciencemesh:/var/www/html/apps/sciencemesh oc2
+docker run --restart=always -d --network=testnet --name=oc2.docker -v $REPO_ROOT/oc-sciencemesh:/var/www/html/apps/sciencemesh oc2
 docker run --restart=always -d --network=testnet --name=meshdir.docker  -v $REPO_ROOT/ocm-stub:/ocm-stub stub
 docker run --restart=always -d --name=firefox -p 5800:5800 -v /tmp/shm:/config:rw --network=testnet --shm-size 2g jlesage/firefox:v1.17.1
 
