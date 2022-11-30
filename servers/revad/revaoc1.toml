@@ -35,7 +35,7 @@ ocmshareprovidersvc = "revaoc1.docker:19000"
 ocminvitemanagersvc = "revaoc1.docker:19000"
 ocmproviderauthorizersvc = "revaoc1.docker:19000"
 commit_share_to_storage_grant = false
-datagateway = "http://localhost:19001/data"
+datagateway = "https://revaoc1.docker/data"
 transfer_expires = 6 # give it a moment
 
 [grpc.services.authregistry]
@@ -72,7 +72,7 @@ driver = "json"
 driver = "nextcloud"
 
 [grpc.services.ocmshareprovider.drivers.nextcloud]
-webdav_host = "https://nc1.docker/"
+webdav_host = "https://oc1.docker/"
 endpoint = "https://oc1.docker/index.php/apps/sciencemesh/"
 shared_secret = "shared-secret-1"
 mock_http = false
@@ -81,7 +81,7 @@ mock_http = false
 driver = "json"
 
 [grpc.services.ocmproviderauthorizer.drivers.json]
-providers = "providers.demo.json"
+providers = "providers.testnet.json"
 verify_request_hostname = true
 
 [grpc.services.publicshareprovider]
@@ -107,7 +107,7 @@ driver = "static"
 [grpc.services.storageprovider]
 driver = "nextcloud"
 expose_data_server = true
-data_server_url = "http://localhost:19001/data"
+data_server_url = "https://revaoc1.docker/data"
 enable_home_creation = true
 
 [grpc.services.storageprovider.drivers.nextcloud]
@@ -139,13 +139,15 @@ certfile = "/etc/revad/tls/revaoc1.crt"
 keyfile = "/etc/revad/tls/revaoc1.key"
 
 [http.services.dataprovider]
-driver = "localhome"
+driver = "nextcloud"
 
 [http.services.prometheus]
 [http.services.sysinfo]
 
-[http.services.dataprovider.drivers.localhome]
-user_layout = "{{.Username}}"
+[http.services.dataprovider.drivers.nextcloud]
+endpoint = "https://oc1.docker/index.php/apps/sciencemesh/"
+shared_secret = "shared-secret-2"
+mock_http = false
 
 [http.services.ocmd]
 prefix = "ocm"
@@ -158,7 +160,7 @@ provider = "test-revaoc1"
 driver = "json"
 
 [http.middlewares.providerauthorizer.drivers.json]
-providers = "providers.demo.json"
+providers = "providers.testnet.json"
 
 [http.services.ocs]
 prefix = "ocs"
