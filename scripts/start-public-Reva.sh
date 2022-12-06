@@ -13,13 +13,26 @@ certbot certonly --standalone
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
 ./gitpod-init.sh
-docker run -d --network=host --name=revanc1.docker -e HOST=$REVA revad sleep 1000000000
-docker container cp /etc/letsencrypt/archive/$REVA/fullchain1.pem revanc1.docker:/etc/revad/tls/revanc1.crt
-docker container cp /etc/letsencrypt/archive/$REVA/privkey1.pem revanc1.docker:/etc/revad/tls/revanc1.key
-docker exec -it revanc1.docker openssl x509 -in tls/revanc1.crt -text
-docker exec -it revanc1.docker bash
-# vim revanc1.toml and providers.testnet.toml
+mkdir -p config/tls
+cp  /etc/letsencrypt/archive/$REVA/fullchain1.pem config/tls/revanc1.crt
+cp /etc/letsencrypt/archive/$REVA/privkey1.pem config/tls/revanc1.key
+openssl x509 -in config/tls/revanc1.crt -text | head -15
+cp servers/revad/revanc1.toml config/$REVA.toml
+cp servers/revad/providers.testnet.json config/
+vim config/$REVA.toml
 # :%s/revanc1.docker/mesh.pondersource.org/g
+# expect 25 substitutions on 25 lines
 # :%s/nc1.docker/cloud.pondersource.org/g
+# expect 7 substitutions on 7 lines
 # :wq
-# /reva/cmd/revad/revad -c ./revanc1.toml
+vim config/providers.testnet.json
+# :%s/revanc1.docker/mesh.pondersource.org/g
+# expect 3 substitutions on 2 lines
+# :%s/nc1.docker/cloud.pondersource.org/g
+# expect 2 substitutions on 1 line (but vim does not report that)
+# :wq
+
+docker run -d --network=host --name=revanc1.docker -e HOST=$REVA -v `pwd`/config:/etc/revad revad
+
+docker ps -a
+docker logs revanc1.docker
