@@ -11,8 +11,10 @@ export REVA=mesh.pondersource.org
 # mkdir tls
 # cp /etc/letsencrypt/live/$EFSS/fullchain.pem tls/nc1.crt
 # cp /etc/letsencrypt/live/$EFSS/privkey.pem tls/nc1.key
+# openssl x509 -in tls/nc1.crt -text
 # cd ../..
 # ./rebuild.sh
+# docker network create testnet
 
 export REPO_ROOT=`pwd`
 [ ! -d "./scripts" ] && echo "Directory ./scripts DOES NOT exist inside $REPO_ROOT, are you running this from the repo root?" && exit 1
@@ -30,6 +32,11 @@ function waitForPort {
 
 docker run -d --network=testnet -e MARIADB_ROOT_PASSWORD=eilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek --name=maria1.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
 docker run -d --network=testnet -p 443:443 -e HOST=$EFSS --name=nc1.docker nc1
+
+docker container cp /etc/letsencrypt/archive/$EFSS/fullchain1.pem nc1.docker:/tls/nc1.crt
+docker container cp /etc/letsencrypt/archive/$EFSS/privkey1.pem nc1.docker:/tls/nc1.key
+docker restart nc1.docker
+docker exec -it nc1.docker sed -i "13 i\      5 => '$EFSS'," /var/www/html/config/config.php
 
 waitForPort maria1.docker 3306
 waitForPort nc1.docker 443

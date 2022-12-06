@@ -146,7 +146,7 @@ driver = "nextcloud"
 
 [http.services.dataprovider.drivers.nextcloud]
 endpoint = "https://nc1.docker/index.php/apps/sciencemesh/"
-shared_secret = "shared-secret-2"
+shared_secret = "shared-secret-1"
 mock_http = false
 
 [http.services.ocmd]
