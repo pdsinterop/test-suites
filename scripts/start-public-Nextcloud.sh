@@ -4,17 +4,15 @@ set -e
 export EFSS=cloud.pondersource.org
 export REVA=mesh.pondersource.org
 
-## First, if your Nextcloud server is for instance cloud.pondersource.org, make sure you have run:
-# apt install -y certbot
-# certbot certonly --standalone
-# cd servers/apache-php
-# mkdir tls
-# cp /etc/letsencrypt/live/$EFSS/fullchain.pem tls/nc1.crt
-# cp /etc/letsencrypt/live/$EFSS/privkey.pem tls/nc1.key
-# openssl x509 -in tls/nc1.crt -text
-# cd ../..
-# ./rebuild.sh
-# docker network create testnet
+echo Please edit this file and run the commands one-by-one so you can check if it all works
+exit 0
+
+apt install -y certbot docker.io
+certbot certonly --standalone
+git clone https://github.com/cs3org/ocm-test-suite
+cd ocm-test-suite
+./gitpod-init.sh
+docker network create testnet
 
 export REPO_ROOT=`pwd`
 [ ! -d "./scripts" ] && echo "Directory ./scripts DOES NOT exist inside $REPO_ROOT, are you running this from the repo root?" && exit 1
