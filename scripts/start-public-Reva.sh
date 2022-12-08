@@ -25,12 +25,9 @@ vim config/$REVA.toml
 # :%s/nc1.docker/cloud.pondersource.org/g
 # expect 7 substitutions on 7 lines
 # :wq
-vim config/providers.testnet.json
-# :%s/revanc1.docker/mesh.pondersource.org/g
-# expect 3 substitutions on 2 lines
-# :%s/nc1.docker/cloud.pondersource.org/g
-# expect 2 substitutions on 1 line (but vim does not report that)
-# :wq
+
+# Follow https://developer.sciencemesh.io/docs/technical-documentation/iop/configuration/basic/#ocm-provider-authorizer-docs-httpsrevalinkdocsconfiggrpcservicesocmproviderauthorizer
+# to set up your provider authorizer
 
 docker run -d --network=host --name=revanc1.docker -e HOST=$REVA -v `pwd`/config:/etc/revad revad
 
