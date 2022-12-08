@@ -3,8 +3,8 @@ FROM ubuntu:22.04
 # COPY --from=base /etc/ssl/certs/ /etc/ssl/certs/
 # COPY --from=base /usr/bin/revad /usr/bin/revad
 RUN apt update && apt install -y openssl build-essential wget git vim
-RUN wget https://golang.org/dl/go1.18.linux-amd64.tar.gz
-RUN tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz
+RUN wget https://golang.org/dl/go1.19.linux-amd64.tar.gz
+RUN tar -C /usr/local -xzf go1.19.linux-amd64.tar.gz
 RUN git clone --depth=1 --branch=ocmd-error-messages-backport https://github.com/cs3org/reva
 WORKDIR /reva
 RUN PATH=$PATH:/usr/local/go/bin make deps
