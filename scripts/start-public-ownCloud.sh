@@ -34,7 +34,6 @@ docker run -d --network=testnet -p 443:443 -e HOST=$EFSS --name=oc1.docker oc1
 docker container cp /etc/letsencrypt/archive/$EFSS/fullchain1.pem oc1.docker:/tls/oc1.crt
 docker container cp /etc/letsencrypt/archive/$EFSS/privkey1.pem oc1.docker:/tls/oc1.key
 docker restart oc1.docker
-docker exec -it oc1.docker sed -i "13 i\      5 => '$EFSS'," /var/www/html/config/config.php
 
 waitForPort maria1.docker 3306
 waitForPort oc1.docker 443
@@ -43,4 +42,5 @@ docker exec -e DBHOST=maria1.docker -e USER=einstein -e PASS=relativity  -u www-
 docker exec maria1.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek owncloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'iopUrl', 'https://$REVA/');"
 docker exec maria1.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek owncloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-1');"
 
-echo Now you should be able to lo:g in at https://$EFSS as einstein / relativity.
+docker exec -it oc1.docker sed -i "13 i\      5 => '$EFSS'," /var/www/html/config/config.php
+echo Now you should be able to log in at https://$EFSS as einstein / relativity.
