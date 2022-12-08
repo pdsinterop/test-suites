@@ -17,17 +17,16 @@ mkdir -p config/tls
 cp  /etc/letsencrypt/archive/$REVA/fullchain1.pem config/tls/revanc1.crt
 cp /etc/letsencrypt/archive/$REVA/privkey1.pem config/tls/revanc1.key
 openssl x509 -in config/tls/revanc1.crt -text | head -15
-cp servers/revad/revanc1.toml config/$REVA.toml
-cp servers/revad/providers.testnet.json config/
+cp servers/revad/sciencemesh.toml config/$REVA.toml
 vim config/$REVA.toml
-# :%s/revanc1.docker/mesh.pondersource.org/g
+# :%s/your.revad.com/mesh.pondersource.org/g
 # expect 25 substitutions on 25 lines
-# :%s/nc1.docker/cloud.pondersource.org/g
+# :%s/your.efss.com/cloud.pondersource.org/g
 # expect 7 substitutions on 7 lines
 # :wq
 
-# Follow https://developer.sciencemesh.io/docs/technical-documentation/iop/configuration/basic/#ocm-provider-authorizer-docs-httpsrevalinkdocsconfiggrpcservicesocmproviderauthorizer
-# to set up your provider authorizer
+# See https://developer.sciencemesh.io/docs/technical-documentation/iop/configuration/basic/
+# for full docs about creating your config/$REVA.toml file
 
 docker run -d --network=host --name=revanc1.docker -e HOST=$REVA -v `pwd`/config:/etc/revad revad
 
