@@ -17,7 +17,7 @@ docker network create testnet
 export REPO_ROOT=`pwd`
 [ ! -d "./scripts" ] && echo "Directory ./scripts DOES NOT exist inside $REPO_ROOT, are you running this from the repo root?" && exit 1
 
-fuoction waitForPort {
+function waitForPort {
   x=$(docker exec -it $1 ss -tulpn | grep $2 | wc -l)
   until [ $x -ne 0 ]
   do
