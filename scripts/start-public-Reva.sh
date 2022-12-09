@@ -28,7 +28,7 @@ vim config/$REVA.toml
 # See https://developer.sciencemesh.io/docs/technical-documentation/iop/configuration/basic/
 # for full docs about creating your config/$REVA.toml file
 
-docker run -d --network=host --name=revanc1.docker -e HOST=$REVA -v `pwd`/config:/etc/revad revad
+docker run -d --network=host --name=revanc1.docker -e HOST=$REVA -v `pwd`/reva:/reva -v `pwd`/config:/etc/revad revad
 
 docker ps -a
 docker logs revanc1.docker
