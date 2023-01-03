@@ -82,7 +82,7 @@ driver = "mentix"
 
 [grpc.services.ocmproviderauthorizer.drivers.mentix]
 url = "https://iop.sciencemesh.uni-muenster.de/iop/mentix/cs3"
-verify_request_hostname = true
+verify_request_hostname = false
 insecure = false
 timeout = 10
 refresh = 900
@@ -164,7 +164,7 @@ driver = "mentix"
 
 [http.middlewares.providerauthorizer.drivers.mentix]
 url = "https://iop.sciencemesh.uni-muenster.de/iop/mentix/cs3"
-verify_request_hostname = true
+verify_request_hostname = false
 insecure = false
 timeout = 10
 refresh = 900
