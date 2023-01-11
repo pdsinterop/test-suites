@@ -2,7 +2,7 @@
 set -e
 REPO_ROOT=`pwd`
 
-git clone --branch=main https://github.com/sciencemesh/nc-sciencemesh
+git clone --branch=main https://github.com/pondersource/nc-sciencemesh
 git clone --branch=main https://github.com/pondersource/oc-sciencemesh
 git clone --branch=efss-backend-fixes https://github.com/cs3org/reva
 git clone --branch=main https://github.com/michielbdejong/ocm-stub
