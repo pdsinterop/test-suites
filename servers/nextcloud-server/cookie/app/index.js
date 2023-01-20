@@ -14,7 +14,7 @@ async function getCookieNextcloudCompatible() {
   await page.goto(LOGIN_URL);
   await page.type("#user", USERNAME);
   await page.type("#password", PASSWORD);
-  await page.click("#submit-form");
+  await page.click("#submit-form,[type=submit]");
   await new Promise((resolve) => setTimeout(resolve, 2000));
   const cookies = await page.cookies();
   // console.log(cookies);
