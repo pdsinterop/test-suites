@@ -1,4 +1,4 @@
-FROM apache-php
+FROM apache-php-8.0
 RUN apt install -y zip iproute2
 RUN rm -rf /var/www/html
 USER www-data

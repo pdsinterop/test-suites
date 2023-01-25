@@ -5,8 +5,10 @@ docker build -t tester .
 # cd ..
 cd servers/revad
 docker build -t revad .
-cd ../apache-php
-docker build -t apache-php .
+cd ../apache-php-7.4
+docker build -t apache-php-7.4 .
+cd ../apache-php-8.0
+docker build -t apache-php-8.0 .
 cd ../nextcloud
 docker build -t nextcloud .
 cd ../nc1

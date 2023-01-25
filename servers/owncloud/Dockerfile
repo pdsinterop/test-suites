@@ -1,4 +1,4 @@
-FROM apache-php
+FROM apache-php-7.4
 RUN rm -rf /var/www/html
 USER www-data
 RUN git clone --depth=1 --branch ocm-via-sciencemesh https://github.com/pondersource/core.git --recursive --shallow-submodules
