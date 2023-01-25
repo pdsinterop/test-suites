@@ -1,4 +1,4 @@
-# Use Ubuntu 20.04 so PHP 7.4 is still available
+# Use Ubuntu 20.04 so PHP 7.4 is used, for OC-10
 FROM ubuntu:20.04
 RUN apt update
 RUN DEBIAN_FRONTEND="noninteractive" apt install -yq \

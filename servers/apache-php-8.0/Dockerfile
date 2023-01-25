@@ -1,4 +1,4 @@
-# Use Ubuntu 20.04 so PHP 7.4 is still available
+# Use Ubuntu 22.04 so PHP 8.0 is used, for NC
 FROM ubuntu:22.04
 RUN apt update
 RUN DEBIAN_FRONTEND="noninteractive" apt install -yq \
