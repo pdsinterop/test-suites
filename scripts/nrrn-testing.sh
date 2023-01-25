@@ -41,7 +41,5 @@ docker exec maria2.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi
 echo Now browse to http://ocmhost:5800 and inside there to https://nc1.docker
 echo Log in as einstein / relativity
 echo Go to the ScienceMesh app and generate a token
-echo Click it to go to the meshdir server.
-echo And when it tells you run Reva\'s CLI tool you can do it here:
-echo Log in as marie / radioactivity
-docker exec -it revanc2.docker /reva/cmd/reva/reva -insecure -host localhost:19000
+echo Click it to go to the meshdir server, and choose nc2 there.
+echo Log in on https://nc2.docker as marie / radioactivity
