@@ -20,6 +20,7 @@ RUN DEBIAN_FRONTEND="noninteractive" apt install -yq \
   php-xml \
   php-xdebug \
   php-zip \
+  phpunit \
   vim \
   wget
 # Trust all the certificates:
