@@ -42,5 +42,5 @@ docker exec -e DBHOST=maria1.docker -e USER=einstein -e PASS=relativity  -u www-
 docker exec maria1.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek owncloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'iopUrl', 'https://$REVA/');"
 docker exec maria1.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek owncloud -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-1');"
 
-docker exec -it oc1.docker sed -i "13 i\      5 => '$EFSS'," /var/www/html/config/config.php
+docker exec -it oc1.docker sed -i "12 i\      3 => '$EFSS'," /var/www/html/config/config.php
 echo Now you should be able to log in at https://$EFSS as einstein / relativity.

@@ -20,10 +20,15 @@ cp -r ../../tls .
 # docker build -t revad --build-arg CACHEBUST=`date +%s` .
 docker build -t revad .
 
-# base image for nextcloud image and owncloud image:
-cd ../apache-php
+# base image for owncloud image:
+cd ../apache-php-7.4
 cp -r ../../tls .
-docker build -t apache-php .
+docker build -t apache-php-7.4 .
+
+# base image for nextcloud image:
+cd ../apache-php-8.0
+cp -r ../../tls .
+docker build -t apache-php-8.0 .
 
 # base image for nc1 image and nc2 image:
 cd ../nextcloud
