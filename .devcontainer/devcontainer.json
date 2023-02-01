@@ -34,5 +34,6 @@
         }
       }
     }
-  }
+  },
+  "postStartCommand": "./gitpod-init.sh"
 }
