@@ -34,6 +34,5 @@
         }
       }
     }
-  },
-  "postStartCommand": "chmod +x /workspaces/ocm-test-suite/gitpod-init.sh && /workspaces/ocm-test-suite/gitpod-init.sh"
+  }
 }
