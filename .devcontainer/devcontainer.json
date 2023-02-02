@@ -34,5 +34,7 @@
         }
       }
     }
-  }
+  },
+  "onCreateCommand": "chmod +x ./github-workspaces-create.sh && ./github-workspaces-create.sh",
+  "postStartCommand": "chmod +x ./github-workspaces-run.sh && ./github-workspaces-run.sh"
 }
