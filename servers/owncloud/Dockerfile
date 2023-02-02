@@ -1,10 +1,13 @@
-FROM apache-php
+FROM apache-php-7.4
 RUN rm -rf /var/www/html
 USER www-data
-RUN git clone --depth=1 --branch reva-sharees https://github.com/pondersource/core.git --recursive --shallow-submodules
+RUN git clone --depth=1 --branch ocm-via-sciencemesh https://github.com/pondersource/core.git --recursive --shallow-submodules
 WORKDIR /var/www/core
 USER root
-RUN apt update && apt install -y composer curl dirmngr apt-transport-https lsb-release ca-certificates
+RUN apt update && apt install -y composer curl dirmngr apt-transport-https lsb-release ca-certificates iproute2 curl unzip php-curl
+RUN curl -sS https://getcomposer.org/installer -o /root/composer-setup.php
+RUN php /root/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+RUN composer -V
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt install nodejs
 RUN npm install -g yarn
@@ -19,4 +22,6 @@ ADD init.sh /init.sh
 RUN git clone --depth=1 https://github.com/pondersource/oc-sciencemesh apps/sciencemesh
 RUN cd apps/sciencemesh && git pull
 RUN cd apps/sciencemesh && make
+RUN mkdir -p data ; touch data/owncloud.log
 USER root
+CMD /usr/sbin/apache2ctl -DFOREGROUND & tail -f /var/log/apache2/error.log & tail -f data/owncloud.log

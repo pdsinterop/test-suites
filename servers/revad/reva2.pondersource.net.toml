@@ -1,3 +1,6 @@
+[log]
+level = "debug"
+
 [shared]
 gatewaysvc = "reva2.pondersource.net:19000"
 # gatewaycertfile = "/etc/revad/tls/server.crt"
@@ -32,7 +35,7 @@ ocmshareprovidersvc = "reva2.pondersource.net:19000"
 ocminvitemanagersvc = "reva2.pondersource.net:19000"
 ocmproviderauthorizersvc = "reva2.pondersource.net:19000"
 commit_share_to_storage_grant = false
-datagateway = "http://localhost/data"
+datagateway = "http://localhost:19001/data"
 transfer_expires = 6 # give it a moment
 
 [grpc.services.authregistry]
@@ -69,6 +72,7 @@ driver = "json"
 driver = "nextcloud"
 
 [grpc.services.ocmshareprovider.drivers.nextcloud]
+webdav_host = "https://nc1.docker/"
 endpoint = "https://nc2.pondersource.net/index.php/apps/sciencemesh/"
 shared_secret = "shared-secret-2"
 mock_http = false
@@ -102,6 +106,9 @@ driver = "static"
 
 [grpc.services.storageprovider]
 driver = "nextcloud"
+expose_data_server = true
+data_server_url = "http://localhost:19001/data"
+enable_home_creation = true
 
 [grpc.services.storageprovider.drivers.nextcloud]
 endpoint = "https://nc2.pondersource.net/index.php/apps/sciencemesh/"

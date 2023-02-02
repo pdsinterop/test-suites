@@ -11,6 +11,10 @@ to the ocm-stub server:
 * OC-10
 * Reva
 
+## Running in CDE
+There is a .gitpod.yml file that points to a gitpod-init.sh script and a gitpod-command.sh script. Use it to your liking
+with GitPod, GitHub Codespaces, or similar!
+
 ## Running interactively on Digital Ocean (or similar)
 The following script sets up the testnet on an empty Ubuntu droplet on Digital Ocean (this takes about 15 minutes):
 ```sh

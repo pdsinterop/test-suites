@@ -1,6 +1,10 @@
 node_modules
 ocm-stub
+nc-sciencemesh
+oc-sciencemesh
+reva
 tls
-servers/apache-php/tls
+servers/apache-php-7.4/tls
+servers/apache-php-8.0/tls
 servers/revad/tls
 servers/ci/tls
