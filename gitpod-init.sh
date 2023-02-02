@@ -1,11 +1,8 @@
 #!/bin/bash
 
-set -x
 set -e
 
 REPO_ROOT=`pwd`
-
-echo $REPO_ROOT
 
 git clone --branch=main https://github.com/pondersource/nc-sciencemesh
 git clone --branch=main https://github.com/pondersource/oc-sciencemesh
