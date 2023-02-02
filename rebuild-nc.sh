@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+export DOCKER_BUILDKIT=0
+
 # base image for nextcloud image:
 cd servers/apache-php-8.0
 cp -r ../../tls .

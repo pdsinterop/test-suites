@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+export DOCKER_BUILDKIT=0
+
 # docker build -t tester .
 
 # image for stub1 and stub2:

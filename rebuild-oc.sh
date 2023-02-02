@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+export DOCKER_BUILDKIT=0
+
 # base image for owncloud image:
 cd servers/apache-php-7.4
 cp -r ../../tls .
