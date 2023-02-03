@@ -3,23 +3,9 @@ level = "debug"
 
 [shared]
 gatewaysvc = "your.revad.com:19000"
-# gatewaycertfile = "/etc/revad/tls/revanc1.crt"
-
-# [registry]
-# driver = "static"
-#
-# [registry.static]
-# services = ["authprovider","userprovider"]
-#
-# [registry.static.authprovider]
-# bearer = ["localhost:0123"]
-# basic = ["localhost:1234"]
-# publiclink = ["localhost:9876"]
 
 [grpc]
 address = "0.0.0.0:19000"
-# certfile = "/etc/revad/tls/revanc1.crt"
-# keyfile = "/etc/revad/tls/revanc1.key"
 
 [grpc.services.gateway]
 authregistrysvc = "your.revad.com:19000"
@@ -52,7 +38,7 @@ home_provider = "/home"
 
 [grpc.services.storageregistry.drivers.static.rules]
 "/home" = {"address" = "your.revad.com:19000"}
-"123e4567-e89b-12d3-a456-426655440000" = {"address" = "your.revad.com:19000"}
+"00000000-0000-0000-0000-000000000000" = {"address" = "your.revad.com:19000"}
 
 [grpc.services.usershareprovider]
 driver = "memory"
@@ -63,6 +49,7 @@ driver = "nextcloud"
 [grpc.services.ocmcore.drivers.nextcloud]
 webdav_host = "https://your.efss.com/"
 endpoint = "https://your.efss.com/index.php/apps/sciencemesh/"
+webdav_host = "https://your.efss.com/"
 shared_secret = "shared-secret-1"
 mock_http = false
 
@@ -158,7 +145,6 @@ prefix = "ocm"
 
 [http.services.ocmd.config]
 host = "your.revad.com"
-provider = "test-revanc1"
 
 [http.middlewares.providerauthorizer]
 driver = "mentix"
