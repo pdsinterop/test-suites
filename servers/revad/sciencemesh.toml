@@ -49,7 +49,6 @@ driver = "nextcloud"
 [grpc.services.ocmcore.drivers.nextcloud]
 webdav_host = "https://your.efss.com/"
 endpoint = "https://your.efss.com/index.php/apps/sciencemesh/"
-webdav_host = "https://your.efss.com/"
 shared_secret = "shared-secret-1"
 mock_http = false
 
