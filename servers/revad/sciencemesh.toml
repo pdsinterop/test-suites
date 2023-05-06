@@ -54,6 +54,7 @@ mock_http = false
 
 [grpc.services.ocminvitemanager]
 driver = "json"
+provider_domain = "your.revad.com"
 
 [grpc.services.ocmshareprovider]
 driver = "nextcloud"
