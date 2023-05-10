@@ -59,6 +59,7 @@ provider_domain = "your.revad.com"
 [grpc.services.ocmshareprovider]
 driver = "nextcloud"
 provider_domain = "your.revad.com"
+webdav_endpoint = "https://your.efss.com/"
 
 [grpc.services.ocmshareprovider.drivers.nextcloud]
 webdav_host = "https://your.efss.com/"
