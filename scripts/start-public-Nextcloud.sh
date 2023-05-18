@@ -29,7 +29,7 @@ function waitForPort {
 
 docker pull pondersource/dev-stock-nc1-sciencemesh-network-beta
 docker run -d --network=testnet -e MARIADB_ROOT_PASSWORD=eilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek --name=maria1.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run -d --network=testnet -p 443:443 -e HOST=$EFSS --name=nc1.docker pondersource/dev-stock-nc1-sciencemesh-network-beta
+docker run -d --network=testnet -p 443:443 -v $REPO_ROOT/nc-sciencemesh:/var/www/html/apps/sciencemesh -e HOST=$EFSS --name=nc1.docker pondersource/dev-stock-nc1-sciencemesh-network-beta
 
 # dereference symlinks to /etc/letsencrypt/archive/$EFSS/fullchain*.pem
 # and /etc/letsencrypt/archive/$EFSS/privkey*.pem,
