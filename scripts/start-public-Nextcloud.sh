@@ -39,7 +39,6 @@ cp /etc/letsencrypt/live/$EFSS/privkey.pem /root/privkey.pem
 docker container cp /root/fullchain.pem nc1.docker:/tls/nc1.crt
 docker container cp /root/privkey.pem nc1.docker:/tls/nc1.key
 docker restart nc1.docker
-#docker exec -it nc1.docker sed -i "13 i\      5 => '$EFSS'," /var/www/html/config/config.php
 
 waitForPort maria1.docker 3306
 waitForPort nc1.docker 443
@@ -48,4 +47,5 @@ docker exec -e DBHOST=maria1.docker -e USER=einstein -e PASS=relativity  -u www-
 docker exec maria1.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek efss -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'iopUrl', 'https://$REVA/');"
 docker exec maria1.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek efss -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-1');"
 
+docker exec -it nc1.docker sed -i "13 i\      5 => '$EFSS'," /var/www/html/config/config.php
 echo Now you should be able to log in at https://$EFSS as einstein / relativity.
