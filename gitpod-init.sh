@@ -4,9 +4,9 @@ set -e
 
 REPO_ROOT=`pwd`
 
-git clone --branch=main https://github.com/pondersource/nc-sciencemesh
-git clone --branch=main https://github.com/pondersource/oc-sciencemesh
-git clone --branch=efss-backend-fixes https://github.com/cs3org/reva
+git clone --branch=sciencemesh https://github.com/pondersource/nc-sciencemesh
+git clone --branch=oc-10-take-2 https://github.com/pondersource/nc-sciencemesh oc-sciencemesh
+git clone --branch=master https://github.com/cs3org/reva
 git clone --branch=main https://github.com/michielbdejong/ocm-stub
 
 /bin/bash ./gencerts.sh

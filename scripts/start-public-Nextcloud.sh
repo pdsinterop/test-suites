@@ -11,7 +11,6 @@ apt install -y certbot docker.io
 certbot certonly --standalone
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
-./gitpod-init.sh
 docker network create testnet
 
 export REPO_ROOT=`pwd`
@@ -28,11 +27,17 @@ function waitForPort {
   echo $1 port $2 is open
 }
 
+docker pull pondersource/dev-stock-nc1-sciencemesh-network-beta
 docker run -d --network=testnet -e MARIADB_ROOT_PASSWORD=eilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek --name=maria1.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run -d --network=testnet -p 443:443 -e HOST=$EFSS --name=nc1.docker nc1
+docker run -d --network=testnet -p 443:443 -e HOST=$EFSS --name=nc1.docker pondersource/dev-stock-nc1-sciencemesh-network-beta
 
-docker container cp /etc/letsencrypt/archive/$EFSS/fullchain2.pem nc1.docker:/tls/nc1.crt
-docker container cp /etc/letsencrypt/archive/$EFSS/privkey2.pem nc1.docker:/tls/nc1.key
+# dereference symlinks to /etc/letsencrypt/archive/$EFSS/fullchain*.pem
+# and /etc/letsencrypt/archive/$EFSS/privkey*.pem,
+# then safely copy them into the container from a full fs path
+cp /etc/letsencrypt/live/$EFSS/fullchain.pem /root/fullchain.pem
+cp /etc/letsencrypt/live/$EFSS/privkey.pem /root/privkey.pem
+docker container cp /root/fullchain.pem nc1.docker:/tls/nc1.crt
+docker container cp /root/privkey.pem nc1.docker:/tls/nc1.key
 docker restart nc1.docker
 docker exec -it nc1.docker sed -i "13 i\      5 => '$EFSS'," /var/www/html/config/config.php
 
