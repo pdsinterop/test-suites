@@ -36,8 +36,8 @@ docker run -d --network=testnet -p 443:443 -e HOST=$EFSS --name=oc1.docker ponde
 # then safely copy them into the container from a full fs path
 cp /etc/letsencrypt/live/$EFSS/fullchain.pem /root/fullchain.pem
 cp /etc/letsencrypt/live/$EFSS/privkey.pem /root/privkey.pem
-docker container cp /root/fullchain.pem nc1.docker:/tls/nc1.crt
-docker container cp /root/privkey.pem nc1.docker:/tls/nc1.key
+docker container cp /root/fullchain.pem oc1.docker:/tls/oc1.crt
+docker container cp /root/privkey.pem oc1.docker:/tls/oc1.key
 docker restart oc1.docker
 
 waitForPort maria1.docker 3306
