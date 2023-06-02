@@ -132,7 +132,7 @@ certfile = "/etc/revad/tls/revanc1.crt"
 keyfile = "/etc/revad/tls/revanc1.key"
 
 [http.services.sciencemesh]
-invite_link_template = "{{.MeshDirectoryURL}}?token={{.Token}}&providerDomain=mesh.pondersource.com"
+invite_link_template = "{{.MeshDirectoryURL}}?token={{.Token}}&providerDomain=your.revad.com"
 
 [http.services.dataprovider]
 driver = "nextcloud"
