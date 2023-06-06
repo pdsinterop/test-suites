@@ -38,6 +38,7 @@ home_provider = "/home"
 
 [grpc.services.storageregistry.drivers.static.rules]
 "/home" = {"address" = "your.revad.com:19000"}
+"/ocm" =  {"address" = "your.revad.com:19000"}
 "00000000-0000-0000-0000-000000000000" = {"address" = "your.revad.com:19000"}
 
 [grpc.services.usershareprovider]
@@ -132,7 +133,7 @@ certfile = "/etc/revad/tls/revanc1.crt"
 keyfile = "/etc/revad/tls/revanc1.key"
 
 [http.services.sciencemesh]
-invite_link_template = "{{.MeshDirectoryURL}}?token={{.Token}}&providerDomain=mesh.pondersource.com"
+invite_link_template = "{{.MeshDirectoryURL}}?token={{.Token}}&providerDomain=your.revad.com"
 
 [http.services.dataprovider]
 driver = "nextcloud"
@@ -165,6 +166,4 @@ refresh = 900
 prefix = "ocs"
 
 [http.services.ocdav]
-prefix = "ocdav"
-
 [http.middlewares.cors]
