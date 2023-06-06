@@ -29,7 +29,7 @@ driver = "static"
 
 [grpc.services.authregistry.drivers.static.rules]
 basic = "your.revad.com:19000"
-ocmshares = "mesh.pondersource.org:19001"
+ocmshares = "your.revad.com:19001"
 
 [grpc.services.storageregistry]
 driver = "static"
