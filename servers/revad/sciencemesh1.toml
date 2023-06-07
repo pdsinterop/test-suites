@@ -30,6 +30,7 @@ driver = "static"
 [grpc.services.authregistry.drivers.static.rules]
 basic = "your.revad.com:19000"
 ocmshares = "your.revad.com:19001"
+machine = "your.revad.com:19030"
 
 [grpc.services.storageregistry]
 driver = "static"
