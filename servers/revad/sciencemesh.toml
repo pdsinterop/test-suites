@@ -39,7 +39,7 @@ home_provider = "/home"
 
 [grpc.services.storageregistry.drivers.static.rules]
 "/home" = {"address" = "your.revad.com:19000"}
-"/ocm" =  {"address" = "your.revad.com:19001"}
+"/ocm" = {"address" = "your.revad.com:19001"}
 "00000000-0000-0000-0000-000000000000" = {"address" = "your.revad.com:19000"}
 
 [grpc.services.usershareprovider]
@@ -127,8 +127,6 @@ shared_secret = "shared-secret-1"
 mock_http = false
 
 [http]
-enabled_services = ["ocmd", "sciencemesh"]
-enabled_middlewares = ["providerauthorizer", "cors"]
 address = "0.0.0.0:443"
 certfile = "/etc/revad/tls/revanc1.crt"
 keyfile = "/etc/revad/tls/revanc1.key"
@@ -147,24 +145,22 @@ endpoint = "https://your.efss.com/index.php/apps/sciencemesh/"
 shared_secret = "shared-secret-1"
 mock_http = false
 
+[http.services.ocmprovider]
+ocm_prefix = "ocm"
+provider = "your.revad.com"
+endpoint = "https://your.revad.com"
+enable_webapp = true
+enable_datatx = true
+
 [http.services.ocmd]
 prefix = "ocm"
 
 [http.services.ocmd.config]
 host = "your.revad.com"
 
-[http.middlewares.providerauthorizer]
-driver = "mentix"
-
-[http.middlewares.providerauthorizer.drivers.mentix]
-url = "https://iop.sciencemesh.uni-muenster.de/iop/mentix/cs3"
-verify_request_hostname = true
-insecure = false
-timeout = 10
-refresh = 900
-
 [http.services.ocs]
 prefix = "ocs"
 
 [http.services.ocdav]
 [http.middlewares.cors]
+
