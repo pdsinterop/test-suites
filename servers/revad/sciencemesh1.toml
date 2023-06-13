@@ -134,6 +134,8 @@ keyfile = "/etc/revad/tls/revanc1.key"
 
 [http.services.sciencemesh]
 invite_link_template = "{{.MeshDirectoryURL}}?token={{.Token}}&providerDomain=your.revad.com"
+provider_domain = "your.revad.com"
+mesh_directory_url = "https://sciencemesh.cesnet.cz/iop/meshdir"
 
 [http.services.dataprovider]
 driver = "nextcloud"
