@@ -11,7 +11,7 @@ apt install -y certbot docker.io
 certbot certonly --standalone
 git clone https://github.com/cs3org/ocm-test-suite
 cd ocm-test-suite
-docker network create testnet
+docker network inspect testnet >/dev/null 2>&1 || docker network create testnet
 
 export REPO_ROOT=`pwd`
 [ ! -d "./scripts" ] && echo "Directory ./scripts DOES NOT exist inside $REPO_ROOT, are you running this from the repo root?" && exit 1
@@ -27,9 +27,9 @@ function waitForPort {
   echo $1 port $2 is open
 }
 
-docker pull pondersource/dev-stock-oc1-sciencemesh-network-beta
+docker pull pondersource/dev-stock-oc1-sciencemesh
 docker run -d --network=testnet -e MARIADB_ROOT_PASSWORD=eilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek --name=maria1.docker mariadb --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed
-docker run -d --network=testnet -p 443:443 -v $REPO_ROOT/oc-sciencemesh:/var/www/html/apps/sciencemesh -e HOST=$EFSS --name=oc1.docker pondersource/dev-stock-oc1-sciencemesh-network-beta
+docker run -d --network=testnet -p 443:443 -v $REPO_ROOT/oc-sciencemesh:/var/www/html/apps/sciencemesh -e HOST=$EFSS --name=oc1.docker pondersource/dev-stock-oc1-sciencemesh
 
 # dereference symlinks to /etc/letsencrypt/archive/$EFSS/fullchain*.pem
 # and /etc/letsencrypt/archive/$EFSS/privkey*.pem,
@@ -46,6 +46,7 @@ waitForPort oc1.docker 443
 docker exec -e DBHOST=maria1.docker -e USER=einstein -e PASS=relativity  -u www-data oc1.docker sh /init.sh
 docker exec maria1.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek efss -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'iopUrl', 'https://$REVA/');"
 docker exec maria1.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek efss -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'revaSharedSecret', 'shared-secret-1');"
+docker exec maria1.docker mariadb -u root -peilohtho9oTahsuongeeTh7reedahPo1Ohwi3aek efss -e "insert into oc_appconfig (appid, configkey, configvalue) values ('sciencemesh', 'inviteManagerApikey', 'shared-secret-1');"
 
 docker exec -it oc1.docker sed -i "12 i\      3 => '$EFSS'," /var/www/html/config/config.php
 echo Now you should be able to log in at https://$EFSS as einstein / relativity.
