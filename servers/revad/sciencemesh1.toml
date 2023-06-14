@@ -29,6 +29,8 @@ driver = "static"
 
 [grpc.services.authregistry.drivers.static.rules]
 basic = "your.revad.com:19000"
+ocmshares = "your.revad.com:19001"
+machine = "your.revad.com:19030"
 
 [grpc.services.storageregistry]
 driver = "static"
@@ -38,6 +40,7 @@ home_provider = "/home"
 
 [grpc.services.storageregistry.drivers.static.rules]
 "/home" = {"address" = "your.revad.com:19000"}
+"/ocm" = {"address" = "your.revad.com:19001"}
 "00000000-0000-0000-0000-000000000000" = {"address" = "your.revad.com:19000"}
 
 [grpc.services.usershareprovider]
@@ -72,7 +75,7 @@ driver = "mentix"
 
 [grpc.services.ocmproviderauthorizer.drivers.mentix]
 url = "https://iop.sciencemesh.uni-muenster.de/iop/mentix/cs3"
-verify_request_hostname = false
+verify_request_hostname = true
 insecure = false
 timeout = 10
 refresh = 900
@@ -125,13 +128,14 @@ shared_secret = "shared-secret-1"
 mock_http = false
 
 [http]
-enabled_services = ["ocmd", "sciencemesh"]
-enabled_middlewares = ["providerauthorizer", "cors"]
 address = "0.0.0.0:443"
 certfile = "/etc/revad/tls/revanc1.crt"
 keyfile = "/etc/revad/tls/revanc1.key"
 
 [http.services.sciencemesh]
+invite_link_template = "{{.MeshDirectoryURL}}?token={{.Token}}&providerDomain=your.revad.com"
+provider_domain = "your.revad.com"
+mesh_directory_url = "https://sciencemesh.cesnet.cz/iop/meshdir"
 
 [http.services.dataprovider]
 driver = "nextcloud"
@@ -144,26 +148,30 @@ endpoint = "https://your.efss.com/index.php/apps/sciencemesh/"
 shared_secret = "shared-secret-1"
 mock_http = false
 
+[http.services.ocmprovider]
+ocm_prefix = "ocm"
+provider = "your.revad.com"
+endpoint = "https://your.revad.com"
+enable_webapp = true
+enable_datatx = true
+
 [http.services.ocmd]
 prefix = "ocm"
 
 [http.services.ocmd.config]
 host = "your.revad.com"
 
+[http.services.ocs]
+prefix = "ocs"
+
+[http.services.ocdav]
+[http.middlewares.cors]
 [http.middlewares.providerauthorizer]
 driver = "mentix"
 
 [http.middlewares.providerauthorizer.drivers.mentix]
 url = "https://iop.sciencemesh.uni-muenster.de/iop/mentix/cs3"
-verify_request_hostname = false
+verify_request_hostname = true
 insecure = false
 timeout = 10
 refresh = 900
-
-[http.services.ocs]
-prefix = "ocs"
-
-[http.services.ocdav]
-prefix = "ocdav"
-
-[http.middlewares.cors]
