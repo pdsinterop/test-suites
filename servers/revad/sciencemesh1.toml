@@ -127,6 +127,27 @@ endpoint = "https://your.efss.com/index.php/apps/sciencemesh/"
 shared_secret = "shared-secret-1"
 mock_http = false
 
+[grpc.services.datatx]
+txdriver = "rclone"
+storagedriver = "json"
+remove_transfer_on_cancel = true
+
+[grpc.services.datatx.txdrivers.rclone]
+endpoint = "rlcone-endpoint"
+auth_user = "rclone-user"
+auth_pass = "rclone-user-secret"
+auth_header = "x-access-token"
+job_status_check_interval = 2000
+job_timeout = 120000
+storagedriver = "json"
+remove_transfer_job_on_cancel = true
+
+[grpc.services.datatx.storagedrivers.json]
+file = ""
+
+[grpc.services.datatx.txdrivers.rclone.storagedrivers.json]
+file = ""
+
 [http]
 address = "0.0.0.0:443"
 certfile = "/etc/revad/tls/revanc1.crt"
