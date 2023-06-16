@@ -81,7 +81,7 @@ driver = "memory"
 driver = "nextcloud"
 
 [grpc.services.ocmcore.drivers.nextcloud]
-webdav_host = "https://your.efss.com/"
+host = "https://your.revad.com/"
 endpoint = "https://your.efss.com/index.php/apps/sciencemesh/"
 shared_secret = "shared-secret-1"
 mock_http = false
@@ -93,10 +93,11 @@ provider_domain = "your.revad.com"
 [grpc.services.ocmshareprovider]
 driver = "nextcloud"
 provider_domain = "your.revad.com"
-webdav_endpoint = "https://your.efss.com/"
+endpoint = "https://your.revad.com/"
+webdav_prefix = "https://your.revad.com/remote.php/dav/files"
 
 [grpc.services.ocmshareprovider.drivers.nextcloud]
-webdav_host = "https://your.efss.com/"
+webdav_host = "https://your.revad.com/"
 endpoint = "https://your.efss.com/index.php/apps/sciencemesh/"
 shared_secret = "shared-secret-1"
 mock_http = false
@@ -205,3 +206,4 @@ verify_request_hostname = true
 insecure = false
 timeout = 10
 refresh = 900
+
