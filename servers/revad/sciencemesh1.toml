@@ -10,7 +10,7 @@ address = "0.0.0.0:19000"
 [grpc.services.gateway]
 authregistrysvc = "your.revad.com:19000"
 appprovidersvc = "your.revad.com:19000"
-appregistry = "your.revad.com:19000"
+appregistrysvc = "your.revad.com:19000"
 storageregistrysvc = "your.revad.com:19000"
 preferencessvc = "your.revad.com:19000"
 userprovidersvc = "your.revad.com:19000"
@@ -24,6 +24,29 @@ commit_share_to_storage_grant = false
 datagateway = "https://your.revad.com/data"
 transfer_expires = 6 # give it a moment
 
+[grpc.services.appregistry]
+driver = "static"
+
+[grpc.services.appregistry.drivers.static]
+mime_types = [
+    {"mime_type" = "text/plain", "extension" = "txt", "name" = "Text file", "description" = "Text file", "allow_creation" = true},
+    {"mime_type" = "text/markdown", "extension" = "md", "name" = "Markdown file", "description" = "Markdown file", "allow_creation" = true},
+    {"mime_type" = "application/vnd.oasis.opendocument.text", "extension" = "odt", "name" = "OpenDocument", "description" = "OpenDocument text document", "default_app" = "Collabora", "allow_creation" = true},
+    {"mime_type" = "application/vnd.oasis.opendocument.spreadsheet", "extension" = "ods", "name" = "OpenSpreadsheet", "description" = "OpenDocument spreadsheet document", "default_app" = "Collabora", "allow_creation" = true},
+    {"mime_type" = "application/vnd.oasis.opendocument.presentation", "extension" = "odp", "name" = "OpenPresentation", "description" = "OpenDocument presentation document", "default_app" = "Collabora", "allow_creation" = true},
+    {"mime_type" = "application/vnd.jupyter", "extension" = "ipynb", "name" = "Jupyter Notebook", "description" = "Jupyter Notebook"}
+]
+
+[grpc.services.appprovider]
+driver = "wopi"
+app_provider_url = "localhost:19000"
+
+[grpc.services.appprovider.drivers.wopi]
+iop_secret = "shared-secret-with-wopiserver"
+wopi_url = "http://0.0.0.0:8880/"
+app_name = "Collabora"
+app_url = "https://your-collabora-server.org:9980"
+
 [grpc.services.authregistry]
 driver = "static"
 
@@ -31,6 +54,14 @@ driver = "static"
 basic = "your.revad.com:19000"
 ocmshares = "your.revad.com:19001"
 machine = "your.revad.com:19030"
+
+[grpc.services.authprovider]
+auth_manager = "nextcloud"
+
+[grpc.services.authprovider.auth_managers.nextcloud]
+endpoint = "https://your.efss.com/index.php/apps/sciencemesh/"
+shared_secret = "shared-secret-1"
+mock_http = false
 
 [grpc.services.storageregistry]
 driver = "static"
@@ -83,23 +114,6 @@ refresh = 900
 [grpc.services.publicshareprovider]
 driver = "memory"
 
-[grpc.services.appprovider]
-driver = "demo"
-iopsecret = "testsecret"
-wopiurl = "http://0.0.0.0:8880/"
-wopibridgeurl = "http://localhost:8000/wopib"
-
-[grpc.services.appregistry]
-driver = "static"
-
-[grpc.services.appregistry.static.rules]
-"text/plain" = "your.revad.com:19000"
-"text/markdown" = "your.revad.com:19000"
-"application/compressed-markdown" = "your.revad.com:19000"
-"application/vnd.oasis.opendocument.text" = "your.revad.com:19000"
-"application/vnd.oasis.opendocument.spreadsheet" = "your.revad.com:19000"
-"application/vnd.oasis.opendocument.presentation" = "your.revad.com:19000"
-
 [grpc.services.storageprovider]
 driver = "nextcloud"
 expose_data_server = true
@@ -107,14 +121,6 @@ data_server_url = "https://your.revad.com/data"
 enable_home_creation = true
 
 [grpc.services.storageprovider.drivers.nextcloud]
-endpoint = "https://your.efss.com/index.php/apps/sciencemesh/"
-shared_secret = "shared-secret-1"
-mock_http = false
-
-[grpc.services.authprovider]
-auth_manager = "nextcloud"
-
-[grpc.services.authprovider.auth_managers.nextcloud]
 endpoint = "https://your.efss.com/index.php/apps/sciencemesh/"
 shared_secret = "shared-secret-1"
 mock_http = false
@@ -153,8 +159,9 @@ address = "0.0.0.0:443"
 certfile = "/etc/revad/tls/revanc1.crt"
 keyfile = "/etc/revad/tls/revanc1.key"
 
+[http.services.appprovider]
+
 [http.services.sciencemesh]
-invite_link_template = "{{.MeshDirectoryURL}}?token={{.Token}}&providerDomain=your.revad.com"
 provider_domain = "your.revad.com"
 mesh_directory_url = "https://sciencemesh.cesnet.cz/iop/meshdir"
 
@@ -171,10 +178,12 @@ mock_http = false
 
 [http.services.ocmprovider]
 ocm_prefix = "ocm"
-provider = "your.revad.com"
+provider = "your EFSS name"
 endpoint = "https://your.revad.com"
 enable_webapp = true
 enable_datatx = true
+
+[http.services.ocsprovider]
 
 [http.services.ocmd]
 prefix = "ocm"
