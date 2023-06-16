@@ -94,6 +94,7 @@ provider_domain = "your.revad.com"
 driver = "nextcloud"
 provider_domain = "your.revad.com"
 endpoint = "https://your.revad.com/"
+webdav_endpoint = "https://your.revad.com/"
 webdav_prefix = "https://your.revad.com/remote.php/dav/files"
 
 [grpc.services.ocmshareprovider.drivers.nextcloud]
