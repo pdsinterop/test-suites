@@ -29,7 +29,7 @@
     "debug": "^4.1.1",
     "isomorphic-webcrypto": "^2.3.6",
     "jest": "^26.1.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "node-fetch": "^2.5.0",
     "node-rsa": "^1.0.8",
     "rdf-namespaces": "^1.8.0",
